@@ -1,4 +1,5 @@
-package si.uni_lj.fe.erk.roadsigns
+package si.uni_lj.fe.diplomsko_delo.pomocnik.util
+
 
 import android.Manifest
 import android.util.Log
@@ -27,11 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 
-/**
- * Composable function to request camera permission and display content based on the permission status.
- *
- * @param content The composable content to display if the camera permission is granted.
- */
+
 @Composable
 fun PermissionsUtil(content: @Composable () -> Unit) {
     val context = LocalContext.current

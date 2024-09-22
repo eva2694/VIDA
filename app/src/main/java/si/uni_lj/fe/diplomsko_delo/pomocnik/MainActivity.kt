@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
-import si.uni_lj.fe.erk.roadsigns.PermissionsUtil
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

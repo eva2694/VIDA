@@ -3,7 +3,6 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.compose.ui.unit.Constraints
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.CompatibilityList
@@ -23,11 +22,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
-/**
- * ModelLoader class for loading and running YOLO models using TensorFlow Lite.
- *
- * @property context Android context.
- */
+
 class ModelLoader(private val context: Context) {
     private val labelPath = Constants.LABELS_PATH
     private var interpreter: Interpreter? = null
@@ -55,9 +50,7 @@ class ModelLoader(private val context: Context) {
         loadLabels()
     }
 
-    /**
-     * Initializes the TensorFlow Lite interpreter with the specified model path.
-     */
+
     private fun initializeInterpreter() {
         val compatList = CompatibilityList()
         try {
@@ -88,9 +81,7 @@ class ModelLoader(private val context: Context) {
         }
     }
 
-    /**
-     * Loads the labels from the asset file.
-     */
+
     private fun loadLabels() {
         try {
             val inputStream: InputStream = context.assets.open(labelPath)
@@ -108,19 +99,17 @@ class ModelLoader(private val context: Context) {
             e.printStackTrace()
         }
     }
-    /**
-     * Detects objects in the given bitmap using the chosen YOLO model.
-     *
-     * @param bitmap Bitmap image to perform detection on.
-     * @return List of detected bounding boxes.
-     */
+
     fun detect(bitmap: Bitmap): List<BoundingBox> {
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, tensorWidth, tensorHeight, false)
+
+        Log.d("modelloader", "Size: ${bitmap.width} x ${bitmap.height}")
 
         val tensorImage = TensorImage(DataType.FLOAT32)
         tensorImage.load(resizedBitmap)
         val processedImage = imageProcessor.process(tensorImage)
         val imageBuffer = processedImage.buffer
+
 
         val output = TensorBuffer.createFixedSize(intArrayOf(1, numChannel, numElements), OUTPUT_IMAGE_TYPE)
 
@@ -129,11 +118,7 @@ class ModelLoader(private val context: Context) {
         return bestBox(output.floatArray) ?: listOf()
     }
 
-    /**
-     * Saves the processed bitmap for debugging purposes. It is not used
-     *
-     * @param bitmap Bitmap image to save.
-     */
+
     fun saveProcessedBitmap(bitmap: Bitmap) {
         val filename = "processed_image_${System.currentTimeMillis()}.jpg"
         val file = File(context.getExternalFilesDir(null), filename)
@@ -148,12 +133,7 @@ class ModelLoader(private val context: Context) {
         }
     }
 
-    /**
-     * Finds the best bounding boxes based on confidence threshold.
-     *
-     * @param array Array of float values representing detected objects.
-     * @return List of bounding boxes.
-     */
+
     private fun bestBox(array: FloatArray): List<BoundingBox>? {
         val boundingBoxes = mutableListOf<BoundingBox>()
 
@@ -202,12 +182,7 @@ class ModelLoader(private val context: Context) {
         Log.d("ModelLoader", "Non-max suppression applied, ${nmsBoxes.size} boxes selected")
         return nmsBoxes
     }
-    /**
-     * Applies non-maximum suppression to filter bounding boxes.
-     *
-     * @param boxes List of bounding boxes.
-     * @return List of filtered bounding boxes.
-     */
+
     private fun applyNMS(boxes: List<BoundingBox>): MutableList<BoundingBox> {
         val sortedBoxes = boxes.sortedByDescending { it.cnf }.toMutableList()
         val selectedBoxes = mutableListOf<BoundingBox>()
@@ -229,13 +204,7 @@ class ModelLoader(private val context: Context) {
 
         return selectedBoxes
     }
-    /**
-     * Calculates the Intersection over Union (IoU) of two bounding boxes.
-     *
-     * @param box1 First bounding box.
-     * @param box2 Second bounding box.
-     * @return IoU value.
-     */
+
     private fun calculateIoU(box1: BoundingBox, box2: BoundingBox): Float {
         val x1 = maxOf(box1.x1, box2.x1)
         val y1 = maxOf(box1.y1, box2.y1)
