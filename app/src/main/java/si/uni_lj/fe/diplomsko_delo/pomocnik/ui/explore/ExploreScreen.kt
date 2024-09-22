@@ -13,10 +13,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -25,18 +22,12 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import java.util.concurrent.ExecutorService
 
 
 
 @Composable
-fun ExploreScreen(cameraExecutor: ExecutorService) {
+fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) {
     val context = LocalContext.current
 
     val displayRotation = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
@@ -44,11 +35,8 @@ fun ExploreScreen(cameraExecutor: ExecutorService) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-    var detectionResults by remember { mutableStateOf<List<BoundingBox>>(listOf()) }
 
-    val modelLoader = remember { ModelLoader(context) }
-
-    val imageProcessor = remember { ImageProcessor() }
+    val detectionResults = viewModel.detectionResults
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -65,10 +53,7 @@ fun ExploreScreen(cameraExecutor: ExecutorService) {
                 .build()
 
             imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-                CoroutineScope(Dispatchers.Main).launch {
-                    val results = imageProcessor.processImage(imageProxy, modelLoader)
-                    detectionResults = results
-                }
+                viewModel.processImage(imageProxy)
             }
 
 
@@ -90,7 +75,7 @@ fun ExploreScreen(cameraExecutor: ExecutorService) {
                 val canvasWidth = size.width
                 val canvasHeight = size.height
 
-                detectionResults.forEach {result ->
+                detectionResults.forEach { result ->
                     val x1 = result.x1 * canvasWidth
                     val y1 = result.y1 * canvasHeight
                     val x2 = result.x2 * canvasWidth

@@ -1,0 +1,601 @@
+Harmonika
+Lepilni trak
+Letalo
+letalo
+Budilka
+Alpaka
+Ambulanta
+žival
+mravlja
+antilopa
+Apple
+Armadillo
+artičoke
+Avto del
+sekira
+Nahrbtnik
+Bagel
+Pekovski izdelki
+Ravnotežni gred
+Žoga
+Balon
+Banana
+Obliž
+bendžo
+Barka
+Barrel
+Baseball kij
+Baseball rokavica
+Netopir (žival)
+Kopalniški dodatek
+Kopalniška omarica
+Kopalna kad
+Čaša
+Medved
+Postelja
+Čebela
+Čebelnjak
+Pivo
+Hrošč
+paprika
+Pas
+Klop
+kolo
+Kolesarska čelada
+Kolo kolesa
+Bide
+Billboard
+Biljardna miza
+Daljnogled
+ptica
+Mešalnik
+Modra šojka
+Čoln
+Bomba
+Knjiga
+Knjižna omara
+Zagon
+Steklenička
+Odpirač za steklenice
+Lok in puščica
+Skleda
+Oprema za balinanje
+Škatla
+Fant
+Modrček
+Kruh
+Aktovka
+brokoli
+Bronasta skulptura
+Rjavi medved
+Stavba
+Bik
+burito
+Avtobus
+Doprsi
+Metulj
+Zelje
+Kabinet
+Torta
+Stojalo za torte
+Kalkulator
+kamela
+Kamera
+Odpirač za konzerve
+Kanarček
+Sveča
+sladkarije
+Topovi
+Kanu
+Cantaloupe
+avto
+Mesojedec
+korenček
+Voziček
+Kasetni deck
+Grad
+mačka
+Mačje pohištvo
+Caterpillar
+Govedo
+Stropni ventilator
+Violončelo
+stonoga
+Motorna žaga
+stol
+sir
+Gepard
+Komoda s predali
+piščanec
+zvonec
+Dleto
+Palčke
+božično drevo
+Ura
+Omara
+Oblačila
+Plašč
+Koktajl
+Shaker za koktajle
+Kokos
+kava
+Skodelica za kavo
+Klubska mizica
+Aparat za kavo
+Kovanec
+Navadna figa
+Navadna sončnica
+Računalniška tipkovnica
+Računalniški monitor
+Računalniška miška
+Posoda
+Trgovina z mešanim blagom
+Piškotek
+Sprej za kuhanje
+Žični telefon
+Kozmetika
+Kavč
+Pult
+Kavbojski klobuk
+Rakovica
+smetana
+Žoga za kriket
+Krokodil
+Rogljiček
+krona
+bergla
+kumare
+Omara
+Zavesa
+Deska za rezanje
+bodalo
+Mlečni izdelek
+Jelen
+Pisalna miza
+Sladica
+Plenica
+Kocke
+Digitalna ura
+Dinozaver
+Pomivalni stroj
+pes
+Pasja postelja
+lutka
+Delfin
+Vrata
+Kljuka za vrata
+Krof
+Kačji pastir
+Predal
+obleka
+Vrtalnik (orodje)
+Pijte
+Slamica za pitje
+boben
+Raca
+Dumbbell
+Orel
+Uhani
+jajce (hrana)
+slon
+ovojnica
+Radirka
+Puder za obraz
+Držalo za obrazne robčke
+Sokol
+Modni dodatek
+Hitra hrana
+faks
+Fedora
+Kartotečna omara
+Požarni hidrant
+Kamin
+ribe
+Zastava
+Svetilka
+cvet
+Cvetlični lonček
+Flavta
+Leteči disk
+hrana
+Kuhinjski robot
+Nogomet
+Nogometna čelada
+Obutev
+Vilice
+Fontana
+Lisica
+pomfrit
+francoski rog
+žaba
+sadje
+Ponev
+Pohištvo
+Vrtni šparglji
+Plinski štedilnik
+Žirafa
+punca
+Očala
+rokavica
+Koza
+Zaščitna očala
+Zlata ribica
+Žogica za golf
+Voziček za golf
+Gondola
+Gos
+Grozdje
+Grenivke
+Mlinček
+Guacamole
+Kitara
+Sušilnik za lase
+Sprej za lase
+hamburger
+Kladivo
+Hrček
+Sušilnik za roke
+Ročna torbica
+Pištola
+pristaniški tjulenj
+Harmonika
+Harfa
+Čembalo
+Klobuk
+Slušalke
+Grelec
+Ježek
+Helikopter
+Čelada
+Visoke pete
+Pohodniška oprema
+Povodni konj
+Gospodinjski aparat
+satja
+Vodoravna vrstica
+Konj
+Hot dog
+Hiša
+Sobna rastlina
+Človeška roka
+Človeška brada
+Človeško telo
+Človeško uho
+Človeško oko
+Človeški obraz
+Človeško stopalo
+Človeški lasje
+Človeška roka
+Človeška glava
+Človeška noga
+Človeška usta
+Človeški nos
+Vlažilec zraka
+sladoled
+Veslač v dvorani
+Otroška posteljica
+Insekt
+Nevretenčar
+Ipod
+Enakopod
+Jakna
+Jacuzzi
+Jaguar (žival)
+kavbojke
+Meduze
+Vodni skuter
+Vrč
+sok
+Kenguru
+Kotliček
+Kuhinjska in jedilna miza
+Kuhinjski aparat
+Kuhinjski nož
+Kuhinjski pripomoček
+Kuhinjska posoda
+Kajt
+Nož
+Koala
+Lestev
+Zajemalka
+Pikapolonica
+Svetilka
+Kopensko vozilo
+Svetilka
+Prenosni računalnik
+sivka (rastlina)
+limona
+Leopard
+Žarnica
+Stikalo za luči
+Svetilnik
+Lily
+Limuzina
+Lev
+Šminka
+kuščar
+Jastog
+Loveseat
+Prtljaga in torbe
+Ris
+Sraka
+sesalec
+Človek
+Mango
+Javor
+Maracas
+Morski nevretenčarji
+Morski sesalec
+Merilna skodelica
+Mehanski ventilator
+Medicinska oprema
+Mikrofon
+Mikrovalovna pečica
+Mleko
+Mini krilo
+Ogledalo
+Izstrelek
+Mešalnik
+Posoda za mešanje
+Mobilni telefon
+opica
+Molji in metulji
+Motorno kolo
+Miška
+Muffin
+Skodelica
+Mule
+Goba
+Glasbilo
+Glasbena tipkovnica
+Žeblji (konstrukcija)
+Ogrlica
+Nočna omarica
+Oboa
+Poslovna stavba
+Pisarniški material
+Oranžna
+Orgle (glasbilo)
+Noj
+Vidra
+Pečica
+sova
+Ostriga
+Veslo
+Palma
+Palačinka
+Panda
+Rezalnik papirja
+Papirnata brisača
+Padalo
+Parkirometer
+Papiga
+Testenine
+Pecivo
+breskev
+hruška
+Pero
+Etui za svinčnike
+Šilček za svinčnike
+Pingvin
+Parfum
+oseba
+Osebna nega
+Osebna flotacijska naprava
+Klavir
+Košara za piknik
+Okvir za slike
+prašič
+Blazina
+Ananas
+Vrč (posoda)
+Pizza
+Rezalnik za pico
+Rastlina
+Plastična vrečka
+Plošča
+Krožnik
+Vodovodna napeljava
+Polarni medved
+Granatno jabolko
+kokice
+Veranda
+ježek
+Plakat
+Krompir
+Električni vtiči in vtičnice
+Lonec na pritisk
+Presta
+Tiskalnik
+Buča
+Boksarska vreča
+Zajec
+Rakun
+Lopar
+Redkev
+Raglja (naprava)
+Raven
+Žarki in drsalke
+Rdeča panda
+Hladilnik
+Daljinski upravljalnik
+Plazilec
+nosorog
+Puška
+Obročasti registrator
+Raketa
+Rolerji
+Rose
+Žoga za ragbi
+Ravnilo
+Solata
+Sol in poper
+Sandal
+Sendvič
+krožnik
+saksofon
+Lestvica
+Šal
+Škarje
+Semafor
+Škorpijon
+Izvijač
+Kiparstvo
+Morski lev
+Morska želva
+Morski sadeži
+Morski konjiček
+Varnostni pas
+Segway
+Servirni pladenj
+Šivalni stroj
+Morski pes
+ovce
+Polica
+školjke
+Majica
+Kratke hlače
+Puška
+Tuš
+kozica
+Umivalnik
+Rolka
+Smučanje
+Krilo
+Lobanja
+Skunk
+Nebotičnik
+Počasni kuhalnik
+Prigrizek
+polž
+kača
+Snowboard
+Snežak
+Motorne sani
+Snežni plug
+Dozirnik za milo
+Nogavica
+Raztegljiv kavč
+Sombrero
+Vrabec
+Spatula
+Stojalo za začimbe
+Pajek
+Žlica
+Športna oprema
+Športna uniforma
+Squash (rastlina)
+Lignji
+Veverica
+stopnice
+Spenjalnik
+Morska zvezda
+Sobno kolo
+Stetoskop
+Blato
+Stop znak
+Jagoda
+Ulična luč
+Nosila
+Studio kavč
+Podmornica
+Sendvič s podmornico
+Obleka
+Kovček
+Klobuk za sončenje
+Sončna očala
+Surfboard
+suši
+Labod
+Plavalna kapa
+Bazen
+Kopalke
+meč
+Brizga
+Tabela
+Lopar za namizni tenis
+Tablični računalnik
+Namizni pribor
+Taco
+Rezervoar
+Tapnite
+Tart
+Taksi
+čaj
+Čajnik
+medvedek
+Telefon
+televizija
+Teniška žoga
+Teniški lopar
+Šotor
+Tiara
+Kljukica
+Kravata
+Tiger
+Pločevinka
+Pnevmatika
+Toaster
+Stranišče
+Toaletni papir
+Paradižnik
+Orodje
+Zobna ščetka
+Bakla
+Želva
+Brisačo
+Stolp
+Igrača
+Semafor
+Prometni znak
+Vlak
+Vadbena klop
+Tekalna steza
+Drevo
+Hiša na drevesu
+Stativ
+Pozavna
+Hlače
+Tovornjak
+Trobenta
+Turčija
+Želva
+Dežnik
+Monocikel
+Kombi
+Vaza
+Zelenjava
+Vozilo
+Registrska tablica vozila
+Violina
+Odbojka (žoga)
+Vafelj
+Pekač za vaflje
+Stenska ura
+Garderoba
+Pralni stroj
+Posoda za smeti
+Pazi
+Vodna plovila
+Lubenica
+Orožje
+Kit
+kolo
+Invalidski voziček
+Stepajte
+Bela tabla
+Willow
+Okno
+Rolo za okna
+Vino
+Kozarec za vino
+Stojalo za vino
+Zimska melona
+vok
+ženska
+Peč na drva
+Žolna
+Črv
+viličasti ključ
+Zebra
+Bučke

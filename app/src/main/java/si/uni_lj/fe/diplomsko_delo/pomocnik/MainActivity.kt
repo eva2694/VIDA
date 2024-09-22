@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import java.util.concurrent.ExecutorService
@@ -23,6 +25,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        val exploreViewModel : ExploreViewModel by viewModels()
+
         Log.d("MainActivity", "Camera executor initialized")
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -33,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            ExploreScreen(cameraExecutor)
+                            ExploreScreen(cameraExecutor, viewModel = exploreViewModel)
                         }
 
                     }
