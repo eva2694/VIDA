@@ -13,12 +13,15 @@ import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.erk.roadsigns.PermissionsUtil
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 class MainActivity : ComponentActivity() {
-
+    private lateinit var cameraExecutor: ExecutorService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
         Log.d("MainActivity", "Camera executor initialized")
 
@@ -30,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            ExploreScreen()
+                            ExploreScreen(cameraExecutor)
                         }
 
                     }
