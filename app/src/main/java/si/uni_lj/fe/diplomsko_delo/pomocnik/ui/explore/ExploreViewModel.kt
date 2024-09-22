@@ -16,9 +16,8 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
 class ExploreViewModel(
     private val modelLoader: ModelLoader,
     private val imageProcessor: ImageProcessor,
-    private val tts: TextToSpeech) : ViewModel()
-{
-
+    private val tts: TextToSpeech
+) : ViewModel() {
 
     var detectionResults by mutableStateOf<List<BoundingBox>>(emptyList())
         private set

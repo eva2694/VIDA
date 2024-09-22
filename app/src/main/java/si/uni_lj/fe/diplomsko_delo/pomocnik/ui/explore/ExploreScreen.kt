@@ -13,6 +13,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -95,7 +96,6 @@ fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) 
                     )
 
                     val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
-                    viewModel.speak(text)
 
                     drawContext.canvas.nativeCanvas.apply {
                         drawText(
@@ -108,7 +108,17 @@ fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) 
                                 style = android.graphics.Paint.Style.FILL
                             }
                         )
-                    }}
+                    }
+                }
+            }
+
+            LaunchedEffect(detectionResults) {
+                if (detectionResults.isNotEmpty()) {
+                    detectionResults.forEach { result ->
+                        val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
+                        viewModel.speak(text)
+                    }
+                }
             }
         }
     }
