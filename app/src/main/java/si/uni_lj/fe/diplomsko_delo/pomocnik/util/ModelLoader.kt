@@ -3,6 +3,7 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.compose.ui.unit.Constraints
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.CompatibilityList
@@ -23,12 +24,12 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 /**
- * YoloModelLoader class for loading and running YOLO models using TensorFlow Lite.
+ * ModelLoader class for loading and running YOLO models using TensorFlow Lite.
  *
  * @property context Android context.
  */
 class ModelLoader(private val context: Context) {
-    private val labelPath = "labels.txt"
+    private val labelPath = Constants.LABELS_PATH
     private var interpreter: Interpreter? = null
     private var tensorWidth = 0
     private var tensorHeight = 0
@@ -80,10 +81,10 @@ class ModelLoader(private val context: Context) {
             numChannel = outputShape?.get(1) ?: 0
             numElements = outputShape?.get(2) ?: 0
 
-            Log.d("YoloModelLoader", "Interpreter initialized successfully with model: ${Constants.MODEL_PATH}")
+            Log.d("ModelLoader", "Interpreter initialized successfully with model: ${Constants.MODEL_PATH}")
 
         } catch (e: Exception) {
-            Log.e("YoloModelLoader", "Error initializing interpreter", e)
+            Log.e("ModelLoader", "Error initializing interpreter", e)
         }
     }
 
@@ -101,9 +102,9 @@ class ModelLoader(private val context: Context) {
             }
             reader.close()
             inputStream.close()
-            Log.d("YoloModelLoader", "Labels loaded successfully from $labelPath")
+            Log.d("ModelLoader", "Labels loaded successfully from $labelPath")
         } catch (e: IOException) {
-            Log.e("YoloModelLoader", "Error loading labels", e)
+            Log.e("ModelLoader", "Error loading labels", e)
             e.printStackTrace()
         }
     }
@@ -141,9 +142,9 @@ class ModelLoader(private val context: Context) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
-            Log.d("YoloModelLoader", "Processed bitmap saved as $filename")
+            Log.d("ModelLoader", "Processed bitmap saved as $filename")
         } catch (e: IOException) {
-            Log.e("YoloModelLoader", "Failed to save processed image", e)
+            Log.e("ModelLoader", "Failed to save processed image", e)
         }
     }
 
@@ -198,7 +199,7 @@ class ModelLoader(private val context: Context) {
         if (boundingBoxes.isEmpty()) return null
 
         val nmsBoxes = applyNMS(boundingBoxes)
-        Log.d("YoloModelLoader", "Non-max suppression applied, ${nmsBoxes.size} boxes selected")
+        Log.d("ModelLoader", "Non-max suppression applied, ${nmsBoxes.size} boxes selected")
         return nmsBoxes
     }
     /**
