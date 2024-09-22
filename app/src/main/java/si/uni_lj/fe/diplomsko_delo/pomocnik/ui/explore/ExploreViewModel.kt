@@ -11,8 +11,15 @@ import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
 
-class ExploreViewModel(private val modelLoader: ModelLoader, private val imageProcessor: ImageProcessor) : ViewModel() {
+class ExploreViewModel(
+    private val modelLoader: ModelLoader,
+    private val imageProcessor: ImageProcessor,
+    private val tts: TextToSpeech) : ViewModel()
+{
+
+
     var detectionResults by mutableStateOf<List<BoundingBox>>(emptyList())
         private set
 
@@ -28,4 +35,15 @@ class ExploreViewModel(private val modelLoader: ModelLoader, private val imagePr
         detectionResults = results
     }
 
+
+    fun speak(text: String) {
+        viewModelScope.launch {
+            tts.speak(text)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        tts.shutdown()
+    }
 }

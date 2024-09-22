@@ -95,6 +95,7 @@ fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) 
                     )
 
                     val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
+                    viewModel.speak(text)
 
                     drawContext.canvas.nativeCanvas.apply {
                         drawText(
