@@ -1,32 +1,32 @@
 Harmonika
 Lepilni trak
 Letalo
-letalo
+Letalo
 Budilka
 Alpaka
 Ambulanta
-žival
-mravlja
-antilopa
-Apple
-Armadillo
-artičoke
-Avto del
-sekira
+Žival
+Mravlja
+Antilopa
+Jabolko
+Pasavec
+Artičoka
+Del vozila
+Sekira
 Nahrbtnik
-Bagel
+Žemlja
 Pekovski izdelki
-Ravnotežni gred
+Gred
 Žoga
 Balon
 Banana
 Obliž
-bendžo
+Bendžo
 Barka
-Barrel
-Baseball kij
-Baseball rokavica
-Netopir (žival)
+Sod
+Kij za bejzbol
+Rokavica za bejzbol
+Netopir
 Kopalniški dodatek
 Kopalniška omarica
 Kopalna kad
@@ -37,24 +37,24 @@ Postelja
 Čebelnjak
 Pivo
 Hrošč
-paprika
+Paprika
 Pas
 Klop
-kolo
+Kolo
 Kolesarska čelada
 Kolo kolesa
 Bide
-Billboard
+Plakat
 Biljardna miza
 Daljnogled
-ptica
+Ptica
 Mešalnik
 Modra šojka
 Čoln
 Bomba
 Knjiga
 Knjižna omara
-Zagon
+Škorenj
 Steklenička
 Odpirač za steklenice
 Lok in puščica
@@ -65,52 +65,52 @@ Fant
 Modrček
 Kruh
 Aktovka
-brokoli
+Brokoli
 Bronasta skulptura
 Rjavi medved
 Stavba
 Bik
-burito
+Burito
 Avtobus
-Doprsi
+Oprsje
 Metulj
 Zelje
-Kabinet
+Omarica
 Torta
 Stojalo za torte
 Kalkulator
-kamela
+Kamela
 Kamera
 Odpirač za konzerve
 Kanarček
 Sveča
-sladkarije
-Topovi
+Sladkarije
+Top
 Kanu
-Cantaloupe
-avto
+Melona
+Avto
 Mesojedec
-korenček
+Korenje
 Voziček
-Kasetni deck
+Kasete
 Grad
-mačka
-Mačje pohištvo
-Caterpillar
+Mačka
+Pohištvo za mačko
+Gosenica
 Govedo
 Stropni ventilator
 Violončelo
-stonoga
+Stonoga
 Motorna žaga
-stol
-sir
+Stol
+Sir
 Gepard
 Komoda s predali
-piščanec
-zvonec
+Piščanec
+Zvonec
 Dleto
 Palčke
-božično drevo
+Božično drevo
 Ura
 Omara
 Oblačila
@@ -118,18 +118,18 @@ Plašč
 Koktajl
 Shaker za koktajle
 Kokos
-kava
+Kava
 Skodelica za kavo
 Klubska mizica
 Aparat za kavo
 Kovanec
-Navadna figa
-Navadna sončnica
+Figa
+Sončnica
 Računalniška tipkovnica
 Računalniški monitor
 Računalniška miška
 Posoda
-Trgovina z mešanim blagom
+Trgovina
 Piškotek
 Sprej za kuhanje
 Žični telefon
@@ -138,17 +138,17 @@ Kavč
 Pult
 Kavbojski klobuk
 Rakovica
-smetana
+Smetana
 Žoga za kriket
 Krokodil
 Rogljiček
-krona
-bergla
-kumare
+Krona
+Bergla
+Kumare
 Omara
 Zavesa
 Deska za rezanje
-bodalo
+Bodalo
 Mlečni izdelek
 Jelen
 Pisalna miza
@@ -158,9 +158,9 @@ Kocke
 Digitalna ura
 Dinozaver
 Pomivalni stroj
-pes
+Pes
 Pasja postelja
-lutka
+Lutka
 Delfin
 Vrata
 Kljuka za vrata
@@ -168,77 +168,77 @@ Krof
 Kačji pastir
 Predal
 obleka
-Vrtalnik (orodje)
-Pijte
+Vrtalnik
+Pijača
 Slamica za pitje
-boben
+Boben
 Raca
-Dumbbell
+Dambel utež
 Orel
 Uhani
-jajce (hrana)
-slon
-ovojnica
+Jajce
+Slon
+Kuverta
 Radirka
 Puder za obraz
-Držalo za obrazne robčke
+Držalo za robčke
 Sokol
 Modni dodatek
 Hitra hrana
-faks
-Fedora
+Faks
+Fedora klobuk
 Kartotečna omara
 Požarni hidrant
 Kamin
-ribe
+Riba
 Zastava
 Svetilka
-cvet
-Cvetlični lonček
+Cvetlica
+Cvetlični lonec
 Flavta
 Leteči disk
-hrana
-Kuhinjski robot
+Hrana
+Multipraktik
 Nogomet
-Nogometna čelada
+Čelada
 Obutev
-Vilice
+Vilica
 Fontana
 Lisica
-pomfrit
-francoski rog
-žaba
-sadje
+Pomfri
+Rog inštrument
+Žaba
+Sadje
 Ponev
 Pohištvo
-Vrtni šparglji
+Šparglji
 Plinski štedilnik
 Žirafa
-punca
+Punca
 Očala
-rokavica
+Rokavica
 Koza
 Zaščitna očala
 Zlata ribica
-Žogica za golf
+Žoga za golf
 Voziček za golf
 Gondola
 Gos
 Grozdje
-Grenivke
+Grenivka
 Mlinček
-Guacamole
+Gvakamole
 Kitara
 Sušilnik za lase
 Sprej za lase
-hamburger
+Hamburger
 Kladivo
 Hrček
 Sušilnik za roke
-Ročna torbica
+Torbica
 Pištola
-pristaniški tjulenj
-Harmonika
+Tjulenj
+Orglice
 Harfa
 Čembalo
 Klobuk
@@ -251,7 +251,7 @@ Visoke pete
 Pohodniška oprema
 Povodni konj
 Gospodinjski aparat
-satja
+Satje
 Vodoravna vrstica
 Konj
 Hot dog
@@ -271,24 +271,24 @@ Sobna rastlina
 Človeška usta
 Človeški nos
 Vlažilec zraka
-sladoled
-Veslač v dvorani
+Sladoled
+Veslač
 Otroška posteljica
-Insekt
+Žuželka
 Nevretenčar
-Ipod
-Enakopod
+Ajpod
+Enakonožec
 Jakna
-Jacuzzi
-Jaguar (žival)
-kavbojke
-Meduze
+Džakuzi
+Jaguar žival
+Kavbojke
+Meduza
 Vodni skuter
 Vrč
-sok
+Sok
 Kenguru
 Kotliček
-Kuhinjska in jedilna miza
+Miza v kuhinji ali jedilnic
 Kuhinjski aparat
 Kuhinjski nož
 Kuhinjski pripomoček
@@ -303,28 +303,28 @@ Svetilka
 Kopensko vozilo
 Svetilka
 Prenosni računalnik
-sivka (rastlina)
-limona
+Sivka rastlina
+Limona
 Leopard
 Žarnica
-Stikalo za luči
+Stikalo za luč
 Svetilnik
-Lily
+Lilija
 Limuzina
 Lev
 Šminka
-kuščar
+Kuščar
 Jastog
-Loveseat
+Dvojni fotelj
 Prtljaga in torbe
 Ris
 Sraka
-sesalec
+Sesalec žival
 Človek
 Mango
 Javor
-Maracas
-Morski nevretenčarji
+Marake glasbilo
+Morski nevretenčar
 Morski sesalec
 Merilna skodelica
 Mehanski ventilator
@@ -332,34 +332,34 @@ Medicinska oprema
 Mikrofon
 Mikrovalovna pečica
 Mleko
-Mini krilo
+Krilo
 Ogledalo
-Izstrelek
+Samopogonski izstrelek
 Mešalnik
 Posoda za mešanje
 Mobilni telefon
-opica
+Opica
 Molji in metulji
 Motorno kolo
 Miška
-Muffin
+Mafin
 Skodelica
-Mule
+Mula
 Goba
 Glasbilo
-Glasbena tipkovnica
-Žeblji (konstrukcija)
+Klaviatura
+Žebelj
 Ogrlica
 Nočna omarica
 Oboa
 Poslovna stavba
 Pisarniški material
-Oranžna
-Orgle (glasbilo)
+Pomaranča
+Orgle
 Noj
 Vidra
 Pečica
-sova
+Sova
 Ostriga
 Veslo
 Palma
@@ -372,24 +372,24 @@ Parkirometer
 Papiga
 Testenine
 Pecivo
-breskev
-hruška
-Pero
-Etui za svinčnike
-Šilček za svinčnike
+Breskev
+Hruška
+Pisalo
+Peresnica
+Šilček
 Pingvin
 Parfum
-oseba
+Oseba
 Osebna nega
-Osebna flotacijska naprava
+Rešilni jopič
 Klavir
 Košara za piknik
 Okvir za slike
-prašič
+Pujs
 Blazina
 Ananas
-Vrč (posoda)
-Pizza
+Vrč
+Pica
 Rezalnik za pico
 Rastlina
 Plastična vrečka
@@ -398,12 +398,12 @@ Krožnik
 Vodovodna napeljava
 Polarni medved
 Granatno jabolko
-kokice
+Pokovka
 Veranda
-ježek
+Jež
 Plakat
 Krompir
-Električni vtiči in vtičnice
+Električni vtiči
 Lonec na pritisk
 Presta
 Tiskalnik
@@ -413,16 +413,16 @@ Zajec
 Rakun
 Lopar
 Redkev
-Raglja (naprava)
-Raven
+Zatikalnik
+Krokar
 Žarki in drsalke
-Rdeča panda
+Mačji panda
 Hladilnik
 Daljinski upravljalnik
 Plazilec
-nosorog
+Nosorog
 Puška
-Obročasti registrator
+Fascikel
 Raketa
 Rolerji
 Rose
@@ -430,11 +430,11 @@ Rose
 Ravnilo
 Solata
 Sol in poper
-Sandal
+Natikač
 Sendvič
-krožnik
-saksofon
-Lestvica
+Krožnik
+Saksofon
+Tehtnica
 Šal
 Škarje
 Semafor
@@ -446,91 +446,91 @@ Morska želva
 Morski sadeži
 Morski konjiček
 Varnostni pas
-Segway
-Servirni pladenj
+Osebni transporter
+Pladenj
 Šivalni stroj
 Morski pes
-ovce
+Ovca
 Polica
-školjke
+Školjke
 Majica
 Kratke hlače
 Puška
 Tuš
-kozica
+Morska kozica
 Umivalnik
 Rolka
-Smučanje
+Smuči
 Krilo
 Lobanja
-Skunk
+Dihur
 Nebotičnik
 Počasni kuhalnik
 Prigrizek
-polž
-kača
-Snowboard
+Polž
+Kača
+Snežna deska
 Snežak
 Motorne sani
 Snežni plug
-Dozirnik za milo
+Milo
 Nogavica
-Raztegljiv kavč
+Kavč
 Sombrero
 Vrabec
-Spatula
+Lopatica
 Stojalo za začimbe
 Pajek
 Žlica
 Športna oprema
 Športna uniforma
-Squash (rastlina)
+Buča
 Lignji
 Veverica
-stopnice
+Stopnice
 Spenjalnik
 Morska zvezda
 Sobno kolo
 Stetoskop
-Blato
+Stol
 Stop znak
 Jagoda
 Ulična luč
 Nosila
-Studio kavč
+Kavč
 Podmornica
-Sendvič s podmornico
+Sendvič
 Obleka
 Kovček
 Klobuk za sončenje
 Sončna očala
-Surfboard
-suši
+Deska za surfanje
+sSuši
 Labod
 Plavalna kapa
 Bazen
 Kopalke
-meč
+Meč
 Brizga
-Tabela
+Miza
 Lopar za namizni tenis
 Tablični računalnik
 Namizni pribor
-Taco
+Tako hrana
 Rezervoar
-Tapnite
-Tart
+Pipa za vodo
+Kolač
 Taksi
-čaj
+Čaj
 Čajnik
-medvedek
+Plišasti medvedek
 Telefon
-televizija
+Televizija
 Teniška žoga
 Teniški lopar
 Šotor
 Tiara
-Kljukica
+Klop
 Kravata
 Tiger
 Pločevinka
@@ -543,7 +543,7 @@ Orodje
 Zobna ščetka
 Bakla
 Želva
-Brisačo
+Brisača
 Stolp
 Igrača
 Semafor
@@ -558,7 +558,7 @@ Pozavna
 Hlače
 Tovornjak
 Trobenta
-Turčija
+Puran
 Želva
 Dežnik
 Monocikel
@@ -566,36 +566,36 @@ Kombi
 Vaza
 Zelenjava
 Vozilo
-Registrska tablica vozila
+Registrska tablica
 Violina
-Odbojka (žoga)
+Odbojkarska žoga
 Vafelj
 Pekač za vaflje
 Stenska ura
 Garderoba
 Pralni stroj
-Posoda za smeti
-Pazi
-Vodna plovila
+Koš za smeti
+Zapestna ura
+Plovila
 Lubenica
 Orožje
 Kit
-kolo
+Kolo
 Invalidski voziček
-Stepajte
-Bela tabla
-Willow
+Stepalna metlica
+Tabla
+Vrba
 Okno
-Rolo za okna
+Zastiralo za okna
 Vino
 Kozarec za vino
 Stojalo za vino
-Zimska melona
-vok
-ženska
-Peč na drva
+Melona
+Vok
+Oseba
+Štedilnik na drva
 Žolna
 Črv
-viličasti ključ
+Ključ za matice
 Zebra
 Bučke
