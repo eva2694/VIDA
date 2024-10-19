@@ -7,10 +7,13 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
@@ -25,7 +28,8 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         bottomBar = {
@@ -33,20 +37,27 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Visibility, contentDescription = "Explore") },
                     label = { Text("Razglej se") },
-                    selected = navController.currentDestination?.route == "explore",
+                    selected = currentRoute == "explore",
                     onClick = {
                         coroutineScope.launch {
-                            navController.navigate("explore")
+                            navController.navigate("explore"){
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
                     }
+
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.TextFields, contentDescription = "Read") },
                     label = { Text("Beri") },
-                    selected = navController.currentDestination?.route == "read",
+                    selected = currentRoute == "read",
                     onClick = {
                         coroutineScope.launch {
-                            navController.navigate("read")
+                            navController.navigate("read"){
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
                     }
                 )
