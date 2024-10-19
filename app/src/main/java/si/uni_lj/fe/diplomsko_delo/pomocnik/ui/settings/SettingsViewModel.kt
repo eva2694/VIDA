@@ -1,12 +1,13 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 
-class SettingsViewModel(private val preferencesManager: PreferencesManager) : ViewModel() {
+class SettingsViewModel(val context: Context, private val preferencesManager: PreferencesManager) : ViewModel() {
 
     val language: Flow<String> = preferencesManager.language
     val readingSpeed: Flow<Float> = preferencesManager.readingSpeed

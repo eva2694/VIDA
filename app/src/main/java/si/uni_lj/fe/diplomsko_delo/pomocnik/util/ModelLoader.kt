@@ -3,6 +3,9 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.CompatibilityList
@@ -24,7 +27,8 @@ import java.io.InputStreamReader
 
 
 class ModelLoader(private val context: Context) {
-    private val labelPath = Constants.LABELS_PATH_SI
+
+    private var labelPath = ""
     private var interpreter: Interpreter? = null
     private var tensorWidth = 0
     private var tensorHeight = 0
@@ -47,7 +51,9 @@ class ModelLoader(private val context: Context) {
 
     init {
         initializeInterpreter()
-        loadLabels()
+        CoroutineScope(Dispatchers.IO).launch {
+            loadLabelsWithLanguage()
+        }
     }
 
 
@@ -81,11 +87,34 @@ class ModelLoader(private val context: Context) {
         }
     }
 
+    fun updateLabels(language: String) {
+        labelPath = if (language == "SI") {
+            Constants.LABELS_PATH_SI
+        } else {
+            Constants.LABELS_PATH_EN
+        }
+        initializeInterpreter()
+        loadLabels()
+    }
+
+    private suspend fun loadLabelsWithLanguage() {
+        val preferencesManager = PreferencesManager(context)
+        val language = preferencesManager.getLanguage()
+
+        labelPath = if (language == "SI") {
+            Constants.LABELS_PATH_SI
+        } else {
+            Constants.LABELS_PATH_EN
+        }
+
+        loadLabels()
+    }
 
     private fun loadLabels() {
         try {
             val inputStream: InputStream = context.assets.open(labelPath)
             val reader = BufferedReader(InputStreamReader(inputStream))
+            labels.clear()
             var line: String? = reader.readLine()
             while (!line.isNullOrEmpty()) {
                 labels.add(line)

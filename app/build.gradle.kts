@@ -106,4 +106,8 @@ dependencies {
     // Shared Preferences
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
+    // Broadcast Manager
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+
+
 }
