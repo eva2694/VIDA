@@ -2,6 +2,7 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 
 
 import android.Manifest
+import android.graphics.drawable.Icon
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -13,8 +14,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -68,11 +74,7 @@ fun PermissionsUtil(content: @Composable () -> Unit) {
                 modifier = Modifier.padding(16.dp)
             )
 
-            Image(
-                painter = painterResource(id = R.drawable.lock),
-                contentDescription = "Cute puppy",
-                modifier = Modifier.padding(16.dp).clip(RoundedCornerShape(8.dp))
-            )
+            Icon(Icons.Default.Lock, contentDescription = "Locked icon", Modifier.size(40.dp))
 
         }
 
