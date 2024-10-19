@@ -5,14 +5,13 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModelFactory
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
@@ -50,7 +49,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            ExploreScreen(cameraExecutor, viewModel = exploreViewModel)
+                            MainScreen(cameraExecutor, viewModel = exploreViewModel)
                         }
 
                     }

@@ -67,7 +67,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation("androidx.compose.ui:ui-text-google-fonts:1.7.2")
+    implementation("androidx.compose.material:material-icons-extended:1.7.2")
     implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.9.0")
+
+    // navigation
+    implementation("androidx.navigation:navigation-compose:2.8.3")
 
     // coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
