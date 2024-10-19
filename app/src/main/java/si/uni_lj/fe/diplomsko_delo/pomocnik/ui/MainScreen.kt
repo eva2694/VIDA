@@ -16,11 +16,12 @@ import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
 import java.util.concurrent.ExecutorService
 
 
 @Composable
-fun MainScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) {
+fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel) {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
@@ -60,10 +61,10 @@ fun MainScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) {
                 .padding(paddingValues)
         ) {
             composable("explore") {
-                ExploreScreen(cameraExecutor, viewModel)
+                ExploreScreen(cameraExecutor, exploreViewModel)
             }
             composable("read") {
-                ReadScreen()
+                ReadScreen(cameraExecutor, readViewModel)
             }
         }
     }

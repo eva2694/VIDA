@@ -87,4 +87,14 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
     fun shutdown() {
         tts?.shutdown()
     }
+
+    fun readText(text: String) {
+        if (isInitialized && !isSpeaking()) {
+            val params = HashMap<String, String>()
+            params[TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID] = "utteranceId"
+            tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params)
+        } else {
+            Log.e("TextToSpeechUtil", "TTS not initialized or is currently speaking.")
+        }
+    }
 }

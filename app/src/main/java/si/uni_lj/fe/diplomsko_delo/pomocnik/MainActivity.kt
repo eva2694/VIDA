@@ -14,6 +14,8 @@ import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModelFactory
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModelFactory
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
@@ -39,6 +41,11 @@ class MainActivity : ComponentActivity() {
             ExploreViewModelFactory(modelLoader, imageProcessor, tts)
         )[ExploreViewModel::class.java]
 
+        val readViewModel: ReadViewModel = ViewModelProvider(
+            this,
+            ReadViewModelFactory(tts)
+        )[ReadViewModel::class.java]
+
         Log.d("MainActivity", "Camera executor initialized")
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -49,7 +56,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            MainScreen(cameraExecutor, viewModel = exploreViewModel)
+                            MainScreen(cameraExecutor, exploreViewModel = exploreViewModel, readViewModel = readViewModel)
                         }
                     }
                 }
