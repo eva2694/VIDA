@@ -103,8 +103,6 @@ class ModelLoader(private val context: Context) {
     fun detect(bitmap: Bitmap): List<BoundingBox> {
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, tensorWidth, tensorHeight, false)
 
-        Log.d("modelloader", "Size: ${bitmap.width} x ${bitmap.height}")
-
         val tensorImage = TensorImage(DataType.FLOAT32)
         tensorImage.load(resizedBitmap)
         val processedImage = imageProcessor.process(tensorImage)
@@ -127,7 +125,6 @@ class ModelLoader(private val context: Context) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
-            Log.d("ModelLoader", "Processed bitmap saved as $filename")
         } catch (e: IOException) {
             Log.e("ModelLoader", "Failed to save processed image", e)
         }
@@ -179,7 +176,6 @@ class ModelLoader(private val context: Context) {
         if (boundingBoxes.isEmpty()) return null
 
         val nmsBoxes = applyNMS(boundingBoxes)
-        Log.d("ModelLoader", "Non-max suppression applied, ${nmsBoxes.size} boxes selected")
         return nmsBoxes
     }
 

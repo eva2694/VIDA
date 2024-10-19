@@ -37,7 +37,7 @@ class ExploreViewModel(
 
     fun speak(text: String) {
         viewModelScope.launch {
-            tts.speak(text)
+            tts.queueSpeak(text)
         }
     }
 

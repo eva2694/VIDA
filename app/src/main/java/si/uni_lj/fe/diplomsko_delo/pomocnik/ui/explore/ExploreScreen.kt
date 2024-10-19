@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore
 
 
@@ -115,8 +117,12 @@ fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) 
             LaunchedEffect(detectionResults) {
                 if (detectionResults.isNotEmpty()) {
                     detectionResults.forEach { result ->
-                        val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
-                        viewModel.speak(text)
+                        //val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
+                        val text = result.clsName
+
+                        if(result.cnf > 0.4) {
+                            viewModel.speak(text)
+                        }
                     }
                 }
             }
