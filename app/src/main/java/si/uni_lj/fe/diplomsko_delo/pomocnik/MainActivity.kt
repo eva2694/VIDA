@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            MainScreen(cameraExecutor, exploreViewModel = exploreViewModel, readViewModel = readViewModel)
+                            MainScreen(cameraExecutor, exploreViewModel = exploreViewModel, readViewModel = readViewModel, tts = tts)
                         }
                     }
                 }

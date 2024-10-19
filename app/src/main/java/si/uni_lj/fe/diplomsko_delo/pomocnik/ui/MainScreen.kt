@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -20,11 +19,12 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
 import java.util.concurrent.ExecutorService
 
 
 @Composable
-fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel) {
+fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel, tts: TextToSpeech) {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,6 +40,7 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
                     selected = currentRoute == "explore",
                     onClick = {
                         coroutineScope.launch {
+                            tts.stop()
                             navController.navigate("explore"){
                                 launchSingleTop = true
                                 restoreState = true
@@ -54,6 +55,7 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
                     selected = currentRoute == "read",
                     onClick = {
                         coroutineScope.launch {
+                            tts.stop()
                             navController.navigate("read"){
                                 launchSingleTop = true
                                 restoreState = true

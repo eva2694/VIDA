@@ -88,6 +88,11 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
         tts?.shutdown()
     }
 
+    fun stop() {
+        textQueue.clear()
+        tts?.stop()
+    }
+
     fun readText(text: String) {
         if (isInitialized && !isSpeaking()) {
             val params = HashMap<String, String>()
