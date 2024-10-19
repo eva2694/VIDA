@@ -51,7 +51,6 @@ class MainActivity : ComponentActivity() {
                         PermissionsUtil {
                             MainScreen(cameraExecutor, viewModel = exploreViewModel)
                         }
-
                     }
                 }
             } catch (e: Exception) {
