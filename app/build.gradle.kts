@@ -103,4 +103,7 @@ dependencies {
     // Text Recognition
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
+    // Shared Preferences
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
 }

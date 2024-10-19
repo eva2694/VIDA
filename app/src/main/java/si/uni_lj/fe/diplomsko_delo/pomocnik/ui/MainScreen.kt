@@ -3,6 +3,7 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
@@ -19,12 +20,14 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
 import java.util.concurrent.ExecutorService
 
 
 @Composable
-fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel, tts: TextToSpeech) {
+fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel, tts: TextToSpeech, settingsViewModel: SettingsViewModel) {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
@@ -63,6 +66,20 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
                         }
                     }
                 )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                    label = { Text("Nastavitve")},
+                    selected = currentRoute == "settings",
+                    onClick = {
+                        coroutineScope.launch {
+                            tts.stop()
+                            navController.navigate("settings"){
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    }
+                )
             }
         }
     ) { paddingValues ->
@@ -78,6 +95,9 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
             }
             composable("read") {
                 ReadScreen(cameraExecutor, readViewModel)
+            }
+            composable("settings") {
+                SettingsScreen(settingsViewModel)
             }
         }
     }

@@ -16,10 +16,13 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModelFactory
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModelFactory
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModelFactory
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -28,6 +31,8 @@ import java.util.concurrent.Executors
 class MainActivity : ComponentActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private  lateinit var tts: TextToSpeech
+    private lateinit var preferencesManager: PreferencesManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -35,6 +40,8 @@ class MainActivity : ComponentActivity() {
         tts = TextToSpeech(this)
         val modelLoader = ModelLoader(this)
         val imageProcessor = ImageProcessor()
+
+        preferencesManager = PreferencesManager(this)
 
         val exploreViewModel: ExploreViewModel = ViewModelProvider(
             this,
@@ -46,6 +53,11 @@ class MainActivity : ComponentActivity() {
             ReadViewModelFactory(tts)
         )[ReadViewModel::class.java]
 
+        val settingsViewModel: SettingsViewModel = ViewModelProvider(
+            this,
+            SettingsViewModelFactory(preferencesManager)
+        )[SettingsViewModel::class.java]
+
         Log.d("MainActivity", "Camera executor initialized")
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -56,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 setContent {
                     PomocnikTheme {
                         PermissionsUtil {
-                            MainScreen(cameraExecutor, exploreViewModel = exploreViewModel, readViewModel = readViewModel, tts = tts)
+                            MainScreen(cameraExecutor, exploreViewModel = exploreViewModel, readViewModel = readViewModel, tts = tts, settingsViewModel = settingsViewModel)
                         }
                     }
                 }

@@ -24,7 +24,7 @@ import java.io.InputStreamReader
 
 
 class ModelLoader(private val context: Context) {
-    private val labelPath = Constants.LABELS_PATH
+    private val labelPath = Constants.LABELS_PATH_SI
     private var interpreter: Interpreter? = null
     private var tensorWidth = 0
     private var tensorHeight = 0
