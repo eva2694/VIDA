@@ -47,9 +47,21 @@ class MainActivity : ComponentActivity() {
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            updateLanguageSettings()
-            updateSpeedSettings()
-            updateDarkModeSettings()
+
+            when (intent?.action) {
+                "LANGUAGE_SETTINGS_CHANGED" -> {
+                    Log.d("MainActivity", "Language settings changed")
+                    updateLanguageSettings()
+                }
+                "SPEED_SETTINGS_CHANGED" -> {
+                    Log.d("MainActivity", "Speed settings changed")
+                    updateSpeedSettings()
+                }
+                "DARK_MODE_SETTINGS_CHANGED" -> {
+                    Log.d("MainActivity", "Dark mode settings changed")
+                    updateDarkModeSettings()
+                }
+            }
         }
     }
 
@@ -117,7 +129,11 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         Log.d("MainActivity", "onStart called")
-        val filter = IntentFilter("SETTINGS_CHANGED")
+        val filter = IntentFilter().apply {
+            addAction("LANGUAGE_SETTINGS_CHANGED")
+            addAction("SPEED_SETTINGS_CHANGED")
+            addAction("DARK_MODE_SETTINGS_CHANGED")
+        }
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
     }
 
@@ -170,10 +186,5 @@ class MainActivity : ComponentActivity() {
             tts.setLanguage(newLanguage)
         }
     }
-
-    private fun refreshUI(language: String, readingSpeed: Float, isDarkMode: Boolean) {
-        // todo
-    }
-
 
 }

@@ -16,13 +16,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
+
     val coroutineScope = rememberCoroutineScope()
+
     val language by viewModel.language.collectAsState(initial = "SI")
     val readingSpeed by viewModel.readingSpeed.collectAsState(initial = 0.75f)
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
+
+    val languageChanged by viewModel.languageChanged.collectAsState(initial = false)
+    val readingSpeedChanged by viewModel.readingSpeedChanged.collectAsState(initial = false)
+    val darkModeChanged by viewModel.darkModeChanged.collectAsState(initial = false)
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -55,7 +63,9 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             )
             Slider(
                 value = readingSpeed,
-                onValueChange = { viewModel.setReadingSpeed(it) },
+                onValueChange = {
+                    viewModel.setReadingSpeed(it)
+                },
                 valueRange = 0.25f..2f,
                 steps = 6,
                 modifier = Modifier
@@ -82,13 +92,25 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             Button(
                 onClick = {
                     coroutineScope.launch {
-                        notifySettingsChanged(viewModel.context)
+                        val context = viewModel.context
+
+                        if (languageChanged) {
+                            notifyLanguageSettingsChanged(context)
+                        }
+                        if (readingSpeedChanged) {
+                            notifySpeedSettingsChanged(context)
+                        }
+                        if (darkModeChanged) {
+                            notifyDarkModeSettingsChanged(context)
+                        }
 
                         snackbarHostState.showSnackbar(
                             message = "Settings applied successfully",
                             actionLabel = "OK",
                             duration = SnackbarDuration.Short
                         )
+
+                        viewModel.resetChangeFlags()
                     }
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -112,7 +134,17 @@ fun LanguageOption(label: String, languageCode: String, selectedLanguage: String
     }
 }
 
-private fun notifySettingsChanged(context: Context) {
-    val intent = Intent("SETTINGS_CHANGED")
+private fun notifyLanguageSettingsChanged(context: Context) {
+    val intent = Intent("LANGUAGE_SETTINGS_CHANGED")
+    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+}
+
+private fun notifySpeedSettingsChanged(context: Context) {
+    val intent = Intent("SPEED_SETTINGS_CHANGED")
+    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+}
+
+private fun notifyDarkModeSettingsChanged(context: Context) {
+    val intent = Intent("DARK_MODE_SETTINGS_CHANGED")
     LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
 }
