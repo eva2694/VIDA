@@ -41,10 +41,15 @@ class MainActivity : ComponentActivity() {
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var modelLoader: ModelLoader
     private lateinit var imageProcessor: ImageProcessor
+    private lateinit var exploreViewModel: ExploreViewModel
+    private lateinit var readViewModel: ReadViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            updateSettings()
+            updateLanguageSettings()
+            updateSpeedSettings()
+            updateDarkModeSettings()
         }
     }
 
@@ -57,17 +62,17 @@ class MainActivity : ComponentActivity() {
         preferencesManager = PreferencesManager(this)
         tts = TextToSpeech(this)
 
-        val exploreViewModel: ExploreViewModel = ViewModelProvider(
+        exploreViewModel = ViewModelProvider(
             this,
             ExploreViewModelFactory(modelLoader, imageProcessor, tts)
         )[ExploreViewModel::class.java]
 
-        val readViewModel: ReadViewModel = ViewModelProvider(
+        readViewModel = ViewModelProvider(
             this,
             ReadViewModelFactory(tts)
         )[ReadViewModel::class.java]
 
-        val settingsViewModel: SettingsViewModel = ViewModelProvider(
+        settingsViewModel = ViewModelProvider(
             this,
             SettingsViewModelFactory(preferencesManager, this)
         )[SettingsViewModel::class.java]
@@ -75,12 +80,13 @@ class MainActivity : ComponentActivity() {
         Log.d("MainActivity", "Camera executor initialized")
 
         CoroutineScope(Dispatchers.Main).launch {
+            val isDarkMode = preferencesManager.getDarkMode()
             try {
                 TfLite.initialize(this@MainActivity).await()
                 Log.d("MainActivity", "TensorFlow Lite initialized successfully")
                 enableEdgeToEdge()
                 setContent {
-                    PomocnikTheme {
+                    PomocnikTheme(darkTheme = isDarkMode) {
                         PermissionsUtil {
                             MainScreen(
                                 cameraExecutor,
@@ -100,16 +106,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         Log.d("MainActivity", "onDestroy called")
         tts.shutdown()
         cameraExecutor.shutdown()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("MainActivity", "onResume called")
     }
 
     override fun onStart() {
@@ -125,19 +127,42 @@ class MainActivity : ComponentActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     }
 
-    private fun updateSettings() {
+    private fun updateLanguageSettings() {
         CoroutineScope(Dispatchers.Main).launch {
             val newLanguage = preferencesManager.getLanguage()
-            val newReadingSpeed = preferencesManager.getReadingSpeed()
-            // todo : val isDarkMode = preferencesManager.getDarkMode()
-
             tts.setLanguage(newLanguage)
-            tts.setSpeechRate(newReadingSpeed)
-
             modelLoader.updateLabels(newLanguage)
         }
 
     }
+
+    private fun updateSpeedSettings() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val newReadingSpeed = preferencesManager.getReadingSpeed()
+            tts.setSpeechRate(newReadingSpeed)
+        }
+
+    }
+
+    private fun updateDarkModeSettings() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val isDarkMode = preferencesManager.getDarkMode()
+            setContent {
+                PomocnikTheme(darkTheme = isDarkMode) {
+                    PermissionsUtil {
+                        MainScreen(
+                            cameraExecutor,
+                            exploreViewModel = exploreViewModel,
+                            readViewModel = readViewModel,
+                            tts = tts,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                }
+            }
+        }
+    }
+
 
     private fun updateTTSLanguage() {
         CoroutineScope(Dispatchers.Main).launch {
