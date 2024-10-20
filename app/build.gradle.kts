@@ -47,6 +47,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 dependencies {
@@ -109,5 +113,7 @@ dependencies {
     // Broadcast Manager
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
+    // Livedata
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.4")
 
 }

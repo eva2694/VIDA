@@ -27,6 +27,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModelFactory
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.LanguageChangeHelper
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var exploreViewModel: ExploreViewModel
     private lateinit var readViewModel: ReadViewModel
     private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var languageChangeHelper: LanguageChangeHelper
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -51,7 +53,10 @@ class MainActivity : ComponentActivity() {
             when (intent?.action) {
                 "LANGUAGE_SETTINGS_CHANGED" -> {
                     Log.d("MainActivity", "Language settings changed")
-                    updateLanguageSettings()
+                    val language = intent.getStringExtra("language")
+                    if (language != null) {
+                        updateLanguageSettings(language)
+                    }
                 }
                 "SPEED_SETTINGS_CHANGED" -> {
                     Log.d("MainActivity", "Speed settings changed")
@@ -73,6 +78,7 @@ class MainActivity : ComponentActivity() {
         imageProcessor = ImageProcessor()
         preferencesManager = PreferencesManager(this)
         tts = TextToSpeech(this)
+        languageChangeHelper = LanguageChangeHelper()
 
         exploreViewModel = ViewModelProvider(
             this,
@@ -90,6 +96,7 @@ class MainActivity : ComponentActivity() {
         )[SettingsViewModel::class.java]
 
         Log.d("MainActivity", "Camera executor initialized")
+
 
         CoroutineScope(Dispatchers.Main).launch {
             val isDarkMode = preferencesManager.getDarkMode()
@@ -143,13 +150,12 @@ class MainActivity : ComponentActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     }
 
-    private fun updateLanguageSettings() {
+    private fun updateLanguageSettings(language: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            val newLanguage = preferencesManager.getLanguage()
-            tts.setLanguage(newLanguage)
-            modelLoader.updateLabels(newLanguage)
+            modelLoader.updateLabels(language)
+            tts.setLanguage(language)
+            // languageChangeHelper.changeLanguage(applicationContext, language)
         }
-
     }
 
     private fun updateSpeedSettings() {
@@ -179,10 +185,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     private fun updateTTSLanguage() {
         CoroutineScope(Dispatchers.Main).launch {
-            val newLanguage = preferencesManager.getLanguage()
+            val newLanguage = languageChangeHelper.getLanguageCode(applicationContext)
+            modelLoader.updateLabels(newLanguage)
             tts.setLanguage(newLanguage)
         }
     }

@@ -88,7 +88,7 @@ class ModelLoader(private val context: Context) {
     }
 
     fun updateLabels(language: String) {
-        labelPath = if (language == "SI") {
+        labelPath = if (language == "sl") {
             Constants.LABELS_PATH_SI
         } else {
             Constants.LABELS_PATH_EN
@@ -97,11 +97,11 @@ class ModelLoader(private val context: Context) {
         loadLabels()
     }
 
-    private suspend fun loadLabelsWithLanguage() {
-        val preferencesManager = PreferencesManager(context)
-        val language = preferencesManager.getLanguage()
+    private fun loadLabelsWithLanguage() {
+        val languageChangeHelper = LanguageChangeHelper()
+        val language = languageChangeHelper.getLanguageCode(context)
 
-        labelPath = if (language == "SI") {
+        labelPath = if (language == "sl") {
             Constants.LABELS_PATH_SI
         } else {
             Constants.LABELS_PATH_EN

@@ -4,13 +4,9 @@ import android.content.Context
 import android.util.Log
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.Language
-import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
 import java.util.Locale
 
 
@@ -109,8 +105,8 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
     fun setLanguage(languageCode: String) {
         if (isInitialized) {
             val locale = when (languageCode) {
-                "SI" -> Locale("sl", "SI")
-                "EN" -> Locale.ENGLISH
+                "sl" -> Locale("sl", "SI")
+                "en" -> Locale.ENGLISH
                 else -> Locale.getDefault()
             }
 

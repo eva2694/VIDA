@@ -16,16 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
+import androidx.compose.runtime.livedata.observeAsState
+
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
 
     val coroutineScope = rememberCoroutineScope()
 
-    val language by viewModel.language.collectAsState(initial = "SI")
-    val readingSpeed by viewModel.readingSpeed.collectAsState(initial = 0.75f)
+    val language by viewModel.language.observeAsState()
+    val readingSpeed by viewModel.readingSpeed.collectAsState(initial = 1.0f)
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
 
     val languageChanged by viewModel.languageChanged.collectAsState(initial = false)
@@ -51,8 +51,8 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                LanguageOption("Slovenian", "SI", language, viewModel)
-                LanguageOption("English", "EN", language, viewModel)
+                language?.let { LanguageOption("Slovenian", "sl", language!!, viewModel) }
+                language?.let { LanguageOption("English", "en", language!!, viewModel) }
             }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
@@ -95,7 +95,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                         val context = viewModel.context
 
                         if (languageChanged) {
-                            notifyLanguageSettingsChanged(context)
+                            language?.let { notifyLanguageSettingsChanged(context, it) }
                         }
                         if (readingSpeedChanged) {
                             notifySpeedSettingsChanged(context)
@@ -128,14 +128,16 @@ fun LanguageOption(label: String, languageCode: String, selectedLanguage: String
     ) {
         RadioButton(
             selected = languageCode == selectedLanguage,
-            onClick = { viewModel.setLanguage(languageCode) }
+            onClick = { viewModel.setLanguageChanged(languageCode) }
         )
         Text(label, modifier = Modifier.padding(4.dp))
     }
 }
 
-private fun notifyLanguageSettingsChanged(context: Context) {
-    val intent = Intent("LANGUAGE_SETTINGS_CHANGED")
+private fun notifyLanguageSettingsChanged(context: Context, language: String) {
+    val intent = Intent("LANGUAGE_SETTINGS_CHANGED").apply {
+        putExtra("language", language)
+    }
     LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
 }
 
