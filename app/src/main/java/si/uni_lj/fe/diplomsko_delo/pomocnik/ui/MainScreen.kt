@@ -1,5 +1,6 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -12,11 +13,12 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -41,11 +43,21 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val tts = remember { TTSManager.getInstance(context) }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    DisposableEffect(navController) {
+        val listener =
+            NavController.OnDestinationChangedListener { _: NavController, destination: NavDestination, _ ->
+                TTSManager.stop()
+                Log.d("MainScreen", "Switched to: ${destination.route} — TTS stopped.")
+            }
+        navController.addOnDestinationChangedListener(listener)
+        onDispose {
+            navController.removeOnDestinationChangedListener(listener)
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -56,7 +68,6 @@ fun MainScreen(
                     selected = currentRoute == "explore",
                     onClick = {
                         coroutineScope.launch {
-                            tts.stop()
                             navController.navigate("explore"){
                                 launchSingleTop = true
                                 restoreState = true
@@ -71,7 +82,6 @@ fun MainScreen(
                     selected = currentRoute == "read",
                     onClick = {
                         coroutineScope.launch {
-                            tts.stop()
                             navController.navigate("read"){
                                 launchSingleTop = true
                                 restoreState = true
@@ -85,7 +95,6 @@ fun MainScreen(
                     selected = currentRoute == "settings",
                     onClick = {
                         coroutineScope.launch {
-                            tts.stop()
                             navController.navigate("settings"){
                                 launchSingleTop = true
                                 restoreState = true
@@ -105,7 +114,6 @@ fun MainScreen(
         ) {
             composable("explore") {
                 ExploreScreen(cameraExecutor, modelLoader, imageProcessor)
-                // cameraExecutor: ExecutorService, modelLoader: ModelLoader, imageProcessor: ImageProcessor
             }
             composable("read") {
                 ReadScreen(cameraExecutor)

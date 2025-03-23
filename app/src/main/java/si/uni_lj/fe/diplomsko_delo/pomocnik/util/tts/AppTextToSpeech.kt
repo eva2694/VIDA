@@ -106,8 +106,12 @@ class AppTextToSpeech(private val context: Context) : TextToSpeech.OnInitListene
             val params = HashMap<String, String>()
             params[TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID] = "utteranceId"
             tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params)
+        } else if (!isInitialized) {
+            Log.e("TextToSpeechUtil", "TTS not initialized.")
+        } else if (isSpeaking()) {
+            Log.d("TextToSpeechUtil", "TTS speaking.")
         } else {
-            Log.e("TextToSpeechUtil", "TTS not initialized or is currently speaking.")
+            Log.e("TextToSpeechUtil", "Cannot read, idk why...")
         }
     }
 

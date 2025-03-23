@@ -31,7 +31,6 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import java.util.concurrent.ExecutorService
 
 
-
 @Composable
 fun ExploreScreen(cameraExecutor: ExecutorService, modelLoader: ModelLoader, imageProcessor: ImageProcessor) {
     val context = LocalContext.current
@@ -47,8 +46,7 @@ fun ExploreScreen(cameraExecutor: ExecutorService, modelLoader: ModelLoader, ima
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
 
     val detectionResults = viewModel.detectionResults
-
-
+  
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(factory = { ctx ->
             val previewView = PreviewView(ctx)

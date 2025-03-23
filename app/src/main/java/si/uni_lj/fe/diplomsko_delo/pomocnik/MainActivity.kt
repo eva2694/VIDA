@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var imageProcessor: ImageProcessor
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("MainActivity", "ON CREATE!")
         super.onCreate(savedInstanceState)
 
         preferencesManager = PreferencesManager(this)
@@ -56,8 +57,6 @@ class MainActivity : ComponentActivity() {
 
         val tts = TTSManager.getInstance(applicationContext)
         tts.setLanguage(lang)
-        Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", speed.toString())
-        Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", lang)
         tts.setSpeechRate(speed)
     }
 
@@ -97,7 +96,33 @@ class MainActivity : ComponentActivity() {
         if (!isChangingConfigurations) {
             TTSManager.shutdown()
         }
+        Log.d("MainActivity", "ON DESTROY!")
         super.onDestroy()
+    }
+
+    override fun onStart() {
+        Log.d("MainActivity", "ON START!")
+        super.onStart()
+    }
+
+    override fun onStop() {
+        Log.d("MainActivity", "ON STOP!")
+        super.onStop()
+    }
+
+    override fun onPause() {
+        Log.d("MainActivity", "ON PAUSE!")
+        super.onPause()
+    }
+
+    override fun onRestart() {
+        Log.d("MainActivity", "ON RESTART!")
+        super.onRestart()
+    }
+
+    override fun onResume() {
+        Log.d("MainActivity", "ON RESUME!")
+        super.onResume()
     }
 
 }
