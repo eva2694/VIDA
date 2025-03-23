@@ -36,7 +36,7 @@ class DepthViewModel(
             depthMap?.let {
                 val centerDepth = it[0][128][128][0]
                 val message = context.getString(R.string.depth_feedback, centerDepth)
-                tts.queueSpeak(message)
+                tts.readText(message)
 
                 val grayscale = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888)
                 var min = Float.MAX_VALUE

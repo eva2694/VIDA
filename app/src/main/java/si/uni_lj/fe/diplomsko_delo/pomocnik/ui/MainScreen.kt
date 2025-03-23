@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
@@ -73,7 +74,14 @@ fun MainScreen(
                             contentDescription = "Explore screen"
                         )
                     },
-                    label = { Text(stringResource(R.string.tab_explore)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.tab_explore),
+                            maxLines = 1,
+                            softWrap = false,
+                            fontSize = 10.sp,
+                        )
+                    },
                     selected = currentRoute == "explore",
                     onClick = {
                         coroutineScope.launch {
@@ -87,7 +95,14 @@ fun MainScreen(
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.TextFields, contentDescription = "Read screen") },
-                    label = { Text(stringResource(R.string.tab_read)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.tab_read),
+                            maxLines = 1,
+                            softWrap = false,
+                            fontSize = 10.sp,
+                        )
+                    },
                     selected = currentRoute == "read",
                     onClick = {
                         coroutineScope.launch {
@@ -100,7 +115,14 @@ fun MainScreen(
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Settings, contentDescription = "Settings screen") },
-                    label = { Text(stringResource(R.string.tab_settings)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.tab_settings),
+                            maxLines = 1,
+                            softWrap = false,
+                            fontSize = 10.sp,
+                        )
+                    },
                     selected = currentRoute == "settings",
                     onClick = {
                         coroutineScope.launch {
@@ -114,7 +136,14 @@ fun MainScreen(
 
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.ViewInAr, contentDescription = "Depth screen") },
-                    label = { Text(stringResource(R.string.tab_depth)) },
+                    label = {
+                        Text(
+                            stringResource(R.string.tab_depth),
+                            maxLines = 1,
+                            softWrap = false,
+                            fontSize = 10.sp,
+                        )
+                    },
                     selected = currentRoute == "depth",
                     onClick = {
                         coroutineScope.launch {
