@@ -9,13 +9,16 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 
 class ImageProcessor {
 
-    suspend  fun processImage(imageProxy: ImageProxy, modelLoader: ModelLoader): List<BoundingBox> {
+    suspend fun processImage(
+        imageProxy: ImageProxy,
+        yoloModelLoader: YoloModelLoader
+    ): List<BoundingBox> {
         val bitmap = imageProxy.toBitmapFromRGBA8888()
 
         val rotatedBitmap = rotateBitmap(bitmap, imageProxy.imageInfo.rotationDegrees)
 
         return withContext(Dispatchers.IO) {
-            val results = modelLoader.detect(rotatedBitmap)
+            val results = yoloModelLoader.detect(rotatedBitmap)
             imageProxy.close()
             results
         }

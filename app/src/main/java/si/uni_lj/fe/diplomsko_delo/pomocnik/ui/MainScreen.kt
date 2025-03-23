@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFields
+import androidx.compose.material.icons.filled.ViewInAr
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,20 +27,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.R
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth.DepthScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
 
 @Composable
 fun MainScreen(
     cameraExecutor: ExecutorService,
-    modelLoader: ModelLoader,
+    yoloModelLoader: YoloModelLoader,
     imageProcessor: ImageProcessor,
     preferencesManager: PreferencesManager
 ) {
@@ -65,7 +67,12 @@ fun MainScreen(
         bottomBar = {
             NavigationBar  {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Visibility, contentDescription = "Explore") },
+                    icon = {
+                        Icon(
+                            Icons.Default.Visibility,
+                            contentDescription = "Explore screen"
+                        )
+                    },
                     label = { Text(stringResource(R.string.tab_explore)) },
                     selected = currentRoute == "explore",
                     onClick = {
@@ -79,7 +86,7 @@ fun MainScreen(
 
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.TextFields, contentDescription = "Read") },
+                    icon = { Icon(Icons.Default.TextFields, contentDescription = "Read screen") },
                     label = { Text(stringResource(R.string.tab_read)) },
                     selected = currentRoute == "read",
                     onClick = {
@@ -92,12 +99,26 @@ fun MainScreen(
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings screen") },
                     label = { Text(stringResource(R.string.tab_settings)) },
                     selected = currentRoute == "settings",
                     onClick = {
                         coroutineScope.launch {
                             navController.navigate("settings"){
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    }
+                )
+
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ViewInAr, contentDescription = "Depth screen") },
+                    label = { Text(stringResource(R.string.tab_depth)) },
+                    selected = currentRoute == "depth",
+                    onClick = {
+                        coroutineScope.launch {
+                            navController.navigate("depth") {
                                 launchSingleTop = true
                                 restoreState = true
                             }
@@ -115,13 +136,16 @@ fun MainScreen(
                 .padding(paddingValues)
         ) {
             composable("explore") {
-                ExploreScreen(cameraExecutor, modelLoader, imageProcessor)
+                ExploreScreen(cameraExecutor, yoloModelLoader, imageProcessor)
             }
             composable("read") {
                 ReadScreen(cameraExecutor)
             }
             composable("settings") {
                 SettingsScreen(preferencesManager)
+            }
+            composable("depth") {
+                DepthScreen(cameraExecutor, preferencesManager)
             }
         }
     }

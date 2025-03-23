@@ -10,11 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
 class ExploreViewModel(
-    private val modelLoader: ModelLoader,
+    private val yoloModelLoader: YoloModelLoader,
     private val imageProcessor: ImageProcessor,
     val tts: AppTextToSpeech
 
@@ -25,7 +25,7 @@ class ExploreViewModel(
 
     fun processImage(imageProxy: ImageProxy) {
         viewModelScope.launch(Dispatchers.IO) {
-            val results = imageProcessor.processImage(imageProxy, modelLoader)
+            val results = imageProcessor.processImage(imageProxy, yoloModelLoader)
             updateDetectionResults(results)
             imageProxy.close()
         }

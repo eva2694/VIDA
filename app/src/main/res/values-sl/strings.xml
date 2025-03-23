@@ -8,4 +8,6 @@
     <string name="settings_sl">Slovenščina</string>
     <string name="setting_rs_title">Izberite hitrost govora</string>
     <string name="settings_title_dm">Temni način</string>
+    <string name="tab_depth">Globina</string>
+    <string name="depth_feedback">Objekt je oddaljen %.2f enot</string>
 </resources>

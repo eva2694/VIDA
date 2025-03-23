@@ -18,11 +18,11 @@ import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.UILangHelper
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -30,7 +30,7 @@ import java.util.concurrent.Executors
 class MainActivity : ComponentActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var preferencesManager: PreferencesManager
-    private lateinit var modelLoader: ModelLoader
+    private lateinit var yoloModelLoader: YoloModelLoader
     private lateinit var imageProcessor: ImageProcessor
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 
         preferencesManager = PreferencesManager(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
-        modelLoader = ModelLoader(this, preferencesManager.language)
+        yoloModelLoader = YoloModelLoader(this, preferencesManager.language)
         imageProcessor = ImageProcessor()
 
         Log.d("MainActivity", "Camera executor initialized")
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                         PermissionsUtil {
                             MainScreen(
                                 cameraExecutor,
-                                modelLoader,
+                                yoloModelLoader,
                                 imageProcessor,
                                 preferencesManager
                             )

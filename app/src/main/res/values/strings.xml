@@ -8,4 +8,6 @@
     <string name="settings_sl">Slovenian</string>
     <string name="setting_rs_title">Select Reading Speed</string>
     <string name="settings_title_dm">Dark Mode</string>
+    <string name="tab_depth">Depth</string>
+    <string name="depth_feedback">Object is approximately %.2f units away</string>
 </resources>
