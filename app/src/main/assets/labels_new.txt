@@ -1,0 +1,212 @@
+Line
+Paragraph
+Word
+Zebracrossing
+Elevator
+Arrow Down
+Arrow DownLeft
+Arrow DownRight
+Arrow Left
+Arrow Right
+Arrow Up
+Arrow UpLeft
+Arrow UpRight
+Container
+Ambulance
+Toothbrush
+Sink
+Cosmetics
+Bird
+Parking meter
+Traffic light
+Towel
+Washing machine
+Glove
+Sunglasses
+Cart
+Ball
+Backpack
+Bicycle
+Home appliance
+Boat
+Headphones
+Bus
+Laptop
+Tower
+Teapot
+Person
+Tent
+Toaster
+Flashlight
+Billboard
+Scissors
+Stairs
+Computer keyboard
+Printer
+Traffic sign
+Chair
+Poster
+Fire hydrant
+Cabinetry
+Clock
+Medical equipment
+Desk
+Cat
+Computer mouse
+Office building
+Fountain
+Coin
+Calculator
+Computer monitor
+Box
+Hiking equipment
+Dessert
+Drink
+Dairy Product
+Oven
+Couch
+Whiteboard
+Door
+Shower
+Mug
+Tap
+Cutting board
+Stop sign
+Office supplies
+Vase
+Wardrobe
+Coffee
+Paper towel
+Personal care
+Food
+Gas stove
+Mechanical fan
+Fruit
+Nightstand
+Flag
+Jacket
+Egg (Food)
+Street light
+Pillow
+Power plugs and sockets
+Woman
+Door handle
+Bathtub
+Houseplant
+Kitchen utensil
+Light switch
+House
+Horse
+Hammer
+Sofa bed
+Heater
+Curtain
+Bed
+Kettle
+Fireplace
+Scale
+Insect
+Hair dryer
+Kitchenware
+Bookcase
+Refrigerator
+Fashion accessory
+Alarm clock
+Table
+Tableware
+Knife
+Bottle
+Dumbbell
+Bowl
+Porch
+Mammal
+Motorcycle
+Musical instrument
+Frying pan
+Man
+Milk
+Plate
+Mobile phone
+Baked goods
+Crutch
+Mirror
+Pencil case
+Plastic bag
+Chest of drawers
+Plant
+Sports equipment
+Pasta
+Cupboard
+Pizza
+Reptile
+Seafood
+Picture frame
+Coffee table
+Skyscraper
+Television
+Telephone
+Tree
+Train
+Tool
+Picnic basket
+Truck
+Vehicle
+Handbag
+Weapon
+Wheel
+Jug
+Bread
+Helicopter
+Toilet
+Toilet paper
+Clothing
+Footwear
+Rocket
+Countertop
+Tablet computer
+Waste container
+Swimming pool
+Dog
+Book
+Hand dryer
+Soap dispenser
+Flower
+Building
+Fish
+Furniture
+Airplane
+Spoon
+Convenience store
+Bench
+Window
+Closet
+Fork
+Lamp
+Camera
+Racket
+Vegetable
+Flowerpot
+Drawer
+Stool
+Microwave oven
+Shelf
+Watch
+Salad
+Van
+Light bulb
+Kitchen & dining room table
+Bathroom accessory
+Kitchen appliance
+Ruler
+Luggage and bags
+Microphone
+Umbrella
+Animal
+Glasses
+Pen
+Car
+Dishwasher
+Sandwich
+Remote control
+Wheelchair
+Helmet

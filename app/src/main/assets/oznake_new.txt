@@ -1,0 +1,212 @@
+Vrstica besedila
+Odstavek
+Beseda
+Prehod za pešce
+Dvigalo
+Puščica dol
+Puščica, levo spodaj
+Puščica, desno spodaj
+Puščica levo
+Puščica desno
+Puščica gor
+Puščica, levo zgoraj
+Puščica, desno zgoraj
+Posoda
+Rešilni avto
+Zobna ščetka
+Umivalnik
+Kozmetika
+Ptič
+Parkirni števec
+Semafor
+Brisača
+Pralni stroj
+Rokavica
+Sončna očala
+Voziček
+Žoga
+Nahrbtnik
+Kolo
+Gospodinjski aparat
+Čoln
+Slušalke
+Avtobus
+Prenosni računalnik
+Stolp
+Čajnik
+Oseba
+Šotor
+Opekač kruha, Toaster
+Svetilka
+Reklamna tabla
+Škarje
+Stopnice
+Tipkovnica
+Tiskalnik, printer
+Prometni znak
+Stol
+Plakat
+Hidrant
+Omara
+Ura
+Medicinska oprema
+Miza
+Mačka
+Računalniška miška
+Pisarna
+Vodnjak
+Kovanec
+Kalkulator
+Zaslon
+Škatla
+Pohodniška oprema
+Sladica
+Pijača
+Mlečni izdelek
+Pečica
+Kavč
+Tabla
+Vrata
+Tuš
+Skodelica
+Pipa
+Deska za rezanje
+Znak za ustavitev
+Pisarnaška oprema
+Vaza
+Garderobna omara
+Kava
+Papirnate brisače
+Osebna nega
+Hrana
+Plinski štedilnik
+Ventilator
+Sadje
+Nočna omarica
+Zastava
+Jakna
+Jajce
+Ulična svetilka
+Vzglavnik
+Vtičnica
+Ženska
+Kljuka
+Kopalna kad
+Lončnica
+Kuhinjski pripomoček
+Stikalo
+Hiša
+Konj
+Kladivo
+Raztegljiv kavč
+Grelec
+Zavese
+Postelja
+Grelnik vode
+Kamin
+Tehtnica
+Žuželka
+Sušilec za lase
+Kuhinjska oprema
+Knjižna polica
+Hladilnik
+Modni dodatek
+Budilka
+Miza
+Jedilni pribor
+Nož
+Steklenica
+Utež
+Skleda
+Veranda
+Sesalec
+Motor
+Glasbeni inštrument
+Ponev
+Moški
+Mleko
+Krožnik
+Mobilni telefon
+Pecivo
+Berlina
+Ogledalo
+Peresnica
+Plastična vrečka
+Predalnik
+Rastlina
+Športna oprema
+Testenine
+Omara
+Pica
+Plazilec
+Morska hrana
+Okvir za sliko
+Klubska mizica
+Nebotičnik
+Televizor
+Telefon
+Drevo
+Vlak
+Orodje
+Piknik košara
+Tovornjak
+Vozilo
+Torbica
+Orožje
+Kolo
+Vrč
+Kruh
+Helikopter
+WC školjka
+Toaletni papir
+Oblačila
+Obutev
+Raketa
+Pult
+Tablični računalnik
+Smetnjak
+Bazen
+Pes
+Knjiga
+Sušilnik za roke
+Dozator za milo
+Cvetlica
+Zgradba
+Riba
+Pohištvo
+Letalo
+Žlica
+Trgovina
+Klop
+Okno
+Omarica
+Vilica
+Svetilka
+Fotoaparat
+Lopar
+Zelenjava
+Cvetlični lonček
+Predal
+Stolček
+Mikrovalovna
+Polica
+Ročna ura
+Solata
+Kombi
+Žarnica
+Jedilna miza
+Kopalniška oprema
+Kuhinjski aparat
+Ravnilo
+Prtljaga
+Mikrofon
+Dežnik
+Žival
+Očala
+Svinčnik
+Avto
+Pomivalni stroj
+Sendvič
+Daljinec
+Invalidski voziček
+Čelada
