@@ -1,4 +1,3 @@
-@file:Suppress("DEPRECATION")
 
 package si.uni_lj.fe.diplomsko_delo.pomocnik
 
@@ -95,7 +94,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         cameraExecutor.shutdown()
-        TTSManager.shutdown()
+        if (!isChangingConfigurations) {
+            TTSManager.shutdown()
+        }
         super.onDestroy()
     }
 
