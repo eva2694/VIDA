@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +20,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.UILangHelper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -42,9 +41,11 @@ class MainActivity : ComponentActivity() {
 
         Log.d("MainActivity", "Camera executor initialized")
 
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             TfLite.initialize(this@MainActivity).await()
             applyInitialTTSSettings()
+        }
+        CoroutineScope(Dispatchers.Main).launch {
             observeSettingsChanges()
         }
 
@@ -81,6 +82,7 @@ class MainActivity : ComponentActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             preferencesManager.language.collectLatest { lang ->
                 TTSManager.getInstance(applicationContext).setLanguage(lang)
+                UILangHelper().changeUILanguage(applicationContext, lang)
             }
         }
 

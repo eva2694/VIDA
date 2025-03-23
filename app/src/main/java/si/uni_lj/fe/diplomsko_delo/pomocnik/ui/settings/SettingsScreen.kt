@@ -59,19 +59,22 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                LanguageOption(
-                    stringResource(R.string.settings_sl),
-                    "sl",
-                    language,
-                    viewModel
-                )
-                LanguageOption(
-                    stringResource(R.string.settings_eng),
-                    "en",
-                    language,
-                    viewModel
+                Column {
+                    LanguageOption(
+                        stringResource(R.string.settings_sl),
+                        "sl",
+                        language,
+                        viewModel
+                    )
+                    LanguageOption(
+                        stringResource(R.string.settings_eng),
+                        "en",
+                        language,
+                        viewModel
 
-                )
+                    )
+                }
+
             }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
