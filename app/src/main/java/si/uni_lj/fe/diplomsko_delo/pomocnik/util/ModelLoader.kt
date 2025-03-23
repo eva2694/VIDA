@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
@@ -26,15 +28,16 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 
-class ModelLoader(private val context: Context) {
+class ModelLoader(private val context: Context,  private val languageFlow: Flow<String>) {
 
-    private var labelPath = ""
+    private var labelPath = Constants.LABELS_PATH_SI
     private var interpreter: Interpreter? = null
     private var tensorWidth = 0
     private var tensorHeight = 0
     private var numChannel = 0
     private var numElements = 0
     private var labels = mutableListOf<String>()
+
     private val imageProcessor = ImageProcessor.Builder()
         .add(NormalizeOp(INPUT_MEAN, INPUT_STANDARD_DEVIATION))
         .add(CastOp(INPUT_IMAGE_TYPE))
@@ -52,8 +55,12 @@ class ModelLoader(private val context: Context) {
     init {
         initializeInterpreter()
         CoroutineScope(Dispatchers.IO).launch {
-            loadLabelsWithLanguage()
+            languageFlow.collectLatest { lang ->
+                labelPath = if (lang == "sl") Constants.LABELS_PATH_SI else Constants.LABELS_PATH_EN
+                loadLabels()
+            }
         }
+
     }
 
 
@@ -87,29 +94,6 @@ class ModelLoader(private val context: Context) {
         }
     }
 
-    fun updateLabels(language: String) {
-        labelPath = if (language == "sl") {
-            Constants.LABELS_PATH_SI
-        } else {
-            Constants.LABELS_PATH_EN
-        }
-        initializeInterpreter()
-        loadLabels()
-    }
-
-    private fun loadLabelsWithLanguage() {
-        val languageChangeHelper = LanguageChangeHelper()
-        val language = languageChangeHelper.getLanguageCode(context)
-
-        labelPath = if (language == "sl") {
-            Constants.LABELS_PATH_SI
-        } else {
-            Constants.LABELS_PATH_EN
-        }
-
-        loadLabels()
-    }
-
     private fun loadLabels() {
         try {
             val inputStream: InputStream = context.assets.open(labelPath)
@@ -132,7 +116,7 @@ class ModelLoader(private val context: Context) {
     fun detect(bitmap: Bitmap): List<BoundingBox> {
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, tensorWidth, tensorHeight, false)
 
-        val tensorImage = TensorImage(DataType.FLOAT32)
+        val tensorImage = TensorImage(INPUT_IMAGE_TYPE)
         tensorImage.load(resizedBitmap)
         val processedImage = imageProcessor.process(tensorImage)
         val imageBuffer = processedImage.buffer

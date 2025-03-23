@@ -2,41 +2,34 @@
 
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings
 
-import android.content.Context
-import android.content.Intent
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
+fun SettingsScreen(preferencesManager: PreferencesManager) {
+    val context = LocalContext.current
+    val viewModelFactory = remember {
+        SettingsViewModelFactory(preferencesManager, context);
+    }
+    val viewModel: SettingsViewModel = viewModel(factory = viewModelFactory)
 
-    val coroutineScope = rememberCoroutineScope()
-
-    val language by viewModel.language.observeAsState()
+    val language by viewModel.language.collectAsState(initial = "sl")
     val readingSpeed by viewModel.readingSpeed.collectAsState(initial = 1.0f)
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
 
-    val languageChanged by viewModel.languageChanged.collectAsState(initial = false)
-    val readingSpeedChanged by viewModel.readingSpeedChanged.collectAsState(initial = false)
-    val darkModeChanged by viewModel.darkModeChanged.collectAsState(initial = false)
-
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { paddingValues ->
+    Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,8 +44,8 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                language?.let { LanguageOption("Slovenian", "sl", language!!, viewModel) }
-                language?.let { LanguageOption("English", "en", language!!, viewModel) }
+                LanguageOption("Slovenian", "sl", language, viewModel)
+                LanguageOption("English", "en", language, viewModel)
             }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
@@ -88,35 +81,6 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
-
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        val context = viewModel.context
-
-                        if (languageChanged) {
-                            language?.let { notifyLanguageSettingsChanged(context, it) }
-                        }
-                        if (readingSpeedChanged) {
-                            notifySpeedSettingsChanged(context)
-                        }
-                        if (darkModeChanged) {
-                            notifyDarkModeSettingsChanged(context)
-                        }
-
-                        snackbarHostState.showSnackbar(
-                            message = "Settings applied successfully",
-                            actionLabel = "OK",
-                            duration = SnackbarDuration.Short
-                        )
-
-                        viewModel.resetChangeFlags()
-                    }
-                },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text("OK")
-            }
         }
     }
 }
@@ -128,25 +92,8 @@ fun LanguageOption(label: String, languageCode: String, selectedLanguage: String
     ) {
         RadioButton(
             selected = languageCode == selectedLanguage,
-            onClick = { viewModel.setLanguageChanged(languageCode) }
+            onClick = { viewModel.setLanguage(languageCode) }
         )
         Text(label, modifier = Modifier.padding(4.dp))
     }
-}
-
-private fun notifyLanguageSettingsChanged(context: Context, language: String) {
-    val intent = Intent("LANGUAGE_SETTINGS_CHANGED").apply {
-        putExtra("language", language)
-    }
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-}
-
-private fun notifySpeedSettingsChanged(context: Context) {
-    val intent = Intent("SPEED_SETTINGS_CHANGED")
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-}
-
-private fun notifyDarkModeSettingsChanged(context: Context) {
-    val intent = Intent("DARK_MODE_SETTINGS_CHANGED")
-    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
 }

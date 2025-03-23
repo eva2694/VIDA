@@ -9,10 +9,12 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
 
-class ReadViewModel(private val tts: TextToSpeech) : ViewModel() {
+class ReadViewModel(
+    val tts: AppTextToSpeech
+) : ViewModel() {
 
     private val textRecognizer: TextRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
@@ -24,7 +26,7 @@ class ReadViewModel(private val tts: TextToSpeech) : ViewModel() {
             .addOnSuccessListener { visionText ->
                 val recognizedText = visionText.text
                 if (recognizedText.isNotEmpty()) {
-                    tts.readText(recognizedText)
+                    tts.readText(recognizedText) // ? tts.queueSpeak
                 }
             }
             .addOnFailureListener { e ->

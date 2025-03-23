@@ -11,12 +11,13 @@ import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
 class ExploreViewModel(
     private val modelLoader: ModelLoader,
     private val imageProcessor: ImageProcessor,
-    private val tts: TextToSpeech
+    val tts: AppTextToSpeech
+
 ) : ViewModel() {
 
     var detectionResults by mutableStateOf<List<BoundingBox>>(emptyList())
@@ -39,10 +40,5 @@ class ExploreViewModel(
         viewModelScope.launch {
             tts.queueSpeak(text)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        tts.shutdown()
     }
 }

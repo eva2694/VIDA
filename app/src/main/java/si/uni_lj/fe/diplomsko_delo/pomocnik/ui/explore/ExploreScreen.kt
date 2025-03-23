@@ -25,13 +25,20 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
 import java.util.concurrent.ExecutorService
 
 
 
 @Composable
-fun ExploreScreen(cameraExecutor: ExecutorService, viewModel: ExploreViewModel) {
+fun ExploreScreen(cameraExecutor: ExecutorService, modelLoader: ModelLoader, imageProcessor: ImageProcessor) {
     val context = LocalContext.current
+    val viewModelFactory = remember {
+        ExploreViewModelFactory(context, modelLoader, imageProcessor)
+    }
+    val viewModel: ExploreViewModel = viewModel(factory = viewModelFactory)
 
     val displayRotation = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
         .defaultDisplay.rotation

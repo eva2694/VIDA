@@ -6,30 +6,43 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsViewModel
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TextToSpeech
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ModelLoader
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import java.util.concurrent.ExecutorService
 
 
 @Composable
-fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewModel, readViewModel: ReadViewModel, tts: TextToSpeech, settingsViewModel: SettingsViewModel) {
+fun MainScreen(
+    cameraExecutor: ExecutorService,
+    modelLoader: ModelLoader,
+    imageProcessor: ImageProcessor,
+    preferencesManager: PreferencesManager
+) {
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val tts = remember { TTSManager.getInstance(context) }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -91,13 +104,14 @@ fun MainScreen(cameraExecutor: ExecutorService, exploreViewModel: ExploreViewMod
                 .padding(paddingValues)
         ) {
             composable("explore") {
-                ExploreScreen(cameraExecutor, exploreViewModel)
+                ExploreScreen(cameraExecutor, modelLoader, imageProcessor)
+                // cameraExecutor: ExecutorService, modelLoader: ModelLoader, imageProcessor: ImageProcessor
             }
             composable("read") {
-                ReadScreen(cameraExecutor, readViewModel)
+                ReadScreen(cameraExecutor)
             }
             composable("settings") {
-                SettingsScreen(settingsViewModel)
+                SettingsScreen(preferencesManager)
             }
         }
     }

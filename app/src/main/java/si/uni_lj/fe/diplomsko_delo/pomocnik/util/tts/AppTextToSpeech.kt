@@ -1,9 +1,9 @@
-package si.uni_lj.fe.diplomsko_delo.pomocnik.util
+package si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts
 
 import android.content.Context
-import android.util.Log
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.util.Log
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,11 +11,14 @@ import java.util.Locale
 
 
 @Suppress("DEPRECATION")
-class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
+class AppTextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
     private var isInitialized = false
     private val textQueue = mutableListOf<String>()
+
+    private var pendingLanguage: String? = null
+    private var pendingSpeechRate: Float? = null
 
     init {
         tts = TextToSpeech(context, this)
@@ -23,16 +26,20 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
+            isInitialized = true
+            setUtteranceProgressListener()
 
-            val locale = Locale("sl", "SI")
-            val result = tts?.setLanguage(locale)
+            Log.d("TextToSpeechUtil", "TTS initialized")
 
-            isInitialized = result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED
-            if (!isInitialized) {
-                Log.e("TextToSpeechUtil", "Language not supported")
-            } else {
-                tts?.setSpeechRate(0.70f)
-                setUtteranceProgressListener()
+            // Apply pending settings
+            pendingLanguage?.let {
+                applyLanguage(it)
+                pendingLanguage = null
+            }
+
+            pendingSpeechRate?.let {
+                applySpeechRate(it)
+                pendingSpeechRate = null
             }
         } else {
             Log.e("TextToSpeechUtil", "Initialization failed")
@@ -85,6 +92,8 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
     fun shutdown() {
         tts?.shutdown()
         tts = null
+        isInitialized = false
+        textQueue.clear()
     }
 
     fun stop() {
@@ -103,31 +112,40 @@ class TextToSpeech(private val context: Context) : TextToSpeech.OnInitListener {
     }
 
     fun setLanguage(languageCode: String) {
-        if (isInitialized) {
-            val locale = when (languageCode) {
-                "sl" -> Locale("sl", "SI")
-                "en" -> Locale.ENGLISH
-                else -> Locale.getDefault()
-            }
-
-            val result = tts?.setLanguage(locale)
-
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TextToSpeechUtil", "Language not supported: $languageCode")
-            } else {
-                Log.d("TextToSpeechUtil", "Language set to $languageCode")
-            }
-        } else {
-            Log.e("TextToSpeechUtil", "TTS not initialized. Cannot set language.")
+        if (!isInitialized) {
+            pendingLanguage = languageCode
+            Log.e("TextToSpeechUtil", "TTS not initialized. Will apply language later.")
+            return
         }
+        applyLanguage(languageCode)
     }
 
     fun setSpeechRate(rate: Float) {
-        if (isInitialized) {
-            tts?.setSpeechRate(rate)
-            Log.d("TextToSpeechUtil", "Speech rate set to $rate")
-        } else {
-            Log.e("TextToSpeechUtil", "TTS not initialized. Cannot set speech rate.")
+        if (!isInitialized) {
+            pendingSpeechRate = rate
+            Log.e("TextToSpeechUtil", "TTS not initialized. Will apply speech rate later.")
+            return
         }
+        applySpeechRate(rate)
+    }
+
+    private fun applyLanguage(languageCode: String) {
+        val locale = when (languageCode) {
+            "sl" -> Locale("sl", "SI")
+            "en" -> Locale.ENGLISH
+            else -> Locale.getDefault()
+        }
+
+        val result = tts?.setLanguage(locale)
+        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            Log.e("TextToSpeechUtil", "Language not supported: $languageCode")
+        } else {
+            Log.d("TextToSpeechUtil", "Language set to $languageCode")
+        }
+    }
+
+    private fun applySpeechRate(rate: Float) {
+        tts?.setSpeechRate(rate)
+        Log.d("TextToSpeechUtil", "Speech rate set to $rate")
     }
 }
