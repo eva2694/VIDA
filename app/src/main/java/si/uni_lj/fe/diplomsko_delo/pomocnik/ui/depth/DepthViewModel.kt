@@ -18,6 +18,8 @@ class DepthViewModel(
 ) : ViewModel() {
     private var estimator: DepthEstimator? = null
 
+    val centerDepthText = mutableStateOf<String?>(null)
+
     val depthBitmap = mutableStateOf<Bitmap?>(null)
 
     fun setContext(context: android.content.Context) {
@@ -35,6 +37,7 @@ class DepthViewModel(
 
             depthMap?.let {
                 val centerDepth = it[0][128][128][0]
+                centerDepthText.value = centerDepth.toString()
                 val message = context.getString(R.string.depth_feedback, centerDepth)
                 tts.readText(message)
 

@@ -11,13 +11,18 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -45,6 +50,7 @@ fun DepthScreen(cameraExecutor: ExecutorService, preferencesManager: Preferences
     val depthBitmap by viewModel.depthBitmap
 
     Box(modifier = Modifier.fillMaxSize()) {
+
         AndroidView(factory = { ctx ->
             val previewView = PreviewView(ctx)
 
@@ -80,6 +86,17 @@ fun DepthScreen(cameraExecutor: ExecutorService, preferencesManager: Preferences
                 contentDescription = "Depth Map",
                 contentScale = androidx.compose.ui.layout.ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        viewModel.centerDepthText.value?.let { depthText ->
+            Text(
+                text = depthText,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Red,
+                modifier = Modifier
+                    .align(Alignment.Center)
             )
         }
     }
