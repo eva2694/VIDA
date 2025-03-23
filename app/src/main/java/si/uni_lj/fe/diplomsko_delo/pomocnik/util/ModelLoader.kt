@@ -18,8 +18,8 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
+import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream

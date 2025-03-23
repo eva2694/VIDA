@@ -83,6 +83,10 @@ fun ExploreScreen(cameraExecutor: ExecutorService, modelLoader: ModelLoader, ima
                 val canvasWidth = size.width
                 val canvasHeight = size.height
 
+                // Canvas size: 1080.0 x 1956.0
+                // Canvas size: 2176.0 x 766.0
+                // TODO: Maybe fix BB in landscape.
+
                 detectionResults.forEach { result ->
                     val x1 = result.x1 * canvasWidth
                     val y1 = result.y1 * canvasHeight

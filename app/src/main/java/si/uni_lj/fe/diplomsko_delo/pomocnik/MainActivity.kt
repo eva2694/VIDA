@@ -2,6 +2,8 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik
 
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -31,8 +33,12 @@ class MainActivity : ComponentActivity() {
     private lateinit var modelLoader: ModelLoader
     private lateinit var imageProcessor: ImageProcessor
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // For now: Lock orientation. (Landscape is almost handled btw, only BB are missing)
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         preferencesManager = PreferencesManager(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
