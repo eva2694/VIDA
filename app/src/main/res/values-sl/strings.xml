@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Pomocnik</string>
+    <string name="tab_read">Beri</string>
+    <string name="tab_explore">Razglej se</string>
+    <string name="tab_settings">Nastavitve</string>
+    <string name="settings_title_lang">Izberite jezik</string>
+    <string name="settings_eng">Angleščina</string>
+    <string name="settings_sl">Slovenščina</string>
+    <string name="setting_rs_title">Izberite hitrost govora</string>
+    <string name="settings_title_dm">Temni način</string>
 </resources>

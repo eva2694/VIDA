@@ -17,6 +17,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
@@ -24,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
+import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
@@ -64,7 +66,7 @@ fun MainScreen(
             NavigationBar  {
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Visibility, contentDescription = "Explore") },
-                    label = { Text("Razglej se") },
+                    label = { Text(stringResource(R.string.tab_explore)) },
                     selected = currentRoute == "explore",
                     onClick = {
                         coroutineScope.launch {
@@ -78,7 +80,7 @@ fun MainScreen(
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.TextFields, contentDescription = "Read") },
-                    label = { Text("Beri") },
+                    label = { Text(stringResource(R.string.tab_read)) },
                     selected = currentRoute == "read",
                     onClick = {
                         coroutineScope.launch {
@@ -91,7 +93,7 @@ fun MainScreen(
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                    label = { Text("Nastavitve")},
+                    label = { Text(stringResource(R.string.tab_settings)) },
                     selected = currentRoute == "settings",
                     onClick = {
                         coroutineScope.launch {

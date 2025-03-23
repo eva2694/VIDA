@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +33,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var imageProcessor: ImageProcessor
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MainActivity", "ON CREATE!")
         super.onCreate(savedInstanceState)
 
         preferencesManager = PreferencesManager(this)
@@ -40,7 +41,6 @@ class MainActivity : ComponentActivity() {
         imageProcessor = ImageProcessor()
 
         Log.d("MainActivity", "Camera executor initialized")
-
 
         CoroutineScope(Dispatchers.Main).launch {
             TfLite.initialize(this@MainActivity).await()
@@ -96,33 +96,7 @@ class MainActivity : ComponentActivity() {
         if (!isChangingConfigurations) {
             TTSManager.shutdown()
         }
-        Log.d("MainActivity", "ON DESTROY!")
         super.onDestroy()
-    }
-
-    override fun onStart() {
-        Log.d("MainActivity", "ON START!")
-        super.onStart()
-    }
-
-    override fun onStop() {
-        Log.d("MainActivity", "ON STOP!")
-        super.onStop()
-    }
-
-    override fun onPause() {
-        Log.d("MainActivity", "ON PAUSE!")
-        super.onPause()
-    }
-
-    override fun onRestart() {
-        Log.d("MainActivity", "ON RESTART!")
-        super.onRestart()
-    }
-
-    override fun onResume() {
-        Log.d("MainActivity", "ON RESUME!")
-        super.onResume()
     }
 
 }

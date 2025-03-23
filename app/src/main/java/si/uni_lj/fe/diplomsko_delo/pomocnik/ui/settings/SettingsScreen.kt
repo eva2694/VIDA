@@ -24,10 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
-
 
 @Composable
 fun SettingsScreen(preferencesManager: PreferencesManager) {
@@ -49,21 +50,39 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
                 .padding(20.dp)
         ) {
             Spacer(modifier = Modifier.height(20.dp))
-
-            Text("Select Language", style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(R.string.settings_title_lang),
+                style = MaterialTheme.typography.titleLarge
+            )
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                LanguageOption("Slovenian", "sl", language, viewModel)
-                LanguageOption("English", "en", language, viewModel)
+                LanguageOption(
+                    stringResource(R.string.settings_sl),
+                    "sl",
+                    language,
+                    viewModel
+                )
+                LanguageOption(
+                    stringResource(R.string.settings_eng),
+                    "en",
+                    language,
+                    viewModel
+
+                )
             }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
 
             Text(
-                "Select Reading Speed: ${String.format("%.2f", readingSpeed)}",
+                "${stringResource(R.string.setting_rs_title)}: ${
+                    String.format(
+                        "%.2f",
+                        readingSpeed
+                    )
+                }",
                 style = MaterialTheme.typography.titleLarge
             )
             Slider(
@@ -84,7 +103,11 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Dark Mode", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
+                Text(
+                    stringResource(R.string.settings_title_dm),
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.titleLarge
+                )
                 Switch(
                     checked = isDarkMode,
                     onCheckedChange = { viewModel.setDarkMode(it) },
@@ -98,13 +121,20 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
 }
 
 @Composable
-fun LanguageOption(label: String, languageCode: String, selectedLanguage: String, viewModel: SettingsViewModel) {
+fun LanguageOption(
+    label: String,
+    languageCode: String,
+    selectedLanguage: String,
+    viewModel: SettingsViewModel
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(
             selected = languageCode == selectedLanguage,
-            onClick = { viewModel.setLanguage(languageCode) }
+            onClick = {
+                viewModel.setLanguage(languageCode)
+            }
         )
         Text(label, modifier = Modifier.padding(4.dp))
     }
