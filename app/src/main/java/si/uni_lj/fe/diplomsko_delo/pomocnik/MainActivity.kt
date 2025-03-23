@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tflite.java.TfLite
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -41,15 +41,12 @@ class MainActivity : ComponentActivity() {
 
         Log.d("MainActivity", "Camera executor initialized")
 
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             TfLite.initialize(this@MainActivity).await()
             applyInitialTTSSettings()
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            observeSettingsChanges()
-        }
 
-
+        observeSettingsChanges()
     }
 
     private suspend fun applyInitialTTSSettings() {
@@ -62,7 +59,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun observeSettingsChanges() {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             preferencesManager.isDarkMode.collectLatest { isDarkMode ->
                 setContent {
                     PomocnikTheme(darkTheme = isDarkMode) {
@@ -79,14 +76,14 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             preferencesManager.language.collectLatest { lang ->
                 TTSManager.getInstance(applicationContext).setLanguage(lang)
                 UILangHelper().changeUILanguage(applicationContext, lang)
             }
         }
 
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             preferencesManager.readingSpeed.collectLatest { speed ->
                 TTSManager.getInstance(applicationContext).setSpeechRate(speed)
             }
