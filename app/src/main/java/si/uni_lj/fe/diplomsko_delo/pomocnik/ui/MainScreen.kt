@@ -71,6 +71,7 @@ fun MainScreen(
     imageProcessor: ImageProcessor,
     preferencesManager: PreferencesManager
 ) {
+
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 

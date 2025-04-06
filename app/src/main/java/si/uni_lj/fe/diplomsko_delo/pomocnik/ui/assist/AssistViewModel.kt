@@ -55,8 +55,6 @@ class AssistViewModel(
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(3)
         private const val YOLO_CONFIDENCE_THRESHOLD = 0.4f
 
-        private val TEXT_OBJECT_CLASSES = setOf("Laptop", "Prenosni računalnik") // TODO: Modify with text
-
         private val SCALE_BOUNDARIES = listOf(
             1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
         )
@@ -113,39 +111,47 @@ class AssistViewModel(
 
                     // --- Perform OCR ---
                     var ocrTextResult: String? = null
-                    if (detection.clsName in TEXT_OBJECT_CLASSES) {
-                        Log.d(TAG,"Attempting OCR for ${detection.clsName}")
-                        try {
-                            val cropRect = Rect(
-                                (detection.x1 * rotatedBitmap.width).toInt().coerceAtLeast(0),
-                                (detection.y1 * rotatedBitmap.height).toInt().coerceAtLeast(0),
-                                (detection.x2 * rotatedBitmap.width).toInt().coerceAtMost(rotatedBitmap.width),
-                                (detection.y2 * rotatedBitmap.height).toInt().coerceAtMost(rotatedBitmap.height)
-                            )
 
-                            if (cropRect.width() > 0 && cropRect.height() > 0) {
-                                val croppedBitmap = Bitmap.createBitmap(
-                                    rotatedBitmap, cropRect.left, cropRect.top, cropRect.width(), cropRect.height()
-                                )
-                                val imageForText = InputImage.fromBitmap(croppedBitmap, 0)
-                                val visionText = textRecognizer.process(imageForText).await()
-                                ocrTextResult = visionText.text.replace("\n", " ").trim()
-                                if (ocrTextResult.isNotEmpty()) {
-                                    Log.d(TAG,"OCR Success for ${detection.clsName}: $ocrTextResult")
-                                } else {
-                                    Log.d(TAG,"OCR for ${detection.clsName} produced no text.")
-                                    ocrTextResult = null
-                                }
-                                // TODO ?  recycling croppedBitmap here
-                                // croppedBitmap.recycle()
+                    try {
+                        val cropRect = Rect(
+                            (detection.x1 * rotatedBitmap.width).toInt().coerceAtLeast(0),
+                            (detection.y1 * rotatedBitmap.height).toInt().coerceAtLeast(0),
+                            (detection.x2 * rotatedBitmap.width).toInt()
+                                .coerceAtMost(rotatedBitmap.width),
+                            (detection.y2 * rotatedBitmap.height).toInt()
+                                .coerceAtMost(rotatedBitmap.height)
+                        )
+
+                        if (cropRect.width() > 0 && cropRect.height() > 0) {
+                            val croppedBitmap = Bitmap.createBitmap(
+                                rotatedBitmap,
+                                cropRect.left,
+                                cropRect.top,
+                                cropRect.width(),
+                                cropRect.height()
+                            )
+                            val imageForText = InputImage.fromBitmap(croppedBitmap, 0)
+                            val visionText = textRecognizer.process(imageForText).await()
+                            ocrTextResult = visionText.text.replace("\n", " ").trim()
+                            if (ocrTextResult.isNotEmpty()) {
+                                Log.d(TAG, "OCR Success for ${detection.clsName}: $ocrTextResult")
                             } else {
-                                Log.w(TAG, "Skipping OCR for ${detection.clsName} due to invalid crop rectangle: $cropRect")
+                                Log.d(TAG, "OCR for ${detection.clsName} produced no text.")
+                                ocrTextResult = null
                             }
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error during OCR for ${detection.clsName}", e)
-                            ocrTextResult = null
+                            // TODO ?  recycling croppedBitmap here
+                            // croppedBitmap.recycle()
+                        } else {
+                            Log.w(
+                                TAG,
+                                "Skipping OCR for ${detection.clsName} due to invalid crop rectangle: $cropRect"
+                            )
                         }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error during OCR for ${detection.clsName}", e)
+                        ocrTextResult = null
                     }
+
 
                     // --- Add result ---
                     combinedResults.add(
