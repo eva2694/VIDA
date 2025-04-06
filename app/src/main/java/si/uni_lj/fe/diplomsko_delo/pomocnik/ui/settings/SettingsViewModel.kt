@@ -1,6 +1,5 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +11,6 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
  * Manages user preferences and provides methods to update them.
  */
 class SettingsViewModel(
-    val context: Context,
     private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 

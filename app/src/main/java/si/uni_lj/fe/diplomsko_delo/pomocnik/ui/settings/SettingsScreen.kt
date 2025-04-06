@@ -3,6 +3,7 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,11 +34,11 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
  * Screen that allows users to configure app settings.
  * Includes language selection, reading speed adjustment, and dark mode toggle.
  */
+@SuppressLint("DefaultLocale")
 @Composable
 fun SettingsScreen(preferencesManager: PreferencesManager) {
-    val context = LocalContext.current
     val viewModelFactory = remember {
-        SettingsViewModelFactory(preferencesManager, context)
+        SettingsViewModelFactory(preferencesManager)
     }
     val viewModel: SettingsViewModel = viewModel(factory = viewModelFactory)
 

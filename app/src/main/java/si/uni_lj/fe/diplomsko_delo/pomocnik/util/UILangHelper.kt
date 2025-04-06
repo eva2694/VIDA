@@ -31,10 +31,12 @@ class UILangHelper {
      * @return Current language code (e.g., "sl" or "en")
      */
     fun getUILanguage(context: Context): String {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return context.getSystemService(LocaleManager::class.java).applicationLocales[0].toLanguageTag().split("-").first().toString()
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java).applicationLocales[0].toLanguageTag()
+                .split("-").first().toString()
         } else {
-            return AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first().toString()
+            AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first()
+                .toString()
         }
     }
 }

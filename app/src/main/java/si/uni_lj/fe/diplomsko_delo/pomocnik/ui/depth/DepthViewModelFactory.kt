@@ -1,7 +1,8 @@
+package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth
+
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth.DepthViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 
 /**

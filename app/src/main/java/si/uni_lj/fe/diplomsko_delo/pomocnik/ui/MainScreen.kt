@@ -377,7 +377,7 @@ fun MainScreen(
             }
             composable("explore") { ExploreScreen(cameraExecutor, yoloModelLoader, imageProcessor) }
             composable("read") { ReadScreen(cameraExecutor) }
-            composable("depth") { DepthScreen(cameraExecutor, preferencesManager) }
+            composable("depth") { DepthScreen(cameraExecutor) }
             composable("settings") { SettingsScreen(preferencesManager) }
         }
     }

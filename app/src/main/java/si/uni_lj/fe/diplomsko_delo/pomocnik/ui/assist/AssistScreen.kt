@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.assist
 
 import android.content.Context
@@ -148,11 +150,10 @@ fun AssistScreen(
 
                         val bgTop = y1 - textHeight - (strokeWidth * 2)
                         val bgBottom = y1 - strokeWidth
-                        val bgLeft = x1
                         val bgRight = x1 + textWidth + (strokeWidth * 2)
 
                         // Draw background rect first
-                        drawRect(bgLeft, bgTop, bgRight, bgBottom, bgPaint)
+                        drawRect(x1, bgTop, bgRight, bgBottom, bgPaint)
                         // Draw text on top of background
                         drawText(
                             labelText,
@@ -180,10 +181,9 @@ fun AssistScreen(
 
                             val ocrBgTop = bgBottom + strokeWidth
                             val ocrBgBottom = ocrBgTop + ocrTextHeight + (strokeWidth * 2)
-                            val ocrBgLeft = x1
                             val ocrBgRight = x1 + ocrTextWidth + (strokeWidth * 2)
 
-                            drawRect(ocrBgLeft, ocrBgTop, ocrBgRight, ocrBgBottom, ocrBgPaint)
+                            drawRect(x1, ocrBgTop, ocrBgRight, ocrBgBottom, ocrBgPaint)
                             drawText(
                                 ocrText,
                                 x1 + strokeWidth,

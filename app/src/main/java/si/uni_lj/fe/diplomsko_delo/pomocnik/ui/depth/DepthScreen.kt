@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth
 
-import DepthViewModelFactory
 import android.content.Context
 import android.util.Log
 import android.view.WindowManager
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import java.util.concurrent.ExecutorService
 
 /**
@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutorService
  * Shows a grayscale depth map overlay and text with depth information.
  */
 @Composable
-fun DepthScreen(cameraExecutor: ExecutorService, preferencesManager: PreferencesManager) {
+fun DepthScreen(cameraExecutor: ExecutorService) {
     val context = LocalContext.current
     val viewModelFactory = remember {
         DepthViewModelFactory(context)
