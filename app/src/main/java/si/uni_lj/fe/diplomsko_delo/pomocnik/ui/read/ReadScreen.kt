@@ -21,6 +21,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.concurrent.ExecutorService
 
 
+/**
+ * Screen that provides text recognition from the camera feed.
+ * Reads text aloud using text-to-speech.
+ */
 @Composable
 fun ReadScreen(
     cameraExecutor: ExecutorService

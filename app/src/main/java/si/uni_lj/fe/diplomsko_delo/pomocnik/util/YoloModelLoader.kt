@@ -27,7 +27,10 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
-
+/**
+ * Handles loading and running the YOLO object detection model.
+ * Supports GPU acceleration when available and manages model resources.
+ */
 class YoloModelLoader(private val context: Context, private val languageFlow: Flow<String>) {
 
     private var labelPath = Constants.LABELS_PATH_SI
@@ -60,10 +63,11 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
                 loadLabels()
             }
         }
-
     }
 
-
+    /**
+     * Initializes the TFLite interpreter with GPU acceleration if available.
+     */
     private fun initializeInterpreter() {
         val compatList = CompatibilityList()
         try {
@@ -97,6 +101,9 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         }
     }
 
+    /**
+     * Loads object detection labels from assets based on the current language.
+     */
     private fun loadLabels() {
         try {
             val inputStream: InputStream = context.assets.open(labelPath)
@@ -116,6 +123,11 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         }
     }
 
+    /**
+     * Performs object detection on the input bitmap.
+     * @param bitmap Input image to process
+     * @return List of detected bounding boxes
+     */
     fun detect(bitmap: Bitmap): List<BoundingBox> {
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, tensorWidth, tensorHeight, false)
 
@@ -124,7 +136,6 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         val processedImage = imageProcessor.process(tensorImage)
         val imageBuffer = processedImage.buffer
 
-
         val output = TensorBuffer.createFixedSize(intArrayOf(1, numChannel, numElements), OUTPUT_IMAGE_TYPE)
 
         interpreter?.run(imageBuffer, output.buffer)
@@ -132,7 +143,9 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         return bestBox(output.floatArray) ?: listOf()
     }
 
-
+    /**
+     * Saves a processed bitmap to external storage for debugging purposes.
+     */
     fun saveProcessedBitmap(bitmap: Bitmap) {
         val filename = "processed_image_${System.currentTimeMillis()}.jpg"
         val file = File(context.getExternalFilesDir(null), filename)
@@ -146,7 +159,9 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         }
     }
 
-
+    /**
+     * Processes model output to extract bounding boxes above confidence threshold.
+     */
     private fun bestBox(array: FloatArray): List<BoundingBox>? {
         val boundingBoxes = mutableListOf<BoundingBox>()
 
@@ -195,6 +210,9 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         return nmsBoxes
     }
 
+    /**
+     * Applies Non-Maximum Suppression to remove overlapping bounding boxes.
+     */
     private fun applyNMS(boxes: List<BoundingBox>): MutableList<BoundingBox> {
         val sortedBoxes = boxes.sortedByDescending { it.cnf }.toMutableList()
         val selectedBoxes = mutableListOf<BoundingBox>()
@@ -217,6 +235,9 @@ class YoloModelLoader(private val context: Context, private val languageFlow: Fl
         return selectedBoxes
     }
 
+    /**
+     * Calculates Intersection over Union between two bounding boxes.
+     */
     private fun calculateIoU(box1: BoundingBox, box2: BoundingBox): Float {
         val x1 = maxOf(box1.x1, box2.x1)
         val y1 = maxOf(box1.y1, box2.y1)

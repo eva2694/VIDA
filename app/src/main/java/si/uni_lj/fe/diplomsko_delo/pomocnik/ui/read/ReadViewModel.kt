@@ -12,12 +12,19 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
 
+/**
+ * ViewModel for the text recognition screen.
+ * Processes camera images to recognize text and provides audio feedback.
+ */
 class ReadViewModel(
     val tts: AppTextToSpeech
 ) : ViewModel() {
 
     private val textRecognizer: TextRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
+    /**
+     * Processes a camera image to recognize text.
+     */
     @OptIn(ExperimentalGetImage::class)
     fun processImage(image: ImageProxy) {
         val inputImage = InputImage.fromMediaImage(image.image!!, image.imageInfo.rotationDegrees)

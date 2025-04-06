@@ -13,6 +13,10 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
+/**
+ * ViewModel for the object detection screen.
+ * Processes camera images to detect objects and provides audio feedback.
+ */
 class ExploreViewModel(
     private val yoloModelLoader: YoloModelLoader,
     private val imageProcessor: ImageProcessor,
@@ -23,6 +27,9 @@ class ExploreViewModel(
     var detectionResults by mutableStateOf<List<BoundingBox>>(emptyList())
         private set
 
+    /**
+     * Processes a camera image to detect objects.
+     */
     fun processImage(imageProxy: ImageProxy) {
         viewModelScope.launch(Dispatchers.IO) {
             val results = imageProcessor.processImage(imageProxy, yoloModelLoader)
@@ -35,7 +42,9 @@ class ExploreViewModel(
         detectionResults = results
     }
 
-
+    /**
+     * Provides audio feedback for detected objects.
+     */
     fun speak(text: String) {
         viewModelScope.launch {
             tts.queueSpeak(text)

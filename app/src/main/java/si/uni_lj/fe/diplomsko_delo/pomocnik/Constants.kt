@@ -1,5 +1,8 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik
 
+/**
+ * Application-wide constants for model paths and configuration.
+ */
 object Constants {
     const val YOLO_PATH = "yolov8n-oiv7_float32.tflite"
     const val LABELS_PATH_SI = "oznake.txt"

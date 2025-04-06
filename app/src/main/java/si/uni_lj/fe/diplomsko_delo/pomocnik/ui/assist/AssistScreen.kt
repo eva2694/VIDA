@@ -29,17 +29,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
+/**
+ * Assist screen composable that provides real-time object detection and OCR assistance.
+ * Displays camera preview with overlaid bounding boxes, labels, and OCR text for detected objects.
+ *
+ * @param cameraExecutor Executor service for camera operations
+ * @param yoloModelLoader Loader for the YOLO object detection model
+ */
 @Composable
 fun AssistScreen(
     cameraExecutor: ExecutorService,
     yoloModelLoader: YoloModelLoader,
 ) {
+    // View model setup
     val context = LocalContext.current
     val viewModelFactory = remember {
         AssistViewModelFactory(context, yoloModelLoader)
     }
     val viewModel: AssistViewModel = viewModel(factory = viewModelFactory)
 
+    // Display rotation for proper camera orientation
     val displayRotation = remember {
         (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
             .defaultDisplay.rotation
@@ -47,16 +56,16 @@ fun AssistScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-
     val assistResults by viewModel.assistResults
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Camera Preview
+        // Camera preview with image analysis
         AndroidView(factory = { ctx ->
             val previewView = PreviewView(ctx)
             val preview = Preview.Builder().build()
                 .also { it.surfaceProvider = previewView.surfaceProvider }
 
+            // Configure image analysis for object detection
             val imageAnalysis = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setTargetRotation(displayRotation)
@@ -67,7 +76,7 @@ fun AssistScreen(
                 viewModel.processImage(imageProxy, context)
             }
 
-            // Camera Provider Setup
+            // Initialize camera with preview and analysis
             cameraProviderFuture.addListener({
                 val cameraProvider = cameraProviderFuture.get()
                 try {
@@ -86,26 +95,28 @@ fun AssistScreen(
             previewView
         }, modifier = Modifier.fillMaxSize())
 
-        // Bounding Box and Text Overlay Canvas
+        // Overlay for bounding boxes and text
         Canvas(modifier = Modifier.fillMaxSize()) {
             val canvasWidth = size.width
             val canvasHeight = size.height
 
             assistResults.forEach { result ->
                 val bbox = result.boundingBox
-                // Denormalize coordinates
+                // Convert normalized coordinates to canvas coordinates
                 val x1 = bbox.x1 * canvasWidth
                 val y1 = bbox.y1 * canvasHeight
                 val x2 = bbox.x2 * canvasWidth
                 val y2 = bbox.y2 * canvasHeight
 
+                // Drawing configuration
                 val boxColor = Color.Yellow
                 val strokeWidth = 5f
                 val textBgAlpha = 0.6f
                 val textSizePx = 40f
 
-                // Draw Bounding Box
+                // Draw bounding box if coordinates are valid
                 if (x2 > x1 && y2 > y1) {
+                    // Draw object detection box
                     drawRect(
                         color = boxColor,
                         topLeft = Offset(x1, y1),
@@ -113,12 +124,12 @@ fun AssistScreen(
                         style = Stroke(width = strokeWidth)
                     )
 
-                    // Prepare text label
+                    // Format detection label
                     val confidencePercent = "%.0f".format(bbox.cnf * 100)
                     val scaleText = if (result.depthScale != -1) "(${result.depthScale}/11)" else "(Depth N/A)"
                     val labelText = "${bbox.clsName} ${confidencePercent}% $scaleText"
 
-                    // Draw Text with Background
+                    // Draw label with background
                     drawContext.canvas.nativeCanvas.apply {
                         val textPaint = Paint().apply {
                             color = android.graphics.Color.BLACK

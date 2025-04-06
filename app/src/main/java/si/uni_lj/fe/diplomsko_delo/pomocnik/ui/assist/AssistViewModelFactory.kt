@@ -7,11 +7,19 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 
+/**
+ * Factory for creating AssistViewModel instances.
+ * Provides dependencies required for object detection, depth estimation, and TTS functionality.
+ *
+ * @param context Application context for resource access
+ * @param yoloModelLoader Loader for the YOLO object detection model
+ */
 class AssistViewModelFactory(
     private val context: Context,
     private val yoloModelLoader: YoloModelLoader
 ) : ViewModelProvider.Factory {
 
+    // Lazy initialization of depth estimator
     private val depthEstimator: DepthEstimator by lazy {
         DepthEstimator(context.applicationContext)
     }

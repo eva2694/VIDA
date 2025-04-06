@@ -31,6 +31,10 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
 
+/**
+ * Screen that displays object detection results from the camera feed.
+ * Shows bounding boxes around detected objects and provides audio feedback.
+ */
 @Composable
 fun ExploreScreen(
     cameraExecutor: ExecutorService,
@@ -60,7 +64,6 @@ fun ExploreScreen(
             val imageAnalysis = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setTargetRotation(displayRotation)
-                //.setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888) // ! this has less overhead but needs conversion. TBD!
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
 
@@ -83,13 +86,8 @@ fun ExploreScreen(
 
         Box(modifier = Modifier.fillMaxSize()) {
             Canvas(modifier = Modifier.fillMaxSize()) {
-
                 val canvasWidth = size.width
                 val canvasHeight = size.height
-
-                // Canvas size: 1080.0 x 1956.0
-                // Canvas size: 2176.0 x 766.0
-                // TODO: Maybe fix BB in landscape.
 
                 detectionResults.forEach { result ->
                     val x1 = result.x1 * canvasWidth
@@ -130,7 +128,6 @@ fun ExploreScreen(
             LaunchedEffect(detectionResults) {
                 if (detectionResults.isNotEmpty()) {
                     detectionResults.forEach { result ->
-                        //val text = "${result.clsName}: ${"%.0f".format(result.cnf * 100)}%"
                         val text = result.clsName
 
                         if(result.cnf > 0.4) {

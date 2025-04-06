@@ -34,6 +34,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import java.util.concurrent.ExecutorService
 
+/**
+ * Screen that displays depth information from the camera feed.
+ * Shows a grayscale depth map overlay and text with depth information.
+ */
 @Composable
 fun DepthScreen(cameraExecutor: ExecutorService, preferencesManager: PreferencesManager) {
     val context = LocalContext.current

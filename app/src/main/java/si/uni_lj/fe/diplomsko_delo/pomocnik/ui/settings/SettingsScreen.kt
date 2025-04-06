@@ -30,6 +30,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 
+/**
+ * Screen that allows users to configure app settings.
+ * Includes language selection, reading speed adjustment, and dark mode toggle.
+ */
 @Composable
 fun SettingsScreen(preferencesManager: PreferencesManager) {
     val context = LocalContext.current
@@ -123,6 +127,9 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
     }
 }
 
+/**
+ * Composable for a language selection option.
+ */
 @Composable
 fun LanguageOption(
     label: String,

@@ -7,8 +7,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 
+/**
+ * Handles image processing operations for object detection.
+ */
 class ImageProcessor {
 
+    /**
+     * Processes a camera image and performs object detection.
+     * @param imageProxy The camera image to process
+     * @param yoloModelLoader The YOLO model loader for object detection
+     * @return List of detected bounding boxes
+     */
     suspend fun processImage(
         imageProxy: ImageProxy,
         yoloModelLoader: YoloModelLoader

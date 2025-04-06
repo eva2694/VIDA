@@ -7,6 +7,9 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 
+/**
+ * Factory for creating ExploreViewModel instances with required dependencies.
+ */
 class ExploreViewModelFactory(
     private val context: Context,
     private val yoloModelLoader: YoloModelLoader,

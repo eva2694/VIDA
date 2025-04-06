@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModelProvider
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth.DepthViewModel
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 
+/**
+ * Factory for creating DepthViewModel instances with required dependencies.
+ */
 class DepthViewModelFactory(
     private val context: Context
 ) : ViewModelProvider.Factory {

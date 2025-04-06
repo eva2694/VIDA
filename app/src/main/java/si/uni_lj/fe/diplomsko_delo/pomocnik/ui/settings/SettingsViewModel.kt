@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 
+/**
+ * ViewModel for the settings screen.
+ * Manages user preferences and provides methods to update them.
+ */
 class SettingsViewModel(
     val context: Context,
     private val preferencesManager: PreferencesManager
@@ -16,18 +20,27 @@ class SettingsViewModel(
       val readingSpeed: Flow<Float> = preferencesManager.readingSpeed
       val isDarkMode: Flow<Boolean> = preferencesManager.isDarkMode
 
+      /**
+       * Updates the app language.
+       */
       fun setLanguage(language: String) {
             viewModelScope.launch {
                   preferencesManager.setLanguage(language)
                 }
           }
 
+      /**
+       * Updates the text-to-speech reading speed.
+       */
       fun setReadingSpeed(speed: Float) {
             viewModelScope.launch {
                   preferencesManager.setReadingSpeed(speed)
                 }
           }
 
+      /**
+       * Updates the dark mode setting.
+       */
       fun setDarkMode(isDark: Boolean) {
             viewModelScope.launch {
                   preferencesManager.setDarkMode(isDark)

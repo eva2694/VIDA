@@ -63,7 +63,10 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
-
+/**
+ * Main screen composable that handles navigation and app structure.
+ * Manages bottom navigation, mode selection, and screen routing.
+ */
 @Composable
 fun MainScreen(
     cameraExecutor: ExecutorService,
@@ -71,32 +74,28 @@ fun MainScreen(
     imageProcessor: ImageProcessor,
     preferencesManager: PreferencesManager
 ) {
-
+    // Navigation state management
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // UI state
     var isExploreMenuExpanded by remember { mutableStateOf(false) }
-
     val modesRoutes = listOf("explore", "read", "depth")
     val isModesSelected = currentRoute in modesRoutes
 
+    // Theme colors for navigation items
     val navItemColors = NavigationBarItemDefaults.colors()
-
     val selectedDropdownItemColor = MaterialTheme.colorScheme.primary
-    val defaultDropdownItemColor =
-        MaterialTheme.colorScheme.secondary
+    val defaultDropdownItemColor = MaterialTheme.colorScheme.secondary
 
-
-    // Stop TTS when navigating
+    // Cleanup TTS on navigation
     DisposableEffect(navController) {
-        val listener =
-            NavController.OnDestinationChangedListener { _, destination: NavDestination, _ ->
-                TTSManager.stop()
-                Log.d("MainScreen", "Switched to: ${destination.route} — TTS stopped.")
-            }
+        val listener = NavController.OnDestinationChangedListener { _, destination: NavDestination, _ ->
+            TTSManager.stop()
+            Log.d("MainScreen", "Switched to: ${destination.route} — TTS stopped.")
+        }
         navController.addOnDestinationChangedListener(listener)
         onDispose {
             navController.removeOnDestinationChangedListener(listener)
@@ -106,7 +105,7 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
             NavigationBar {
-                // 1. Assist Item
+                // Assist navigation item
                 NavigationBarItem(
                     icon = {
                         Icon(
@@ -139,7 +138,7 @@ fun MainScreen(
                     }
                 )
 
-                // 2. Modes Item Trigger
+                // Mode selection dropdown trigger
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -185,7 +184,7 @@ fun MainScreen(
                         expanded = isExploreMenuExpanded,
                         onDismissRequest = { isExploreMenuExpanded = false }
                     ) {
-                        // Explore
+                        // Mode selection items
                         DropdownMenuItem(
                             text = {
                                 Row(
@@ -231,9 +230,7 @@ fun MainScreen(
                                     }
                                 }
                             }
-
                         )
-                        // Read
                         DropdownMenuItem(
                             text = {
                                 Row(
@@ -278,10 +275,8 @@ fun MainScreen(
                                         }
                                     }
                                 }
-                            },
-
-                            )
-                        // Depth
+                            }
+                        )
                         DropdownMenuItem(
                             text = {
                                 Row(
@@ -326,13 +321,12 @@ fun MainScreen(
                                         }
                                     }
                                 }
-                            },
-
-                            )
+                            }
+                        )
                     }
                 }
 
-                // 3. Settings Item
+                // Settings navigation item
                 NavigationBarItem(
                     icon = {
                         Icon(
@@ -367,6 +361,7 @@ fun MainScreen(
             }
         }
     ) { paddingValues ->
+        // Main content area with navigation
         NavHost(
             navController = navController,
             startDestination = "assist",

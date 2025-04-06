@@ -8,21 +8,22 @@ import org.tensorflow.lite.support.common.FileUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
 import java.io.IOException
 
-
+/**
+ * Handles depth estimation using the MiDaS model.
+ * Processes images to generate depth maps for spatial understanding.
+ */
 class DepthEstimator(context: Context) {
     private var interpreter: Interpreter? = null
     private var isClosed = false
 
     companion object {
         private const val TAG = "DepthEstimator"
-
-        // IMPORTANT: Verify these match YOUR specific model from Constants.MIDAS_PATH
         private const val MODEL_INPUT_WIDTH = 256
         private const val MODEL_INPUT_HEIGHT = 256
         private const val MODEL_INPUT_CHANNELS = 3
-        private const val MODEL_OUTPUT_WIDTH = 256 // Verify
-        private const val MODEL_OUTPUT_HEIGHT = 256 // Verify
-        private const val MODEL_OUTPUT_CHANNELS = 1 // Verify
+        private const val MODEL_OUTPUT_WIDTH = 256
+        private const val MODEL_OUTPUT_HEIGHT = 256
+        private const val MODEL_OUTPUT_CHANNELS = 1
     }
 
     init {
@@ -39,7 +40,9 @@ class DepthEstimator(context: Context) {
     }
 
     /**
-     * Estimates depth from a bitmap. Returns null if estimation fails or estimator wasn't initialized.
+     * Estimates depth from a bitmap image.
+     * @param bitmap Input image to process
+     * @return 4D array containing depth values, or null if estimation fails
      */
     fun estimateDepth(bitmap: Bitmap): Array<Array<Array<FloatArray>>>? {
         if (interpreter == null || isClosed) {
@@ -47,13 +50,7 @@ class DepthEstimator(context: Context) {
             return null
         }
 
-        // --- Verification Point ---
-        // Verify that YOUR model actually expects the preprocessing done below (ImageNet normalization).
-        // Some models might expect simple 0-1 scaling or different normalization values.
         val input = preprocess(bitmap)
-
-        // --- Verification Point ---
-        // Verify that YOUR model output shape matches this declaration. Use tools like Netron to inspect the model.
         val output = Array(1) {
             Array(MODEL_OUTPUT_HEIGHT) {
                 Array(MODEL_OUTPUT_WIDTH) {
@@ -71,7 +68,10 @@ class DepthEstimator(context: Context) {
         }
     }
 
-    /** Prepares the bitmap for the TFLite model. */
+    /**
+     * Preprocesses the input bitmap for the model.
+     * Applies ImageNet normalization and resizes to model input dimensions.
+     */
     private fun preprocess(bitmap: Bitmap): Array<Array<Array<FloatArray>>> {
         val resizedBitmap =
             Bitmap.createScaledBitmap(bitmap, MODEL_INPUT_WIDTH, MODEL_INPUT_HEIGHT, true)
@@ -93,16 +93,16 @@ class DepthEstimator(context: Context) {
                 input[0][y][x][2] = ((pixel and 0xFF) / 255.0f - 0.406f) / 0.225f         // B
             }
         }
-        // recycle the resized bitmap if no longer needed immediately after loop (optional)
-        // resizedBitmap.recycle() // Be careful if bitmap is needed elsewhere
         return input
     }
 
-    /** Closes the interpreter to release resources. */
+    /**
+     * Releases model resources.
+     */
     fun close() {
         if (!isClosed && interpreter != null) {
             interpreter?.close()
-            interpreter = null // Nullify after closing
+            interpreter = null
             isClosed = true
             Log.d(TAG, "Interpreter closed.")
         }

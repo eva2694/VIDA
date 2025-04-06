@@ -36,17 +36,25 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.TimeUnit
 
+/**
+ * ViewModel for the Assist screen that handles real-time object detection, depth estimation, and OCR.
+ * Processes camera frames to detect objects, estimate their depth, and extract text using OCR.
+ * Provides feedback through TTS (Text-to-Speech) about detected objects.
+ */
 class AssistViewModel(
     private val yoloModelLoader: YoloModelLoader,
     private val depthEstimator: DepthEstimator,
     val tts: AppTextToSpeech,
 ) : ViewModel() {
 
+    // UI state
     private val _assistResults = mutableStateOf<List<AssistResult>>(emptyList())
     val assistResults: State<List<AssistResult>> = _assistResults
 
+    // OCR setup
     private val textRecognizer: TextRecognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
+    // TTS rate limiting
     private var lastTtsCallTimestamp = 0L
     private val ttsMutex = Mutex()
 
@@ -55,13 +63,20 @@ class AssistViewModel(
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(3)
         private const val YOLO_CONFIDENCE_THRESHOLD = 0.4f
 
+        // Depth scale boundaries for distance estimation
         private val SCALE_BOUNDARIES = listOf(
             1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
         )
         private const val MAX_SCALE = 11
     }
 
-
+    /**
+     * Processes a camera frame to detect objects, estimate depth, and perform OCR.
+     * Updates the UI state with detection results and provides TTS feedback.
+     *
+     * @param imageProxy The camera frame to process
+     * @param context Context for resource access
+     */
     @OptIn(ExperimentalGetImage::class)
     fun processImage(imageProxy: ImageProxy, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -71,26 +86,27 @@ class AssistViewModel(
             val combinedResults = mutableListOf<AssistResult>()
 
             try {
-                // 1. Convert ImageProxy (YUV) to Rotated Bitmap
+                // Convert camera frame to bitmap
                 rotatedBitmap = imageProxyToYuvBitmap(imageProxy)
                 if (rotatedBitmap == null) {
                     Log.e(TAG, "Failed to convert ImageProxy to Bitmap")
                     return@launch
                 }
 
-                // 2. Run YOLO Detection on the rotated bitmap
+                // Run object detection
                 detections = yoloModelLoader.detect(rotatedBitmap)
 
-                // 3. Run MiDaS Depth Estimation on the same rotated bitmap
+                // Estimate depth for the frame
                 fullDepthMap = depthEstimator.estimateDepth(rotatedBitmap)
                 if (fullDepthMap == null) {
                     Log.w(TAG, "Depth estimation failed for this frame.")
                 }
 
-                // 4. Process Detections
+                // Process each detection
                 for (detection in detections) {
                     if (detection.cnf < YOLO_CONFIDENCE_THRESHOLD) continue
 
+                    // Calculate depth scale for the detected object
                     var depthScale = -1
                     if (fullDepthMap != null) {
                         try {
@@ -105,21 +121,16 @@ class AssistViewModel(
                             Log.e(TAG, "Error sampling depth for ${detection.clsName}", e)
                             depthScale = -1
                         }
-                    } else {
-                        Log.w(TAG, "Skipping depth calculation for ${detection.clsName}")
                     }
 
-                    // --- Perform OCR ---
+                    // Perform OCR on the detected object region
                     var ocrTextResult: String? = null
-
                     try {
                         val cropRect = Rect(
                             (detection.x1 * rotatedBitmap.width).toInt().coerceAtLeast(0),
                             (detection.y1 * rotatedBitmap.height).toInt().coerceAtLeast(0),
-                            (detection.x2 * rotatedBitmap.width).toInt()
-                                .coerceAtMost(rotatedBitmap.width),
-                            (detection.y2 * rotatedBitmap.height).toInt()
-                                .coerceAtMost(rotatedBitmap.height)
+                            (detection.x2 * rotatedBitmap.width).toInt().coerceAtMost(rotatedBitmap.width),
+                            (detection.y2 * rotatedBitmap.height).toInt().coerceAtMost(rotatedBitmap.height)
                         )
 
                         if (cropRect.width() > 0 && cropRect.height() > 0) {
@@ -139,21 +150,16 @@ class AssistViewModel(
                                 Log.d(TAG, "OCR for ${detection.clsName} produced no text.")
                                 ocrTextResult = null
                             }
-                            // TODO ?  recycling croppedBitmap here
-                            // croppedBitmap.recycle()
+                            // TODO: Consider recycling croppedBitmap for memory optimization
                         } else {
-                            Log.w(
-                                TAG,
-                                "Skipping OCR for ${detection.clsName} due to invalid crop rectangle: $cropRect"
-                            )
+                            Log.w(TAG, "Skipping OCR for ${detection.clsName} due to invalid crop rectangle: $cropRect")
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error during OCR for ${detection.clsName}", e)
                         ocrTextResult = null
                     }
 
-
-                    // --- Add result ---
+                    // Add processed result
                     combinedResults.add(
                         AssistResult(
                             boundingBox = detection,
@@ -163,12 +169,12 @@ class AssistViewModel(
                     )
                 }
 
-                // 5. Update UI State
+                // Update UI with results
                 withContext(Dispatchers.Main) {
                     _assistResults.value = combinedResults
                 }
 
-                // 6. Generate and Speak TTS
+                // Provide TTS feedback
                 generateAndSpeakFeedback(combinedResults, context)
 
             } catch (e: Exception) {
@@ -177,14 +183,16 @@ class AssistViewModel(
                     _assistResults.value = emptyList()
                 }
             } finally {
-                // Close the proxy
                 imageProxy.close()
-                // TODO? Recycle the main rotatedBitmap if memory is tight,
-
+                // TODO: Consider recycling rotatedBitmap for memory optimization
             }
         }
     }
 
+    /**
+     * Generates and speaks TTS feedback for detected objects.
+     * Includes object name, depth information, and OCR text if available.
+     */
     private fun generateAndSpeakFeedback(results: List<AssistResult>, context: Context) {
         if (results.isEmpty()) return
 
@@ -231,7 +239,10 @@ class AssistViewModel(
         }
     }
 
-
+    /**
+     * Maps a depth value to a scale number (1-11) representing distance.
+     * Lower numbers indicate closer objects.
+     */
     private fun mapValueToScale(value: Float): Int {
         if (value <= 0) return MAX_SCALE
         if (value > SCALE_BOUNDARIES[0]) return 1
@@ -243,6 +254,9 @@ class AssistViewModel(
         return MAX_SCALE
     }
 
+    /**
+     * Returns the string resource ID for qualitative depth description based on scale.
+     */
     @androidx.annotation.StringRes
     private fun getQualitativeDescriptionResId(scaleNumber: Int): Int {
         return when (scaleNumber) {
@@ -294,7 +308,6 @@ class AssistViewModel(
             null
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()

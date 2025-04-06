@@ -1,6 +1,5 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik
 
-
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -30,7 +29,10 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-
+/**
+ * Main activity that serves as the entry point of the application.
+ * Handles initialization of core components and manages the app's lifecycle.
+ */
 class MainActivity : ComponentActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var preferencesManager: PreferencesManager
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // For now: Lock orientation. (Landscape is almost handled btw, only BB are missing)
+        // Lock orientation to portrait mode
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         preferencesManager = PreferencesManager(this)
@@ -117,5 +119,4 @@ class MainActivity : ComponentActivity() {
         }
         super.onDestroy()
     }
-
 }

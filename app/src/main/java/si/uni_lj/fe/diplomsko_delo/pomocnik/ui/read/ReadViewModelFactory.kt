@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 
+/**
+ * Factory for creating ReadViewModel instances with required dependencies.
+ */
 class ReadViewModelFactory(
     private val context: Context
 ) : ViewModelProvider.Factory {

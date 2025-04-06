@@ -1,6 +1,5 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 
-
 import android.Manifest
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -27,7 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
+/**
+ * Composable that handles camera permission requests.
+ * Displays a warning message if permission is not granted.
+ * 
+ * @param content The content to display when camera permission is granted
+ */
 @Composable
 fun PermissionsUtil(content: @Composable () -> Unit) {
     val context = LocalContext.current
@@ -51,13 +55,11 @@ fun PermissionsUtil(content: @Composable () -> Unit) {
         launcher.launch(Manifest.permission.CAMERA)
     }
 
-
     if (hasCameraPermission) {
         content()
     } else {
         Log.d("RequestCameraPermission", "Camera permission not granted, displaying warning message")
         Column(modifier = Modifier.padding(16.dp)) {
-
             Text(
                 text = "Camera permission is required!",
                 fontSize = 40.sp,
@@ -66,8 +68,7 @@ fun PermissionsUtil(content: @Composable () -> Unit) {
             )
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -76,8 +77,6 @@ fun PermissionsUtil(content: @Composable () -> Unit) {
                     modifier = Modifier.size(80.dp)
                 )
             }
-
         }
-
     }
 }

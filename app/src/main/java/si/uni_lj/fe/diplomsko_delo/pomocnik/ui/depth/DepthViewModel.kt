@@ -27,6 +27,10 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.TimeUnit
 
+/**
+ * ViewModel for the depth estimation screen.
+ * Processes camera images to estimate depth and provides visual feedback.
+ */
 class DepthViewModel(
     context: Context,
     val tts: AppTextToSpeech
@@ -47,11 +51,7 @@ class DepthViewModel(
         private const val TAG = "DepthViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(2)
 
-        /**
-         * Defines the boundaries for mapping raw depth values to a 1-11 scale.
-         * Remember: Higher MiDaS Value = Closer = Lower Scale Number (Scale 1 is closest).
-         * Adjust these values based on testing and observation!
-         */
+        // Higher MiDaS Value = Closer = Lower Scale Number (Scale 1 is closest)
         private val SCALE_BOUNDARIES = listOf(
             1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
         )
@@ -59,6 +59,9 @@ class DepthViewModel(
     }
 
 
+    /**
+     * Processes a camera image to estimate depth and update the UI.
+     */
     fun processImage(
         imageProxy: ImageProxy,
         context: Context
@@ -72,7 +75,7 @@ class DepthViewModel(
 
                 depthMap?.let { depthOutput ->
                     val centerDepthValue = depthOutput[0][128][128][0]
-                    Log.d(TAG, "Center Depth Raw Value: $centerDepthValue") // Keep for tuning
+                    Log.d(TAG, "Center Depth Raw Value: $centerDepthValue")
 
                     val scaleNumber = mapValueToScale(centerDepthValue)
                     val descriptionResId = getQualitativeDescriptionResId(scaleNumber)
@@ -117,12 +120,14 @@ class DepthViewModel(
                 Log.e(TAG, "Error processing image or depth", e)
                 withContext(Dispatchers.Main) { _centerDepthText.value = "Processing Error" }
             } finally {
-                // Crucial: Ensure the ImageProxy is closed to release the camera buffer.
                 imageProxy.close()
             }
         }
     }
 
+    /**
+     * Maps a raw depth value to a scale from 1-11.
+     */
     private fun mapValueToScale(value: Float): Int {
         if (value > SCALE_BOUNDARIES[0]) return 1
         for (i in 0 until SCALE_BOUNDARIES.size - 1) {
@@ -145,8 +150,7 @@ class DepthViewModel(
     }
 
     /**
-     * Creates a grayscale Bitmap visualization from the raw depth map data,
-     * normalizing based on the min/max depth found in the current frame.
+     * Creates a grayscale visualization of the depth map.
      */
     private fun createGrayscaleBitmap(depthMap: Array<Array<Array<FloatArray>>>): Bitmap {
         val height = depthMap[0].size
@@ -181,20 +185,13 @@ class DepthViewModel(
                 grayscale.setPixel(x, y, color)
             }
         }
-        /*
-         * Visualization Stability Note:
-         * Normalizing based on the current frame's min/max can cause the visual
-         * representation of a static object to flicker if other objects enter/leave
-         * the frame, changing the overall min/max. Consider alternative normalization strategies
-         * (clamping, temporal filtering) or color maps for more stable visualization.
-         */
+        
         return grayscale
     }
 
     /**
-     * Converts an ImageProxy (expecting YUV_420_888 format) to a Bitmap.
-     *
-     * WARNING: This YUV->NV21->JPEG->Bitmap conversion is INEFFICIENT. TODO: Improve?
+     * Converts an ImageProxy to a Bitmap.
+     * Note: This YUV->NV21->JPEG->Bitmap conversion is inefficient.
      */
     @SuppressLint("UnsafeOptInUsageError")
     private fun imageProxyToBitmap(image: ImageProxy): Bitmap {
