@@ -1,4 +1,3 @@
-
 package si.uni_lj.fe.diplomsko_delo.pomocnik
 
 
@@ -8,6 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.SplashScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
@@ -69,13 +73,23 @@ class MainActivity : ComponentActivity() {
             preferencesManager.isDarkMode.collectLatest { isDarkMode ->
                 setContent {
                     PomocnikTheme(darkTheme = isDarkMode) {
-                        PermissionsUtil {
-                            MainScreen(
-                                cameraExecutor,
-                                yoloModelLoader,
-                                imageProcessor,
-                                preferencesManager
+                        var showSplash by remember { mutableStateOf(true) }
+                        
+                        if (showSplash) {
+                            SplashScreen(
+                                onSplashComplete = {
+                                    showSplash = false
+                                }
                             )
+                        } else {
+                            PermissionsUtil {
+                                MainScreen(
+                                    cameraExecutor,
+                                    yoloModelLoader,
+                                    imageProcessor,
+                                    preferencesManager
+                                )
+                            }
                         }
                     }
                 }
