@@ -52,9 +52,10 @@ fun MainScreen(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // Stop TTS when navigating to a new destination
     DisposableEffect(navController) {
         val listener =
-            NavController.OnDestinationChangedListener { _: NavController, destination: NavDestination, _ ->
+            NavController.OnDestinationChangedListener { _, destination: NavDestination, _ ->
                 TTSManager.stop()
                 Log.d("MainScreen", "Switched to: ${destination.route} — TTS stopped.")
             }
@@ -66,12 +67,12 @@ fun MainScreen(
 
     Scaffold(
         bottomBar = {
-            NavigationBar  {
+            NavigationBar {
                 NavigationBarItem(
                     icon = {
                         Icon(
                             Icons.Default.Visibility,
-                            contentDescription = "Explore screen"
+                            contentDescription = stringResource(R.string.tab_explore)
                         )
                     },
                     label = {
@@ -79,77 +80,102 @@ fun MainScreen(
                             stringResource(R.string.tab_explore),
                             maxLines = 1,
                             softWrap = false,
-                            fontSize = 10.sp,
+                            fontSize = 10.sp
                         )
                     },
                     selected = currentRoute == "explore",
                     onClick = {
-                        coroutineScope.launch {
-                            navController.navigate("explore"){
-                                launchSingleTop = true
-                                restoreState = true
+                        if (currentRoute != "explore") {
+                            coroutineScope.launch {
+                                navController.navigate("explore") {
+                                    launchSingleTop =
+                                        true // Avoid multiple copies of the same destination
+                                    restoreState = true // Restore state when reselecting
+                                }
                             }
                         }
                     }
-
                 )
+
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.TextFields, contentDescription = "Read screen") },
+                    icon = {
+                        Icon(
+                            Icons.Default.TextFields,
+                            contentDescription = stringResource(R.string.tab_read)
+                        )
+                    },
                     label = {
                         Text(
                             stringResource(R.string.tab_read),
                             maxLines = 1,
                             softWrap = false,
-                            fontSize = 10.sp,
+                            fontSize = 10.sp
                         )
                     },
                     selected = currentRoute == "read",
                     onClick = {
-                        coroutineScope.launch {
-                            navController.navigate("read"){
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings screen") },
-                    label = {
-                        Text(
-                            stringResource(R.string.tab_settings),
-                            maxLines = 1,
-                            softWrap = false,
-                            fontSize = 10.sp,
-                        )
-                    },
-                    selected = currentRoute == "settings",
-                    onClick = {
-                        coroutineScope.launch {
-                            navController.navigate("settings"){
-                                launchSingleTop = true
-                                restoreState = true
+                        if (currentRoute != "read") {
+                            coroutineScope.launch {
+                                navController.navigate("read") {
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
                         }
                     }
                 )
 
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.ViewInAr, contentDescription = "Depth screen") },
+                    icon = {
+                        Icon(
+                            Icons.Default.ViewInAr,
+                            contentDescription = stringResource(R.string.tab_depth)
+                        )
+                    },
                     label = {
                         Text(
                             stringResource(R.string.tab_depth),
                             maxLines = 1,
                             softWrap = false,
-                            fontSize = 10.sp,
+                            fontSize = 10.sp
                         )
                     },
                     selected = currentRoute == "depth",
                     onClick = {
-                        coroutineScope.launch {
-                            navController.navigate("depth") {
-                                launchSingleTop = true
-                                restoreState = true
+                        if (currentRoute != "depth") {
+                            coroutineScope.launch {
+                                navController.navigate("depth") {
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
+                    }
+                )
+
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.tab_settings)
+                        )
+                    },
+                    label = {
+                        Text(
+                            stringResource(R.string.tab_settings),
+                            maxLines = 1,
+                            softWrap = false,
+                            fontSize = 10.sp
+                        )
+                    },
+                    selected = currentRoute == "settings",
+                    onClick = {
+                        if (currentRoute != "settings") {
+                            coroutineScope.launch {
+                                navController.navigate("settings") {
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
                             }
                         }
                     }
@@ -159,24 +185,15 @@ fun MainScreen(
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = "explore",
+            startDestination = "explore", // Initial screen
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues) // Apply padding from Scaffold
         ) {
-            composable("explore") {
-                ExploreScreen(cameraExecutor, yoloModelLoader, imageProcessor)
-            }
-            composable("read") {
-                ReadScreen(cameraExecutor)
-            }
-            composable("settings") {
-                SettingsScreen(preferencesManager)
-            }
-            composable("depth") {
-                DepthScreen(cameraExecutor, preferencesManager)
-            }
+            composable("explore") { ExploreScreen(cameraExecutor, yoloModelLoader, imageProcessor) }
+            composable("read") { ReadScreen(cameraExecutor) }
+            composable("settings") { SettingsScreen(preferencesManager) }
+            composable("depth") { DepthScreen(cameraExecutor, preferencesManager) }
         }
     }
 }
-
