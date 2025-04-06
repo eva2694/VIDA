@@ -23,7 +23,6 @@ class AssistViewModelFactory(
             return AssistViewModel(
                 yoloModelLoader = yoloModelLoader,
                 depthEstimator = depthEstimator,
-                context = context.applicationContext,
                 tts = ttsInstance
             ) as T
         }

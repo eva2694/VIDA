@@ -39,8 +39,7 @@ import java.util.concurrent.TimeUnit
 class AssistViewModel(
     private val yoloModelLoader: YoloModelLoader,
     private val depthEstimator: DepthEstimator,
-    private val context: Context,
-    val tts: AppTextToSpeech
+    val tts: AppTextToSpeech,
 ) : ViewModel() {
 
     private val _assistResults = mutableStateOf<List<AssistResult>>(emptyList())
@@ -66,7 +65,7 @@ class AssistViewModel(
 
 
     @OptIn(ExperimentalGetImage::class)
-    fun processImage(imageProxy: ImageProxy) {
+    fun processImage(imageProxy: ImageProxy, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             val rotatedBitmap: Bitmap?
             val fullDepthMap: Array<Array<Array<FloatArray>>>?

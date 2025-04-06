@@ -64,7 +64,7 @@ fun AssistScreen(
                 .build()
 
             imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-                viewModel.processImage(imageProxy)
+                viewModel.processImage(imageProxy, context)
             }
 
             // Camera Provider Setup
