@@ -3,6 +3,8 @@
     <string name="tab_read">Beri</string>
     <string name="tab_explore">Razglej se</string>
     <string name="tab_settings">Nastavitve</string>
+    <string name="tab_assist">Pomočnik</string>
+    <string name="tab_modes">Izberi način</string>
     <string name="settings_title_lang">Izberite jezik</string>
     <string name="settings_eng">Angleščina</string>
     <string name="settings_sl">Slovenščina</string>
@@ -16,4 +18,6 @@
     <string name="depth_desc_very_far">Zelo Daleč</string>
     <string name="depth_ui_feedback">%.1f (%d/11)</string>
     <string name="depth_tts_feedback">%1$s (%2$d od 11)</string>
+    <string name="tts_ocr_prefix"> Berem: </string>
+    <string name="currently_selected">Trenutno izbrano</string>
 </resources>
