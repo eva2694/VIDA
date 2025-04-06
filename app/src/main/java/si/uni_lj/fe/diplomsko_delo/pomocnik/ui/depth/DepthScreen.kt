@@ -94,7 +94,7 @@ fun DepthScreen(cameraExecutor: ExecutorService, preferencesManager: Preferences
             Image(
                 bitmap = bitmap.asImageBitmap(),
                 contentDescription = "Depth Map Visualization",
-                contentScale = ContentScale.Crop, // Or ContentScale.Fit
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
                 alpha = 0.8f
             )

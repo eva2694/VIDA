@@ -9,5 +9,11 @@
     <string name="setting_rs_title">Select Reading Speed</string>
     <string name="settings_title_dm">Dark Mode</string>
     <string name="tab_depth">Depth</string>
-    <string name="depth_feedback">Object is approximately %.2f units away</string>
+    <string name="depth_desc_very_close">Very Close</string>
+    <string name="depth_desc_close">Close</string>
+    <string name="depth_desc_medium">Medium Distance</string>
+    <string name="depth_desc_far">Far</string>
+    <string name="depth_desc_very_far">Very Far</string>
+    <string name="depth_ui_feedback">%.1f (%d/11)</string>
+    <string name="depth_tts_feedback">%1$s (%2$d out of 11)</string>
 </resources>

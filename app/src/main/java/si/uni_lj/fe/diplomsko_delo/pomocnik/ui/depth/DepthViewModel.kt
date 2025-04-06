@@ -8,7 +8,9 @@ import android.graphics.ImageFormat
 import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.YuvImage
+import android.os.SystemClock
 import android.util.Log
+import androidx.annotation.StringRes
 import androidx.camera.core.ImageProxy
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -16,11 +18,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.TimeUnit
 
 class DepthViewModel(
     context: Context,
@@ -35,35 +40,69 @@ class DepthViewModel(
     private val _depthBitmap = mutableStateOf<Bitmap?>(null)
     val depthBitmap: State<Bitmap?> = _depthBitmap
 
+    private var lastTtsCallTimestamp = 0L
+    private val ttsMutex = Mutex()
+
+    companion object {
+        private const val TAG = "DepthViewModel"
+        private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(2)
+
+        /**
+         * Defines the boundaries for mapping raw depth values to a 1-11 scale.
+         * Remember: Higher MiDaS Value = Closer = Lower Scale Number (Scale 1 is closest).
+         * Adjust these values based on testing and observation!
+         */
+        private val SCALE_BOUNDARIES = listOf(
+            1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
+        )
+        private const val MAX_SCALE = 11
+    }
+
+
     fun processImage(
         imageProxy: ImageProxy,
         context: Context
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            var bitmap: Bitmap? = null
-            var depthMap: Array<Array<Array<FloatArray>>>? = null
+            val bitmap: Bitmap?
+            val depthMap: Array<Array<Array<FloatArray>>>?
             try {
                 bitmap = imageProxyToBitmap(imageProxy)
                 depthMap = estimator.estimateDepth(bitmap)
 
                 depthMap?.let { depthOutput ->
-                    // --- Depth Value Interpretation ---
-                    // MiDaS typically outputs relative inverse depth.
-                    // The raw value isn't directly in meters. Higher values mean closer.
-                    // The text/TTS feedback should reflect this relative nature unless you calibrate.
-                    val centerDepthValue =
-                        depthOutput[0][128][128][0]
+                    val centerDepthValue = depthOutput[0][128][128][0]
+                    Log.d(TAG, "Center Depth Raw Value: $centerDepthValue") // Keep for tuning
 
-                    val centerDepthFormatted = String.format("%.2f", centerDepthValue)
-                    val feedbackText = centerDepthFormatted
+                    val scaleNumber = mapValueToScale(centerDepthValue)
+                    val descriptionResId = getQualitativeDescriptionResId(scaleNumber)
+
+                    val uiText = context.getString(
+                        R.string.depth_ui_feedback,
+                        centerDepthValue,
+                        scaleNumber
+                    )
 
                     withContext(Dispatchers.Main) {
-                        _centerDepthText.value = feedbackText
+                        _centerDepthText.value = uiText
                     }
 
-
-                    val message = context.getString(R.string.depth_feedback, centerDepthValue)
-                    tts.readText(message)
+                    val now = SystemClock.elapsedRealtime()
+                    if (now - lastTtsCallTimestamp > TTS_INTERVAL_MS) {
+                        ttsMutex.withLock {
+                            if (now - lastTtsCallTimestamp > TTS_INTERVAL_MS) {
+                                lastTtsCallTimestamp = now
+                                val descriptionString = context.getString(descriptionResId)
+                                val ttsMessage = context.getString(
+                                    R.string.depth_tts_feedback,
+                                    descriptionString,
+                                    scaleNumber
+                                )
+                                Log.d(TAG, "TTS: $ttsMessage")
+                                tts.readText(ttsMessage)
+                            }
+                        }
+                    }
 
                     val grayscaleBitmap = createGrayscaleBitmap(depthOutput)
                     withContext(Dispatchers.Main) {
@@ -71,29 +110,47 @@ class DepthViewModel(
                     }
 
                 } ?: run {
-                    Log.e("DepthViewModel", "Depth estimation failed.")
-                    // Optionally clear previous state on failure
-                    // withContext(Dispatchers.Main) {
-                    //     _centerDepthText.value = "Error"
-                    //     _depthBitmap.value = null
-                    // }
+                    Log.e(TAG, "Depth estimation failed.")
+                    withContext(Dispatchers.Main) { _centerDepthText.value = "Estimation Failed" }
                 }
             } catch (e: Exception) {
-                Log.e("DepthViewModel", "Error processing image or depth", e)
-                withContext(Dispatchers.Main) {
-                    _centerDepthText.value = "Processing Error"
-                    // _depthBitmap.value = null // Keep last valid bitmap? Or clear?
-                }
+                Log.e(TAG, "Error processing image or depth", e)
+                withContext(Dispatchers.Main) { _centerDepthText.value = "Processing Error" }
             } finally {
+                // Crucial: Ensure the ImageProxy is closed to release the camera buffer.
                 imageProxy.close()
             }
         }
     }
 
+    private fun mapValueToScale(value: Float): Int {
+        if (value > SCALE_BOUNDARIES[0]) return 1
+        for (i in 0 until SCALE_BOUNDARIES.size - 1) {
+            if (value > SCALE_BOUNDARIES[i + 1] && value <= SCALE_BOUNDARIES[i]) {
+                return i + 2
+            }
+        }
+        return MAX_SCALE
+    }
+
+    @StringRes
+    private fun getQualitativeDescriptionResId(scaleNumber: Int): Int {
+        return when (scaleNumber) {
+            1, 2 -> R.string.depth_desc_very_close
+            3, 4 -> R.string.depth_desc_close
+            5, 6, 7 -> R.string.depth_desc_medium
+            8, 9, 10 -> R.string.depth_desc_far
+            else -> R.string.depth_desc_very_far
+        }
+    }
+
+    /**
+     * Creates a grayscale Bitmap visualization from the raw depth map data,
+     * normalizing based on the min/max depth found in the current frame.
+     */
     private fun createGrayscaleBitmap(depthMap: Array<Array<Array<FloatArray>>>): Bitmap {
         val height = depthMap[0].size
         val width = depthMap[0][0].size
-
         val grayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         var min = Float.MAX_VALUE
         var max = Float.MIN_VALUE
@@ -106,52 +163,42 @@ class DepthViewModel(
             }
         }
 
-        // --- Visualization Stability Note ---
-        // Normalizing based on the current frame's min/max can cause the visual
-        // representation of a static object to flicker if other objects change the overall min/max.
-        // For more stable visualization, consider:
-        // 1. Clamping: Use fixed min/max values expected from the model.
-        // 2. Filtering: Apply temporal smoothing to the min/max values.
-        // 3. Color Mapping: Use a color map (like VIRIDIS) instead of grayscale for better depth differentiation.
-
         val range = max - min
+
         if (range <= 0f) {
             for (y in 0 until height) {
                 for (x in 0 until width) {
-                    val color = 0xFF808080.toInt() // Mid-gray
-                    grayscale.setPixel(x, y, color)
+                    grayscale.setPixel(x, y, 0xFF808080.toInt()) // Mid-gray
                 }
             }
             return grayscale
         }
 
-
         for (y in 0 until height) {
             for (x in 0 until width) {
-                // Normalize the depth value to 0-255 range for grayscale
                 val norm = ((depthMap[0][y][x][0] - min) / range * 255).toInt().coerceIn(0, 255)
-                // Create ARGB color (alpha=255, R=G=B=norm)
                 val color = (0xFF shl 24) or (norm shl 16) or (norm shl 8) or norm
                 grayscale.setPixel(x, y, color)
             }
         }
+        /*
+         * Visualization Stability Note:
+         * Normalizing based on the current frame's min/max can cause the visual
+         * representation of a static object to flicker if other objects enter/leave
+         * the frame, changing the overall min/max. Consider alternative normalization strategies
+         * (clamping, temporal filtering) or color maps for more stable visualization.
+         */
         return grayscale
     }
 
     /**
-     * Converts an ImageProxy (YUV_420_888 format) to a Bitmap.
+     * Converts an ImageProxy (expecting YUV_420_888 format) to a Bitmap.
      *
-     * NOTE: This YUV->NV21->JPEG->Bitmap conversion is common but INEFFICIENT.
-     * For performance-critical applications, consider:
-     * 1. Native Code (libyuv): Use JNI to call optimized C++ YUV-to-RGB conversion routines.
-     * 2. RenderScript (Deprecated): Was previously an option for accelerated conversion.
-     * 3. Exploring other libraries or direct buffer manipulation if possible.
+     * WARNING: This YUV->NV21->JPEG->Bitmap conversion is INEFFICIENT. TODO: Improve?
      */
     @SuppressLint("UnsafeOptInUsageError")
     private fun imageProxyToBitmap(image: ImageProxy): Bitmap {
-        require(image.format == ImageFormat.YUV_420_888) {
-            "Unsupported image format: ${image.format}"
-        }
+        require(image.format == ImageFormat.YUV_420_888) { "Unsupported image format: ${image.format}" }
 
         val yBuffer = image.planes[0].buffer
         val uBuffer = image.planes[1].buffer
@@ -168,7 +215,6 @@ class DepthViewModel(
         uBuffer.get(nv21, ySize + vSize, uSize)
 
         val yuvImage = YuvImage(nv21, ImageFormat.NV21, image.width, image.height, null)
-
         val out = ByteArrayOutputStream()
         yuvImage.compressToJpeg(Rect(0, 0, image.width, image.height), 90, out)
         val imageBytes = out.toByteArray()
@@ -180,17 +226,16 @@ class DepthViewModel(
             val matrix = Matrix().apply { postRotate(rotationDegrees.toFloat()) }
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         }
-
         return bitmap
     }
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("DepthViewModel", "Closing DepthEstimator.")
+        Log.d(TAG, "Closing DepthEstimator.")
         try {
             estimator.close()
         } catch (e: Exception) {
-            Log.e("DepthViewModel", "Error closing DepthEstimator", e)
+            Log.e(TAG, "Error closing DepthEstimator", e)
         }
     }
 }
