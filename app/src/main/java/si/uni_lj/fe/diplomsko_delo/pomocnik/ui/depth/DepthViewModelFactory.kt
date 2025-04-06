@@ -11,7 +11,7 @@ class DepthViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DepthViewModel::class.java)) {
             val tts = TTSManager.getInstance(context)
-            return DepthViewModel(tts) as T
+            return DepthViewModel(context, tts) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
