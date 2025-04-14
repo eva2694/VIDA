@@ -130,7 +130,7 @@ fun ExploreScreen(
                     detectionResults.forEach { result ->
                         val text = result.clsName
 
-                        if(result.cnf > 0.4) {
+                        if (result.cnf > 0.3) {
                             viewModel.speak(text)
                         }
                     }

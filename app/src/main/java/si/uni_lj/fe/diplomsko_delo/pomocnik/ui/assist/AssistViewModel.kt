@@ -61,7 +61,7 @@ class AssistViewModel(
     companion object {
         private const val TAG = "AssistViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(3)
-        private const val YOLO_CONFIDENCE_THRESHOLD = 0.4f
+        private const val YOLO_CONFIDENCE_THRESHOLD = 0.3f
 
         // Depth scale boundaries for distance estimation
         private val SCALE_BOUNDARIES = listOf(
