@@ -31,6 +31,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.AssistResult
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator.Companion.getQualitativeDescriptionResId
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 import java.io.ByteArrayOutputStream
@@ -62,12 +63,6 @@ class AssistViewModel(
         private const val TAG = "AssistViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(3)
         private const val YOLO_CONFIDENCE_THRESHOLD = 0.3f
-
-        // Depth scale boundaries for distance estimation
-        private val SCALE_BOUNDARIES = listOf(
-            1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
-        )
-        private const val MAX_SCALE = 11
     }
 
     /**
@@ -107,19 +102,18 @@ class AssistViewModel(
                     if (detection.cnf < YOLO_CONFIDENCE_THRESHOLD) continue
 
                     // Calculate depth scale for the detected object
-                    var depthScale = -1
+                    var depth = -1
                     if (fullDepthMap != null) {
                         try {
                             val centerX = (detection.x1 + detection.x2) / 2f
                             val centerY = (detection.y1 + detection.y2) / 2f
                             val depthMapX = (centerX * (fullDepthMap[0][0].size - 1)).toInt().coerceIn(0, fullDepthMap[0][0].size - 1)
                             val depthMapY = (centerY * (fullDepthMap[0].size - 1)).toInt().coerceIn(0, fullDepthMap[0].size - 1)
-                            val rawDepth = fullDepthMap[0][depthMapY][depthMapX][0]
-                            depthScale = mapValueToScale(rawDepth)
-                            Log.d(TAG, "Object: ${detection.clsName}, CenterDepth: $rawDepth, Scale: $depthScale")
+                            depth = fullDepthMap[0][depthMapY][depthMapX][0].toInt()
+                            Log.d(TAG, "Object: ${detection.clsName}, CenterDepth: $depth")
                         } catch (e: Exception) {
                             Log.e(TAG, "Error sampling depth for ${detection.clsName}", e)
-                            depthScale = -1
+                            depth = -1
                         }
                     }
 
@@ -163,7 +157,7 @@ class AssistViewModel(
                     combinedResults.add(
                         AssistResult(
                             boundingBox = detection,
-                            depthScale = depthScale,
+                            depth = depth,
                             ocrText = ocrTextResult
                         )
                     )
@@ -205,14 +199,13 @@ class AssistViewModel(
 
                         val messages = results.map { result ->
                             var message: String
-                            if (result.depthScale != -1) {
-                                val descriptionResId = getQualitativeDescriptionResId(result.depthScale)
+                            if (result.depth != -1) {
+                                val descriptionResId = getQualitativeDescriptionResId(result.depth)
                                 val descriptionString = context.getString(descriptionResId)
 
                                 message = context.getString(
                                     R.string.depth_tts_feedback,
                                     descriptionString,
-                                    result.depthScale
                                 )
 
                                 message = "${result.boundingBox.clsName}, $message"
@@ -236,35 +229,6 @@ class AssistViewModel(
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Maps a depth value to a scale number (1-11) representing distance.
-     * Lower numbers indicate closer objects.
-     */
-    private fun mapValueToScale(value: Float): Int {
-        if (value <= 0) return MAX_SCALE
-        if (value > SCALE_BOUNDARIES[0]) return 1
-        for (i in 0 until SCALE_BOUNDARIES.size - 1) {
-            if (value > SCALE_BOUNDARIES[i + 1] && value <= SCALE_BOUNDARIES[i]) {
-                return i + 2
-            }
-        }
-        return MAX_SCALE
-    }
-
-    /**
-     * Returns the string resource ID for qualitative depth description based on scale.
-     */
-    @androidx.annotation.StringRes
-    private fun getQualitativeDescriptionResId(scaleNumber: Int): Int {
-        return when (scaleNumber) {
-            1, 2 -> R.string.depth_desc_very_close
-            3, 4 -> R.string.depth_desc_close
-            5, 6, 7 -> R.string.depth_desc_medium
-            8, 9, 10 -> R.string.depth_desc_far
-            else -> R.string.depth_desc_very_far
         }
     }
 
@@ -307,6 +271,10 @@ class AssistViewModel(
             Log.e(TAG, "Error converting YUV ImageProxy to Bitmap", e)
             null
         }
+    }
+
+    fun stopReading() {
+        tts.stop()
     }
 
     override fun onCleared() {

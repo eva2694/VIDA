@@ -10,7 +10,6 @@ import android.graphics.Rect
 import android.graphics.YuvImage
 import android.os.SystemClock
 import android.util.Log
-import androidx.annotation.StringRes
 import androidx.camera.core.ImageProxy
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -51,11 +50,6 @@ class DepthViewModel(
         private const val TAG = "DepthViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(2)
 
-        // Higher MiDaS Value = Closer = Lower Scale Number (Scale 1 is closest)
-        private val SCALE_BOUNDARIES = listOf(
-            1000f, 900f, 800f, 700f, 600f, 500f, 400f, 300f, 200f, 100f
-        )
-        private const val MAX_SCALE = 11
     }
 
 
@@ -75,16 +69,13 @@ class DepthViewModel(
 
                 depthMap?.let { depthOutput ->
                     val centerDepthValue = depthOutput[0][128][128][0]
+                    val valInt = centerDepthValue.toInt()
                     Log.d(TAG, "Center Depth Raw Value: $centerDepthValue")
 
-                    val scaleNumber = mapValueToScale(centerDepthValue)
-                    val descriptionResId = getQualitativeDescriptionResId(scaleNumber)
+                    val descriptionResId =
+                        DepthEstimator.getQualitativeDescriptionResId(res = valInt)
 
-                    val uiText = context.getString(
-                        R.string.depth_ui_feedback,
-                        centerDepthValue,
-                        scaleNumber
-                    )
+                    val uiText = "${1200 - centerDepthValue} ${context.getString(R.string.units)}"
 
                     withContext(Dispatchers.Main) {
                         _centerDepthText.value = uiText
@@ -99,8 +90,8 @@ class DepthViewModel(
                                 val ttsMessage = context.getString(
                                     R.string.depth_tts_feedback,
                                     descriptionString,
-                                    scaleNumber
-                                )
+
+                                    )
                                 Log.d(TAG, "TTS: $ttsMessage")
                                 tts.readText(ttsMessage)
                             }
@@ -125,29 +116,7 @@ class DepthViewModel(
         }
     }
 
-    /**
-     * Maps a raw depth value to a scale from 1-11.
-     */
-    private fun mapValueToScale(value: Float): Int {
-        if (value > SCALE_BOUNDARIES[0]) return 1
-        for (i in 0 until SCALE_BOUNDARIES.size - 1) {
-            if (value > SCALE_BOUNDARIES[i + 1] && value <= SCALE_BOUNDARIES[i]) {
-                return i + 2
-            }
-        }
-        return MAX_SCALE
-    }
 
-    @StringRes
-    private fun getQualitativeDescriptionResId(scaleNumber: Int): Int {
-        return when (scaleNumber) {
-            1, 2 -> R.string.depth_desc_very_close
-            3, 4 -> R.string.depth_desc_close
-            5, 6, 7 -> R.string.depth_desc_medium
-            8, 9, 10 -> R.string.depth_desc_far
-            else -> R.string.depth_desc_very_far
-        }
-    }
 
     /**
      * Creates a grayscale visualization of the depth map.

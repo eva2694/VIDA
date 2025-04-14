@@ -14,9 +14,13 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -24,10 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
@@ -128,7 +135,13 @@ fun AssistScreen(
 
                     // Format detection label
                     val confidencePercent = "%.0f".format(bbox.cnf * 100)
-                    val scaleText = if (result.depthScale != -1) "(${result.depthScale}/11)" else "(Depth N/A)"
+
+                    val scaleText = if (result.depth != -1) {
+                        "(${1200 - result.depth} ${context.getString(R.string.units)})"
+                    } else {
+                        "(${context.getString(R.string.depth)} N/A)"
+                    }
+
                     val labelText = "${bbox.clsName} ${confidencePercent}% $scaleText"
 
                     // Draw label with background
@@ -196,6 +209,15 @@ fun AssistScreen(
                     Log.w("AssistScreen Draw", "Skipping drawing invalid bbox: $bbox")
                 }
             }
+        }
+
+        Button(
+            onClick = { viewModel.stopReading() },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            Text(text = stringResource(R.string.stop_reading))
         }
     }
 }

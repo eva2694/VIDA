@@ -5,6 +5,7 @@
     <string name="tab_settings">Settings</string>
     <string name="tab_assist">Assistant</string>
     <string name="tab_modes">Modes</string>
+    <string name="tab_scene">Scene</string>
     <string name="settings_title_lang">Select Language</string>
     <string name="settings_eng">English</string>
     <string name="settings_sl">Slovenian</string>
@@ -16,8 +17,11 @@
     <string name="depth_desc_medium">Medium Distance</string>
     <string name="depth_desc_far">Far</string>
     <string name="depth_desc_very_far">Very Far</string>
-    <string name="depth_ui_feedback">%.1f (%d/11)</string>
-    <string name="depth_tts_feedback">%1$s (%2$d out of 11)</string>
+    <string name="depth_ui_feedback">%.1f</string>
+    <string name="depth_tts_feedback">%1$s</string>
     <string name="tts_ocr_prefix"> Reads: </string>
     <string name="currently_selected">Currently selected</string>
+    <string name="units">units (MiDaS)</string>
+    <string name="depth">Depth</string>
+    <string name="stop_reading">Stop Reading</string>
 </resources>

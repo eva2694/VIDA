@@ -44,4 +44,9 @@ class ReadViewModel(
                 image.close()
             }
     }
+    
+    fun stopReading() {
+        tts.stop()
+    }
+
 }

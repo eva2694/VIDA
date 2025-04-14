@@ -3,9 +3,11 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.annotation.StringRes
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
+import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import java.io.IOException
 
 /**
@@ -17,6 +19,20 @@ class DepthEstimator(context: Context) {
     private var isClosed = false
 
     companion object {
+        /**
+         * Returns a qualitative depth description resource ID based on the numeric distance.
+         */
+        @StringRes
+        fun getQualitativeDescriptionResId(res: Int): Int {
+            return when (res) {
+                in 0..150 -> R.string.depth_desc_very_far
+                in 151..300 -> R.string.depth_desc_far
+                in 301..450 -> R.string.depth_desc_medium
+                in 451..800 -> R.string.depth_desc_close
+                else -> R.string.depth_desc_very_close
+            }
+        }
+
         private const val TAG = "DepthEstimator"
         private const val MODEL_INPUT_WIDTH = 256
         private const val MODEL_INPUT_HEIGHT = 256
@@ -95,6 +111,7 @@ class DepthEstimator(context: Context) {
         }
         return input
     }
+
 
     /**
      * Releases model resources.
