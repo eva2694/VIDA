@@ -11,4 +11,6 @@ object Constants {
     const val SCENE_DETECTOR_PATH = "resnet18_places365_float32.tflite"
     const val SCENE_LABELS_PATH_EN = "places365_labels_en.txt"
     const val SCENE_LABELS_PATH_SI = "places365_labels_si.txt"
+
+    const val SCENE_READ_CONFIDENCE = 0.4f
 }

@@ -31,7 +31,8 @@ class AssistViewModelFactory(
             return AssistViewModel(
                 yoloModelLoader = yoloModelLoader,
                 depthEstimator = depthEstimator,
-                tts = ttsInstance
+                tts = ttsInstance,
+                context = context.applicationContext
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

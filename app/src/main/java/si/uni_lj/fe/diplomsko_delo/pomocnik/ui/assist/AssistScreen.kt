@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -66,6 +67,11 @@ fun AssistScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
     val assistResults by viewModel.assistResults
+
+    // Reset scene detection when screen is focused
+    LaunchedEffect(Unit) {
+        viewModel.resetSceneDetection()
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Camera preview with image analysis

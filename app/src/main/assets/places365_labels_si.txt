@@ -93,7 +93,7 @@ Cerkev zunanja
 Učilnica
 Čista soba
 Pregrada
-Omarica
+Omara
 Trgovina z oblačili
 Obala
 Kokpit
@@ -103,7 +103,7 @@ Konferenčni center
 Konferenčna soba
 Gradbišče
 Koruzno polje
-Korral
+Koralni greben
 Hodnik
 Koča
 Sodišče
@@ -115,14 +115,14 @@ Jez
 Delikatesa
 Veleblagovnica
 Puščava pesek
-Puščava vegetacija
+Puščava rastje
 Puščavska cesta
 Gostilna na prostem
 Jedilnica
 Jedilnica
 Diskoteka
 Vhod na prostem
-Dijaška soba
+Študentska soba
 Središče mesta
 Oblačilnica
 Dvorišče

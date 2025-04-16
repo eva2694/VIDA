@@ -22,19 +22,28 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.support.common.FileUtil
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
 import si.uni_lj.fe.diplomsko_delo.pomocnik.R
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.AssistResult
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.DepthEstimator.Companion.getQualitativeDescriptionResId
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
+import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
+import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
 /**
@@ -46,6 +55,7 @@ class AssistViewModel(
     private val yoloModelLoader: YoloModelLoader,
     private val depthEstimator: DepthEstimator,
     val tts: AppTextToSpeech,
+    private val context: Context
 ) : ViewModel() {
 
     // UI state
@@ -59,10 +69,129 @@ class AssistViewModel(
     private var lastTtsCallTimestamp = 0L
     private val ttsMutex = Mutex()
 
+    // Scene detection
+    private var sceneInterpreter: Interpreter? = null
+    private var sceneLabels = mutableListOf<String>()
+    private var hasPerformedSceneDetection = false
+    private val preferencesManager = PreferencesManager(context)
+
+
     companion object {
         private const val TAG = "AssistViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(3)
         private const val YOLO_CONFIDENCE_THRESHOLD = 0.3f
+
+        // Scene detection constants
+        private const val INPUT_MEAN = 0.485f
+        private const val INPUT_STANDARD_DEVIATION = 0.229f
+        private const val INPUT_SIZE = 224
+        private const val NUM_CLASSES = 365
+    }
+
+    init {
+        initializeSceneDetector()
+        loadSceneLabels()
+        observeLanguageChanges()
+    }
+
+    private fun observeLanguageChanges() {
+        viewModelScope.launch {
+            preferencesManager.language.collect {
+                loadSceneLabels()
+            }
+        }
+    }
+
+    private fun initializeSceneDetector() {
+        try {
+            val options = Interpreter.Options().apply {
+                numThreads = 4
+            }
+            val model = FileUtil.loadMappedFile(context, Constants.SCENE_DETECTOR_PATH)
+            sceneInterpreter = Interpreter(model, options)
+
+            val inputShape = sceneInterpreter?.getInputTensor(0)?.shape()
+            val outputShape = sceneInterpreter?.getOutputTensor(0)?.shape()
+            Log.d(TAG, "Scene model input shape: ${inputShape?.contentToString()}")
+            Log.d(TAG, "Scene model output shape: ${outputShape?.contentToString()}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error initializing scene classifier interpreter", e)
+        }
+    }
+
+    private fun loadSceneLabels() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val lang = preferencesManager.language.first()
+                val labelPath =
+                    if (lang == "sl") Constants.SCENE_LABELS_PATH_SI else Constants.SCENE_LABELS_PATH_EN
+                context.assets.open(labelPath).use { inputStream ->
+                    BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                        sceneLabels.clear()
+                        reader.lineSequence().forEach { line ->
+                            val trimmedLine = line.trim()
+                            if (trimmedLine.isNotEmpty()) {
+                                sceneLabels.add(trimmedLine.replace("_", " "))
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading scene labels", e)
+            }
+        }
+    }
+
+    private fun detectScene(bitmap: Bitmap): String? {
+        if (sceneInterpreter == null || sceneLabels.isEmpty()) return null
+
+        val pixels = IntArray(INPUT_SIZE * INPUT_SIZE)
+        bitmap.getPixels(pixels, 0, INPUT_SIZE, 0, 0, INPUT_SIZE, INPUT_SIZE)
+
+        val inputBuffer = TensorBuffer.createFixedSize(
+            intArrayOf(1, 3, INPUT_SIZE, INPUT_SIZE),
+            DataType.FLOAT32
+        )
+
+        val inputArray = FloatArray(1 * 3 * INPUT_SIZE * INPUT_SIZE)
+        for (i in pixels.indices) {
+            val pixel = pixels[i]
+            inputArray[i] =
+                ((pixel shr 16 and 0xFF) / 255.0f - INPUT_MEAN) / INPUT_STANDARD_DEVIATION
+            inputArray[i + INPUT_SIZE * INPUT_SIZE] =
+                ((pixel shr 8 and 0xFF) / 255.0f - INPUT_MEAN) / INPUT_STANDARD_DEVIATION
+            inputArray[i + 2 * INPUT_SIZE * INPUT_SIZE] =
+                ((pixel and 0xFF) / 255.0f - INPUT_MEAN) / INPUT_STANDARD_DEVIATION
+        }
+
+        inputBuffer.loadArray(inputArray)
+
+        val outputBuffer = TensorBuffer.createFixedSize(
+            intArrayOf(1, NUM_CLASSES),
+            DataType.FLOAT32
+        )
+
+        sceneInterpreter?.run(inputBuffer.buffer, outputBuffer.buffer)
+
+        val confidences = outputBuffer.floatArray
+        val softmaxConfidences = softmax(confidences)
+
+        val maxIndex =
+            softmaxConfidences.indices.maxByOrNull { softmaxConfidences[it] } ?: return null
+        val maxConfidence = softmaxConfidences[maxIndex]
+
+        return if (maxConfidence > 0.2f) {
+            sceneLabels[maxIndex]
+        } else {
+            null
+        }
+    }
+
+    private fun softmax(input: FloatArray): FloatArray {
+        val max = input.maxOrNull() ?: 0f
+        val exp = input.map { kotlin.math.exp(it - max) }
+        val sum = exp.sum()
+        return exp.map { (it / sum) }.toFloatArray()
     }
 
     /**
@@ -86,6 +215,20 @@ class AssistViewModel(
                 if (rotatedBitmap == null) {
                     Log.e(TAG, "Failed to convert ImageProxy to Bitmap")
                     return@launch
+                }
+
+                // Perform scene detection once when screen is first opened
+                if (!hasPerformedSceneDetection) {
+                    val scene = detectScene(rotatedBitmap)
+                    if (scene != null) {
+                        val lang = preferencesManager.language.first()
+                        val prefix = if (lang == "sl")
+                            context.getString(R.string.scene_prefix)
+                        else
+                            context.getString(R.string.scene_prefix)
+                        tts.readText("$prefix $scene")
+                    }
+                    hasPerformedSceneDetection = true
                 }
 
                 // Run object detection
@@ -275,6 +418,10 @@ class AssistViewModel(
 
     fun stopReading() {
         tts.stop()
+    }
+
+    fun resetSceneDetection() {
+        hasPerformedSceneDetection = false
     }
 
     override fun onCleared() {

@@ -18,13 +18,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
-import org.tensorflow.lite.gpu.CompatibilityList
-import org.tensorflow.lite.gpu.GpuDelegate
 import org.tensorflow.lite.support.common.FileUtil
-import org.tensorflow.lite.support.common.ops.CastOp
-import org.tensorflow.lite.support.common.ops.NormalizeOp
-import org.tensorflow.lite.support.image.ImageProcessor
-import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import si.uni_lj.fe.diplomsko_delo.pomocnik.Constants
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
@@ -56,18 +50,11 @@ class SceneViewModel(
     private val _sceneResults = mutableStateOf<List<SceneResult>>(emptyList())
     val sceneResults: State<List<SceneResult>> = _sceneResults
 
-    private val imageProcessor = ImageProcessor.Builder()
-        .add(NormalizeOp(INPUT_MEAN, INPUT_STANDARD_DEVIATION))
-        .add(CastOp(INPUT_IMAGE_TYPE))
-        .build()
-
     companion object {
         private const val TAG = "SceneViewModel"
         private val TTS_INTERVAL_MS = TimeUnit.SECONDS.toMillis(2)
         private const val INPUT_MEAN = 0.485f
         private const val INPUT_STANDARD_DEVIATION = 0.229f
-        private val INPUT_IMAGE_TYPE = DataType.FLOAT32
-        private const val INPUT_SIZE = 224
         private const val NUM_CLASSES = 365
     }
 
@@ -79,7 +66,7 @@ class SceneViewModel(
 
     private fun observeLanguageChanges() {
         viewModelScope.launch {
-            preferencesManager.language.collect { lang ->
+            preferencesManager.language.collect {
                 loadLabels()
             }
         }
@@ -88,7 +75,7 @@ class SceneViewModel(
     private fun initializeInterpreter() {
         try {
             val options = Interpreter.Options().apply {
-                setNumThreads(4)
+                numThreads = 4
             }
             val model = FileUtil.loadMappedFile(context, Constants.SCENE_DETECTOR_PATH)
             interpreter = Interpreter(model, options)
@@ -204,7 +191,7 @@ class SceneViewModel(
         val max = input.maxOrNull() ?: 0f
         val exp = input.map { kotlin.math.exp(it - max) }
         val sum = exp.sum()
-        return exp.map { (it / sum).toFloat() }.toFloatArray()
+        return exp.map { (it / sum) }.toFloatArray()
     }
 
     private fun updateSceneResults(results: List<SceneResult>) {
@@ -221,7 +208,7 @@ class SceneViewModel(
             if (currentTime - lastTtsCallTimestamp < TTS_INTERVAL_MS) return
 
             val topResult = results.first()
-            if (topResult.confidence > 0.2f) {
+            if (topResult.confidence > Constants.SCENE_READ_CONFIDENCE) {
                 tts.readText(topResult.className)
                 lastTtsCallTimestamp = currentTime
             }
