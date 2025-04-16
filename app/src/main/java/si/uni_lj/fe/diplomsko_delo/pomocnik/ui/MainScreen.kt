@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assistant
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TextFields
@@ -344,7 +345,7 @@ fun MainScreen(
                                         .fillMaxWidth()
                                 ) {
                                     Icon(
-                                        Icons.Default.Visibility,
+                                        Icons.Default.Image,
                                         contentDescription = stringResource(R.string.tab_scene),
                                         tint = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor
                                     )

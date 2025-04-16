@@ -113,9 +113,9 @@ class SceneViewModel(
                     BufferedReader(InputStreamReader(inputStream)).use { reader ->
                         labels.clear()
                         reader.lineSequence().forEach { line ->
-                            val parts = line.split(" ")
-                            if (parts.isNotEmpty()) {
-                                labels.add(parts[0].replace("_", " "))
+                            val trimmedLine = line.trim()
+                            if (trimmedLine.isNotEmpty()) {
+                                labels.add(trimmedLine.replace("_", " "))
                             }
                         }
                     }
