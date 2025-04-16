@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
 
@@ -19,7 +19,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.util.tts.AppTextToSpeech
  */
 class ExploreViewModel(
     private val yoloModelLoader: YoloModelLoader,
-    private val imageProcessor: ImageProcessor,
+    private val appImageProcessor: AppImageProcessor,
     val tts: AppTextToSpeech
 
 ) : ViewModel() {
@@ -32,7 +32,7 @@ class ExploreViewModel(
      */
     fun processImage(imageProxy: ImageProxy) {
         viewModelScope.launch(Dispatchers.IO) {
-            val results = imageProcessor.processImage(imageProxy, yoloModelLoader)
+            val results = appImageProcessor.processImage(imageProxy, yoloModelLoader)
             updateDetectionResults(results)
             imageProxy.close()
         }

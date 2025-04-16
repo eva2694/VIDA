@@ -57,7 +57,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth.DepthScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
@@ -71,7 +71,7 @@ import java.util.concurrent.ExecutorService
 fun MainScreen(
     cameraExecutor: ExecutorService,
     yoloModelLoader: YoloModelLoader,
-    imageProcessor: ImageProcessor,
+    appImageProcessor: AppImageProcessor,
     preferencesManager: PreferencesManager
 ) {
     // Navigation state management
@@ -375,7 +375,13 @@ fun MainScreen(
                     yoloModelLoader
                 )
             }
-            composable("explore") { ExploreScreen(cameraExecutor, yoloModelLoader, imageProcessor) }
+            composable("explore") {
+                ExploreScreen(
+                    cameraExecutor,
+                    yoloModelLoader,
+                    appImageProcessor
+                )
+            }
             composable("read") { ReadScreen(cameraExecutor) }
             composable("depth") { DepthScreen(cameraExecutor) }
             composable("settings") { SettingsScreen(preferencesManager) }

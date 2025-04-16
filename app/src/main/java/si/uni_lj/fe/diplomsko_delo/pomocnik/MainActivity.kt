@@ -20,7 +20,7 @@ import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.SplashScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.TTSManager
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var yoloModelLoader: YoloModelLoader
-    private lateinit var imageProcessor: ImageProcessor
+    private lateinit var appImageProcessor: AppImageProcessor
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
         preferencesManager = PreferencesManager(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
         yoloModelLoader = YoloModelLoader(this, preferencesManager.language)
-        imageProcessor = ImageProcessor()
+        appImageProcessor = AppImageProcessor()
 
         Log.d("MainActivity", "Camera executor initialized")
 
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                                 MainScreen(
                                     cameraExecutor,
                                     yoloModelLoader,
-                                    imageProcessor,
+                                    appImageProcessor,
                                     preferencesManager
                                 )
                             }

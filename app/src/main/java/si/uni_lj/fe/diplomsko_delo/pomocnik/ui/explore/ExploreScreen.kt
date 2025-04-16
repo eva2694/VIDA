@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import si.uni_lj.fe.diplomsko_delo.pomocnik.util.ImageProcessor
+import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.YoloModelLoader
 import java.util.concurrent.ExecutorService
 
@@ -39,11 +39,11 @@ import java.util.concurrent.ExecutorService
 fun ExploreScreen(
     cameraExecutor: ExecutorService,
     yoloModelLoader: YoloModelLoader,
-    imageProcessor: ImageProcessor
+    appImageProcessor: AppImageProcessor
 ) {
     val context = LocalContext.current
     val viewModelFactory = remember {
-        ExploreViewModelFactory(context, yoloModelLoader, imageProcessor)
+        ExploreViewModelFactory(context, yoloModelLoader, appImageProcessor)
     }
     val viewModel: ExploreViewModel = viewModel(factory = viewModelFactory)
 

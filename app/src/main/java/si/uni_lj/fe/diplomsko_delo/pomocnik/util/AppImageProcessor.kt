@@ -10,7 +10,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.models.BoundingBox
 /**
  * Handles image processing operations for object detection.
  */
-class ImageProcessor {
+class AppImageProcessor {
 
     /**
      * Processes a camera image and performs object detection.
