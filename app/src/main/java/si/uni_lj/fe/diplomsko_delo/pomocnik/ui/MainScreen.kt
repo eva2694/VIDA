@@ -56,6 +56,7 @@ import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.assist.AssistScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.depth.DepthScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.explore.ExploreScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.read.ReadScreen
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.scene.SceneScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.settings.SettingsScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
@@ -82,7 +83,7 @@ fun MainScreen(
 
     // UI state
     var isExploreMenuExpanded by remember { mutableStateOf(false) }
-    val modesRoutes = listOf("explore", "read", "depth")
+    val modesRoutes = listOf("explore", "read", "depth", "scene")
     val isModesSelected = currentRoute in modesRoutes
 
     // Theme colors for navigation items
@@ -323,6 +324,52 @@ fun MainScreen(
                                 }
                             }
                         )
+                        DropdownMenuItem(
+                            text = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .background(
+                                            color = Color.Transparent,
+                                            shape = RoundedCornerShape(8.dp)
+                                        )
+                                        .then(
+                                            if (currentRoute == "scene") Modifier.border(
+                                                width = 2.dp,
+                                                color = selectedDropdownItemColor,
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) else Modifier
+                                        )
+                                        .padding(8.dp)
+                                        .fillMaxWidth()
+                                ) {
+                                    Icon(
+                                        Icons.Default.Visibility,
+                                        contentDescription = stringResource(R.string.tab_scene),
+                                        tint = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor
+                                    )
+                                    Text(
+                                        stringResource(R.string.tab_scene),
+                                        color = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor,
+                                        modifier = Modifier.padding(start = 8.dp)
+                                    )
+                                }
+                            },
+                            onClick = {
+                                isExploreMenuExpanded = false
+                                if (currentRoute != "scene") {
+                                    coroutineScope.launch {
+                                        navController.navigate("scene") {
+                                            popUpTo(navController.graph.startDestinationId) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    }
+                                }
+                            }
+                        )
                     }
                 }
 
@@ -384,6 +431,7 @@ fun MainScreen(
             }
             composable("read") { ReadScreen(cameraExecutor) }
             composable("depth") { DepthScreen(cameraExecutor) }
+            composable("scene") { SceneScreen(cameraExecutor) }
             composable("settings") { SettingsScreen(preferencesManager) }
         }
     }

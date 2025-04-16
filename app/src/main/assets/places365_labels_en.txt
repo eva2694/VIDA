@@ -1,0 +1,365 @@
+Airfield
+Airplane Cabin
+Airport Terminal
+Alcove
+Alley
+Amphitheater
+Amusement Arcade
+Amusement Park
+Apartment Building Outdoor
+Aquarium
+Aqueduct
+Arcade
+Arch
+Archaelogical Excavation
+Archive
+Arena Hockey
+Arena Performance
+Arena Rodeo
+Army Base
+Art Gallery
+Art School
+Art Studio
+Artists Loft
+Assembly Line
+Athletic Field Outdoor
+Atrium Public
+Attic
+Auditorium
+Auto Factory
+Auto Showroom
+Badlands
+Bakery Shop
+Balcony Exterior
+Balcony Interior
+Ball Pit
+Ballroom
+Bamboo Forest
+Bank Vault
+Banquet Hall
+Bar
+Barn
+Barndoor
+Baseball Field
+Basement
+Basketball Court Indoor
+Bathroom
+Bazaar Indoor
+Bazaar Outdoor
+Beach
+Beach House
+Beauty Salon
+Bedchamber
+Bedroom
+Beer Garden
+Beer Hall
+Berth
+Biology Laboratory
+Boardwalk
+Boat Deck
+Boathouse
+Bookstore
+Booth Indoor
+Botanical Garden
+Bow Window Indoor
+Bowling Alley
+Boxing Ring
+Bridge
+Building Facade
+Bullring
+Burial Chamber
+Bus Interior
+Bus Station Indoor
+Butchers Shop
+Butte
+Cabin Outdoor
+Cafeteria
+Campsite
+Campus
+Canal Natural
+Canal Urban
+Candy Store
+Canyon
+Car Interior
+Carrousel
+Castle
+Catacomb
+Cemetery
+Chalet
+Chemistry Lab
+Childs Room
+Church Indoor
+Church Outdoor
+Classroom
+Clean Room
+Cliff
+Closet
+Clothing Store
+Coast
+Cockpit
+Coffee Shop
+Computer Room
+Conference Center
+Conference Room
+Construction Site
+Corn Field
+Corral
+Corridor
+Cottage
+Courthouse
+Courtyard
+Creek
+Crevasse
+Crosswalk
+Dam
+Delicatessen
+Department Store
+Desert Sand
+Desert Vegetation
+Desert Road
+Diner Outdoor
+Dining Hall
+Dining Room
+Discotheque
+Doorway Outdoor
+Dorm Room
+Downtown
+Dressing Room
+Driveway
+Drugstore
+Elevator Door
+Elevator Lobby
+Elevator Shaft
+Embassy
+Engine Room
+Entrance Hall
+Escalator Indoor
+Excavation
+Fabric Store
+Farm
+Fastfood Restaurant
+Field Cultivated
+Field Wild
+Field Road
+Fire Escape
+Fire Station
+Fishpond
+Flea Market Indoor
+Florist Shop Indoor
+Food Court
+Football Field
+Forest Broadleaf
+Forest Path
+Forest Road
+Formal Garden
+Fountain
+Galley
+Garage Indoor
+Garage Outdoor
+Gas Station
+Gazebo Exterior
+General Store Indoor
+General Store Outdoor
+Gift Shop
+Glacier
+Golf Course
+Greenhouse Indoor
+Greenhouse Outdoor
+Grotto
+Gymnasium Indoor
+Hangar Indoor
+Hangar Outdoor
+Harbor
+Hardware Store
+Hayfield
+Heliport
+Highway
+Home Office
+Home Theater
+Hospital
+Hospital Room
+Hot Spring
+Hotel Outdoor
+Hotel Room
+House
+Hunting Lodge Outdoor
+Ice Cream Parlor
+Ice Floe
+Ice Shelf
+Ice Skating Rink Indoor
+Ice Skating Rink Outdoor
+Iceberg
+Igloo
+Industrial Area
+Inn Outdoor
+Islet
+Jacuzzi Indoor
+Jail Cell
+Japanese Garden
+Jewelry Shop
+Junkyard
+Kasbah
+Kennel Outdoor
+Kindergarden Classroom
+Kitchen
+Lagoon
+Lake Natural
+Landfill
+Landing Deck
+Laundromat
+Lawn
+Lecture Room
+Legislative Chamber
+Library Indoor
+Library Outdoor
+Lighthouse
+Living Room
+Loading Dock
+Lobby
+Lock Chamber
+Locker Room
+Mansion
+Manufactured Home
+Market Indoor
+Market Outdoor
+Marsh
+Martial Arts Gym
+Mausoleum
+Medina
+Mezzanine
+Moat Water
+Mosque Outdoor
+Motel
+Mountain
+Mountain Path
+Mountain Snowy
+Movie Theater Indoor
+Museum Indoor
+Museum Outdoor
+Music Studio
+Natural History Museum
+Nursery
+Nursing Home
+Oast House
+Ocean
+Office
+Office Building
+Office Cubicles
+Oilrig
+Operating Room
+Orchard
+Orchestra Pit
+Pagoda
+Palace
+Pantry
+Park
+Parking Garage Indoor
+Parking Garage Outdoor
+Parking Lot
+Pasture
+Patio
+Pavilion
+Pet Shop
+Pharmacy
+Phone Booth
+Physics Laboratory
+Picnic Area
+Pier
+Pizzeria
+Playground
+Playroom
+Plaza
+Pond
+Porch
+Promenade
+Pub Indoor
+Racecourse
+Raceway
+Raft
+Railroad Track
+Rainforest
+Reception
+Recreation Room
+Repair Shop
+Residential Neighborhood
+Restaurant
+Restaurant Kitchen
+Restaurant Patio
+Rice Paddy
+River
+Rock Arch
+Roof Garden
+Rope Bridge
+Ruin
+Runway
+Sandbox
+Sauna
+Schoolhouse
+Science Museum
+Server Room
+Shed
+Shoe Shop
+Shopfront
+Shopping Mall Indoor
+Shower
+Ski Resort
+Ski Slope
+Sky
+Skyscraper
+Slum
+Snowfield
+Soccer Field
+Stable
+Stadium Baseball
+Stadium Football
+Stadium Soccer
+Stage Indoor
+Stage Outdoor
+Staircase
+Storage Room
+Street
+Subway Station Platform
+Supermarket
+Sushi Bar
+Swamp
+Swimming Hole
+Swimming Pool Indoor
+Swimming Pool Outdoor
+Synagogue Outdoor
+Television Room
+Television Studio
+Temple Asia
+Throne Room
+Ticket Booth
+Topiary Garden
+Tower
+Toyshop
+Train Interior
+Train Station Platform
+Tree Farm
+Tree House
+Trench
+Tundra
+Underwater Ocean Deep
+Utility Room
+Valley
+Vegetable Garden
+Veterinarians Office
+Viaduct
+Village
+Vineyard
+Volcano
+Volleyball Court Outdoor
+Waiting Room
+Water Park
+Water Tower
+Waterfall
+Watering Hole
+Wave
+Wet Bar
+Wheat Field
+Wind Farm
+Windmill
+Yard
+Youth Hostel
+Zen Garden

@@ -1,0 +1,365 @@
+Letališče
+Kabina letala
+Letališki terminal
+Niša
+Uličica
+Amfiteater
+Igrarna
+Zabaviščni park
+Stanovanjska stavba na prostem
+Akvarij
+Akvadukt
+Arkada
+Lok
+Arheološko izkopavanje
+Arhiv
+Dvorana za hokej
+Dvorana za predstave
+Dvorana za rodeo
+Vojaška baza
+Umetnostna galerija
+Umetniška šola
+Umetniški atelje
+Umetniški podstrešje
+Montažna linija
+Športno igrišče na prostem
+Atrij javni
+Podstrešje
+Avditorij
+Avtomobilska tovarna
+Avtosalon
+Puščava
+Pekarna
+Balkon zunanji
+Balkon notranji
+Jama z žogicami
+Plesna dvorana
+Bambusov gozd
+Bančni trezor
+Banketna dvorana
+Bar
+Hlev
+Hlevska vrata
+Bejzbolsko igrišče
+Klet
+Košarkarska dvorana
+Kopalnica
+Bazar notranji
+Bazar zunanji
+Plaža
+Plažna hiša
+Kozmetični salon
+Spalnica
+Spalnica
+Pivnica na prostem
+Pivnica
+Pristanišče
+Biološki laboratorij
+Sprehajališče
+Paluba čolna
+Čolnarna
+Knjigarna
+Stojnica notranja
+Botanični vrt
+Lok okno notranje
+Kegljišče
+Boksarski ring
+Most
+Fasada stavbe
+Bikoborba
+Grobnica
+Notranjost avtobusa
+Avtobusna postaja notranja
+Mesnica
+Gora
+Koča na prostem
+Menza
+Kamp
+Kampus
+Kanal naravni
+Kanal mestni
+Sladkarija
+Kanjon
+Notranjost avtomobila
+Vrtiljak
+Grad
+Katakombe
+Pokopališče
+Planinska koča
+Kemijski laboratorij
+Otroška soba
+Cerkev notranja
+Cerkev zunanja
+Učilnica
+Čista soba
+Pregrada
+Omarica
+Trgovina z oblačili
+Obala
+Kokpit
+Kavarna
+Računalniška soba
+Konferenčni center
+Konferenčna soba
+Gradbišče
+Koruzno polje
+Korral
+Hodnik
+Koča
+Sodišče
+Dvorišče
+Potok
+Razpoka
+Prehod za pešce
+Jez
+Delikatesa
+Veleblagovnica
+Puščava pesek
+Puščava vegetacija
+Puščavska cesta
+Gostilna na prostem
+Jedilnica
+Jedilnica
+Diskoteka
+Vhod na prostem
+Dijaška soba
+Središče mesta
+Oblačilnica
+Dvorišče
+Lekarna
+Vrata dvigala
+Preddverje dvigala
+Jašek dvigala
+Veleposlaništvo
+Strojnica
+Vhodna dvorana
+Eskalator notranji
+Izkopavanje
+Trgovina s tkaninami
+Kmetija
+Hitra prehrana
+Obdelano polje
+Divje polje
+Poljska cesta
+Požarne stopnice
+Gasilska postaja
+Ribnik
+Bolšji trg notranji
+Cvetličarna notranja
+Hrana na hitro
+Nogometno igrišče
+Listnati gozd
+Gozdna pot
+Gozdna cesta
+Formalni vrt
+Fontana
+Kuhinja
+Garaža notranja
+Garaža zunanja
+Bencinska črpalka
+Paviljon zunanji
+Trgovina notranja
+Trgovina zunanja
+Trgovina s spominki
+Ledenik
+Golf igrišče
+Rastlinjak notranji
+Rastlinjak zunanji
+Jama
+Telovadnica notranja
+Hangar notranji
+Hangar zunanji
+Pristanišče
+Železarija
+Senožet
+Heliport
+Avtocesta
+Domača pisarna
+Domače kino
+Bolnica
+Bolišnična soba
+Topel izvir
+Hotel na prostem
+Hotelska soba
+Hiša
+Lovska koča na prostem
+Sladoledarna
+Ledena plošča
+Ledena police
+Drsališče notranje
+Drsališče zunanje
+Ledena gora
+Iglu
+Industrijsko območje
+Gostilna na prostem
+Otok
+Jakuzi notranji
+Zaporna celica
+Japonski vrt
+Zlatarna
+Smetišče
+Kasba
+Pasji zavod na prostem
+Vrtčevska učilnica
+Kuhinja
+Laguna
+Naravno jezero
+Odlagališče
+Pristajalna ploščad
+Pralnica
+Travnik
+Predavalnica
+Zakonodajna dvorana
+Knjižnica notranja
+Knjižnica zunanja
+Svetilnik
+Dnevna soba
+Nakladalna ploščad
+Preddverje
+Zapornica
+Oblačilnica
+Dvorec
+Montažna hiša
+Trg notranji
+Trg zunanji
+Močvirje
+Borec
+Mavzolej
+Medina
+Mezanin
+Jarek voda
+Mošeja na prostem
+Motel
+Gora
+Gorska pot
+Zasnežena gora
+Kino notranji
+Muzej notranji
+Muzej zunanji
+Glasbeni studio
+Naravoslovni muzej
+Vrtčevska soba
+Dom za ostarele
+Sušilnica
+Ocean
+Pisarna
+Poslovna stavba
+Pisarniške kabine
+Naftna ploščad
+Operacijska dvorana
+Sadovnjak
+Orkestrski jarek
+Pagoda
+Palača
+Shramba
+Park
+Parkirna hiša notranja
+Parkirna hiša zunanja
+Parkirišče
+Pašnik
+Terasa
+Paviljon
+Trgovina s hišnimi ljubljenčki
+Lekarna
+Telefonska govorilnica
+Fizikalni laboratorij
+Piknik območje
+Pristan
+Picerija
+Igrišče
+Igrača
+Trg
+Ribnik
+Veranda
+Sprehajališče
+Pivnica notranja
+Dirkaško stezo
+Dirkaško stezo
+Splav
+Železniška proga
+Deževni gozd
+Recepcija
+Rekreacijska soba
+Popravljalnica
+Stanovanjska soseska
+Restavracija
+Restavracijska kuhinja
+Restavracijska terasa
+Riževa polja
+Reka
+Kamniti lok
+Strešni vrt
+Viseči most
+Razvalina
+Vzletna steza
+Peskovnik
+Savna
+Šolska hiša
+Znanstveni muzej
+Strežniška soba
+Lopa
+Trgovina s čevlji
+Trgovinska fasada
+Nakupovalni center notranji
+Prha
+Smučišče
+Smučarska proga
+Nebo
+Nebotičnik
+Revna četrt
+Snežno polje
+Nogometno igrišče
+Hlev
+Stadion baseball
+Stadion nogomet
+Stadion nogomet
+Oder notranji
+Oder zunanji
+Stopnišče
+Shramba
+Ulica
+Podzemna postaja peron
+Supermarket
+Sushi bar
+Močvirje
+Kopalnišče
+Bazen notranji
+Bazen zunanji
+Sinagoga na prostem
+Televizijska soba
+Televizijski studio
+Tempelj azija
+Dvorana prestola
+Prodajna blagajna
+Topiarni vrt
+Stolp
+Trgovina z igračami
+Notranjost vlaka
+Železniška postaja peron
+Gozdna plantacija
+Hiša na drevesu
+Jarek
+Tundra
+Podvodno ocean globoko
+Pomožna soba
+Dolina
+Zelenjavni vrt
+Veterinarska ordinacija
+Viadukt
+Vas
+Vinograd
+Vulkan
+Odbojkarsko igrišče na prostem
+Čakalnica
+Vodni park
+Vodni stolp
+Slap
+Potočna luknja
+Val
+Bar
+Pšenično polje
+Vetrna elektrarna
+Vetrnica
+Dvorišče
+Mladinski hostel
+Zen vrt

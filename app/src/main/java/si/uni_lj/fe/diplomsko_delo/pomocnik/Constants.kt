@@ -8,4 +8,7 @@ object Constants {
     const val LABELS_PATH_SI = "oznake.txt"
     const val LABELS_PATH_EN = "labels.txt"
     const val MIDAS_PATH = "midas.tflite"
+    const val SCENE_DETECTOR_PATH = "resnet18_places365_float32.tflite"
+    const val SCENE_LABELS_PATH_EN = "places365_labels_en.txt"
+    const val SCENE_LABELS_PATH_SI = "places365_labels_si.txt"
 }
