@@ -50,4 +50,8 @@ class ExploreViewModel(
             tts.readText(text)
         }
     }
+
+    fun stopReading() {
+        tts.stop()
+    }
 }

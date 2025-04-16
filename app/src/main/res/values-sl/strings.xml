@@ -23,5 +23,5 @@
     <string name="currently_selected">Trenutno izbrano</string>
     <string name="units">enot (MiDaS)</string>
     <string name="depth">Globina</string>
-    <string name="stop_reading">Prekini branje</string>
+    <string name="stop_reading">Prekini govor</string>
 </resources>

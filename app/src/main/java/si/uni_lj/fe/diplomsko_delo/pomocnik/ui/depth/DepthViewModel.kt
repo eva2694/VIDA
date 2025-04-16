@@ -204,4 +204,8 @@ class DepthViewModel(
             Log.e(TAG, "Error closing DepthEstimator", e)
         }
     }
+
+    fun stopReading() {
+        tts.stop()
+    }
 }

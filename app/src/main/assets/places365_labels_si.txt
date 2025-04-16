@@ -4,14 +4,14 @@ Letališki terminal
 Niša
 Uličica
 Amfiteater
-Igrarna
+Igre v igralnici
 Zabaviščni park
 Stanovanjska stavba na prostem
 Akvarij
 Akvadukt
 Arkada
 Lok
-Arheološko izkopavanje
+Arheološko najdišče
 Arhiv
 Dvorana za hokej
 Dvorana za predstave
@@ -20,10 +20,10 @@ Vojaška baza
 Umetnostna galerija
 Umetniška šola
 Umetniški atelje
-Umetniški podstrešje
+Umetniško podstrešje
 Montažna linija
 Športno igrišče na prostem
-Atrij javni
+Atrij
 Podstrešje
 Avditorij
 Avtomobilska tovarna
@@ -53,7 +53,7 @@ Spalnica
 Spalnica
 Pivnica na prostem
 Pivnica
-Pristanišče
+Ležišče
 Biološki laboratorij
 Sprehajališče
 Paluba čolna
@@ -223,7 +223,7 @@ Montažna hiša
 Trg notranji
 Trg zunanji
 Močvirje
-Borec
+Telovadnica za borilne veščine
 Mavzolej
 Medina
 Mezanin

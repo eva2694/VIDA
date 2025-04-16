@@ -232,4 +232,8 @@ class SceneViewModel(
         interpreter?.close()
         super.onCleared()
     }
+
+    fun stopReading() {
+        tts.stop()
+    }
 } 

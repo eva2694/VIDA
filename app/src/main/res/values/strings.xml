@@ -23,5 +23,5 @@
     <string name="currently_selected">Currently selected</string>
     <string name="units">units (MiDaS)</string>
     <string name="depth">Depth</string>
-    <string name="stop_reading">Stop Reading</string>
+    <string name="stop_reading">Stop Speaking</string>
 </resources>
