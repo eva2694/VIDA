@@ -20,6 +20,7 @@ import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.LanguageSelectionScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.SetSystemBarsColor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PreferencesManager
@@ -101,6 +102,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                     PomocnikTheme(darkTheme = isDarkMode) {
+                        // Add system bars configuration
+                        SetSystemBarsColor(preferencesManager = preferencesManager)
+                        
                         var showLanguageSelection by remember { mutableStateOf(!initialHasSelectedLanguage) }
 
                         if (showLanguageSelection) {
