@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var yoloModelLoader: YoloModelLoader
     private lateinit var appImageProcessor: AppImageProcessor
+    private var isInitialized = false
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +48,8 @@ class MainActivity : ComponentActivity() {
         // Handle splash screen based on Android version
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val splashScreen = installSplashScreen()
+            // Keep splash screen visible until initialization is complete
+            splashScreen.setKeepOnScreenCondition { !isInitialized }
             super.onCreate(savedInstanceState)
         } else {
             super.onCreate(savedInstanceState)
@@ -64,6 +67,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             TfLite.initialize(this@MainActivity).await()
             applyInitialTTSSettings()
+            isInitialized = true
         }
 
         // Check if this is the first launch before showing any content
