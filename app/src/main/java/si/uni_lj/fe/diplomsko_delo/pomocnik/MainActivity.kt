@@ -2,6 +2,7 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tflite.java.TfLite
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +20,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
-import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.SplashScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.PermissionsUtil
@@ -41,7 +42,13 @@ class MainActivity : ComponentActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        // Handle splash screen based on Android version
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val splashScreen = installSplashScreen()
+            super.onCreate(savedInstanceState)
+        } else {
+            super.onCreate(savedInstanceState)
+        }
 
         // Lock orientation to portrait mode
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -75,23 +82,13 @@ class MainActivity : ComponentActivity() {
             preferencesManager.isDarkMode.collectLatest { isDarkMode ->
                 setContent {
                     PomocnikTheme(darkTheme = isDarkMode) {
-                        var showSplash by remember { mutableStateOf(true) }
-                        
-                        if (showSplash) {
-                            SplashScreen(
-                                onSplashComplete = {
-                                    showSplash = false
-                                }
+                        PermissionsUtil {
+                            MainScreen(
+                                cameraExecutor,
+                                yoloModelLoader,
+                                appImageProcessor,
+                                preferencesManager
                             )
-                        } else {
-                            PermissionsUtil {
-                                MainScreen(
-                                    cameraExecutor,
-                                    yoloModelLoader,
-                                    appImageProcessor,
-                                    preferencesManager
-                                )
-                            }
                         }
                     }
                 }

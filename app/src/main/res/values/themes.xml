@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Pomocnik" parent="android:Theme.Material.Light.NoActionBar" />
+    
+    <!-- Modern splash screen for Android 12+ -->
+    <style name="Theme.Pomocnik.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">?attr/colorPrimary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/vida_no_bg</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.Pomocnik</item>
+    </style>
+
+    <!-- Legacy splash screen for older Android versions -->
+    <style name="Theme.Pomocnik.LegacySplash" parent="Theme.Pomocnik">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
 </resources>
