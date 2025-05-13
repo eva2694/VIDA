@@ -3,7 +3,6 @@
 package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.scene
 
 import android.content.Context
-import android.util.Log
 import android.view.WindowManager
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,13 +54,6 @@ fun SceneScreen(cameraExecutor: ExecutorService) {
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
 
     val sceneResults = viewModel.sceneResults.value
-
-    LaunchedEffect(sceneResults) {
-        Log.d("SceneScreen", "Scene results updated: ${sceneResults.size} results")
-        sceneResults.forEach { result ->
-            Log.d("SceneScreen", "Result: ${result.className} (${result.confidence})")
-        }
-    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Camera preview
