@@ -26,4 +26,12 @@
     <string name="stop_reading">Prekini govor</string>
     <string name="scene_prefix">Okolica:</string>
     <string name="cam_permission">Dovoljenje za uporabo kamere je obvezno!</string>
+    <string name="permission_title">Potrebno dovoljenje za kamerico</string>
+    <string name="permission_rationale">Ta aplikacija potrebuje dostop do kamere, da vam lahko pomaga pri navigaciji in prepoznavanju predmetov. Prosim, odobrite dovoljenje za nadaljevanje.</string>
+    <string name="permission_grant">Odobri dovoljenje</string>
+    <string name="permission_not_now">Ne zdaj</string>
+    <string name="permission_settings_title">Potrebno dovoljenje</string>
+    <string name="permission_settings_message">Dovoljenje za kamerico je potrebno za delovanje aplikacije. Prosim, omogočite ga v nastavitvah.</string>
+    <string name="permission_open_settings">Odpri nastavitve</string>
+    <string name="permission_cancel">Prekliči</string>
 </resources>

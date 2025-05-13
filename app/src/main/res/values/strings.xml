@@ -26,4 +26,12 @@
     <string name="stop_reading">Stop Speaking</string>
     <string name="scene_prefix">Scene:</string>
     <string name="cam_permission">Camera permission is required!</string>
+    <string name="permission_title">Camera Permission Required</string>
+    <string name="permission_rationale">This app needs camera access to help you navigate and identify objects. Please grant the permission to continue.</string>
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_not_now">Not Now</string>
+    <string name="permission_settings_title">Permission Required</string>
+    <string name="permission_settings_message">Camera permission is required for this app to function. Please enable it in Settings.</string>
+    <string name="permission_open_settings">Open Settings</string>
+    <string name="permission_cancel">Cancel</string>
 </resources>
