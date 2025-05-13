@@ -17,14 +17,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 /**
  * Composable that handles camera permission requests.
@@ -59,23 +59,29 @@ fun PermissionsUtil(content: @Composable () -> Unit) {
         content()
     } else {
         Log.d("RequestCameraPermission", "Camera permission not granted, displaying warning message")
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Camera permission is required!",
-                fontSize = 40.sp,
-                lineHeight = 45.sp,
-                modifier = Modifier.padding(16.dp, 40.dp)
-            )
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "Locked icon",
-                    modifier = Modifier.size(80.dp)
-                )
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Box(
+                    modifier = Modifier.size(100.dp)
+                ){}
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Locked icon",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .padding(top = 24.dp),
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
             }
         }
     }

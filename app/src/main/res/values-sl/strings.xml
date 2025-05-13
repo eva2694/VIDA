@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pomocnik</string>
+    <string name="app_name">VIDA</string>
     <string name="tab_read">Beri</string>
     <string name="tab_explore">Razglej se</string>
     <string name="tab_settings">Nastavitve</string>
@@ -25,4 +25,5 @@
     <string name="depth">Globina</string>
     <string name="stop_reading">Prekini govor</string>
     <string name="scene_prefix">Okolica:</string>
+    <string name="cam_permission">Dovoljenje za uporabo kamere je obvezno!</string>
 </resources>
