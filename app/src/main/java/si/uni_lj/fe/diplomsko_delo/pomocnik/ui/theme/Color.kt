@@ -217,3 +217,7 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF231919)
 val surfaceContainerDarkHighContrast = Color(0xFF271D1C)
 val surfaceContainerHighDarkHighContrast = Color(0xFF322827)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF3D3231)
+
+val iconColor = Color(0xFFBE958A)
+val languageSelectionDark = Color(0xff22191a)
+val languageSelectionLight = Color(0xffffeded)

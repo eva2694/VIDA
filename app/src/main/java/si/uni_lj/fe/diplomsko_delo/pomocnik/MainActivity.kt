@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.*
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tflite.java.TfLite
@@ -19,6 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.LanguageSelectionScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.MainScreen
 import si.uni_lj.fe.diplomsko_delo.pomocnik.ui.theme.PomocnikTheme
 import si.uni_lj.fe.diplomsko_delo.pomocnik.util.AppImageProcessor
@@ -42,6 +41,9 @@ class MainActivity : ComponentActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Initialize preferences manager first
+        preferencesManager = PreferencesManager(this)
+        
         // Handle splash screen based on Android version
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val splashScreen = installSplashScreen()
@@ -53,7 +55,6 @@ class MainActivity : ComponentActivity() {
         // Lock orientation to portrait mode
         this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        preferencesManager = PreferencesManager(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
         yoloModelLoader = YoloModelLoader(this, preferencesManager.language)
         appImageProcessor = AppImageProcessor()
@@ -65,7 +66,11 @@ class MainActivity : ComponentActivity() {
             applyInitialTTSSettings()
         }
 
-        observeSettingsChanges()
+        // Check if this is the first launch before showing any content
+        lifecycleScope.launch {
+            val hasSelectedLanguage = preferencesManager.hasSelectedLanguage.first()
+            observeSettingsChanges(hasSelectedLanguage)
+        }
     }
 
     private suspend fun applyInitialTTSSettings() {
@@ -77,18 +82,39 @@ class MainActivity : ComponentActivity() {
         tts.setSpeechRate(speed)
     }
 
-    private fun observeSettingsChanges() {
+    private fun observeSettingsChanges(initialHasSelectedLanguage: Boolean) {
         lifecycleScope.launch {
             preferencesManager.isDarkMode.collectLatest { isDarkMode ->
                 setContent {
+                    val isSystemDarkMode = isSystemInDarkTheme()
+                    
+                    // Update theme preference if it hasn't been set yet
+                    LaunchedEffect(isSystemDarkMode) {
+                        val currentDarkMode = preferencesManager.getDarkMode()
+                        if (currentDarkMode == null) {
+                            preferencesManager.setDarkMode(isSystemDarkMode)
+                        }
+                    }
+
                     PomocnikTheme(darkTheme = isDarkMode) {
-                        PermissionsUtil {
-                            MainScreen(
-                                cameraExecutor,
-                                yoloModelLoader,
-                                appImageProcessor,
-                                preferencesManager
+                        var showLanguageSelection by remember { mutableStateOf(!initialHasSelectedLanguage) }
+
+                        if (showLanguageSelection) {
+                            LanguageSelectionScreen(
+                                preferencesManager = preferencesManager,
+                                onLanguageSelected = {
+                                    showLanguageSelection = false
+                                }
                             )
+                        } else {
+                            PermissionsUtil {
+                                MainScreen(
+                                    cameraExecutor,
+                                    yoloModelLoader,
+                                    appImageProcessor,
+                                    preferencesManager
+                                )
+                            }
                         }
                     }
                 }

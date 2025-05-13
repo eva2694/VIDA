@@ -34,4 +34,9 @@
     <string name="permission_settings_message">Camera permission is required for this app to function. Please enable it in Settings.</string>
     <string name="permission_open_settings">Open Settings</string>
     <string name="permission_cancel">Cancel</string>
+    <string name="language_selection_title">Welcome to VIDA</string>
+    <string name="language_selection_subtitle">Please select your preferred language</string>
+    <string name="language_selection_continue">Continue</string>
+    <string name="language_selection_slovenian">Slovenščina</string>
+    <string name="language_selection_english">English</string>
 </resources>

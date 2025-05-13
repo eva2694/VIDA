@@ -24,26 +24,34 @@ class PreferencesManager(private val context: Context) {
         val LANGUAGE = stringPreferencesKey("language")
         val READING_SPEED = floatPreferencesKey("reading_speed")
         val DARK_MODE = booleanPreferencesKey("dark_mode")
+        val HAS_SELECTED_LANGUAGE = booleanPreferencesKey("has_selected_language")
     }
 
     /** Current language setting (default: "sl") */
     val language: Flow<String> = context.dataStore.data
         .map { it[LANGUAGE] ?: "sl" }
 
-    /** Text-to-speech reading speed (default: 0.7) */
+    /** Text-to-speech reading speed (default: 1.0) */
     val readingSpeed: Flow<Float> = context.dataStore.data
-        .map { it[READING_SPEED] ?: 0.7f }
+        .map { it[READING_SPEED] ?: 1.0f }
 
     /** Dark mode setting (default: false) */
     val isDarkMode: Flow<Boolean> = context.dataStore.data
         .map { it[DARK_MODE] ?: false }
+
+    /** Whether the user has made their initial language selection (default: false) */
+    val hasSelectedLanguage: Flow<Boolean> = context.dataStore.data
+        .map { it[HAS_SELECTED_LANGUAGE] ?: false }
 
     /**
      * Updates the language setting.
      * @param value Language code ("sl" for Slovenian, "en" for English)
      */
     suspend fun setLanguage(value: String) {
-        context.dataStore.edit { it[LANGUAGE] = value }
+        context.dataStore.edit { preferences ->
+            preferences[LANGUAGE] = value
+            preferences[HAS_SELECTED_LANGUAGE] = true
+        }
     }
 
     /**
@@ -64,9 +72,9 @@ class PreferencesManager(private val context: Context) {
 
     /**
      * Retrieves the current dark mode setting.
-     * @return true if dark mode is enabled, false otherwise
+     * @return true if dark mode is enabled, false if light mode is enabled, null if not set
      */
-    suspend fun getDarkMode(): Boolean {
-        return context.dataStore.data.map { it[DARK_MODE] ?: false }.first()
+    suspend fun getDarkMode(): Boolean? {
+        return context.dataStore.data.map { it[DARK_MODE] }.first()
     }
 }
