@@ -1,0 +1,170 @@
+@startuml VIDA Architecture
+
+' Custom styles
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+' Package styling
+skinparam packageStyle rectangle
+skinparam package {
+    BackgroundColor #FAFAFA
+    BorderColor #2C3E50
+    FontColor #2C3E50
+    StereotypeFontColor #2C3E50
+}
+
+' Component styling
+skinparam component {
+    BackgroundColor<<UI>> #E3F2FD
+    BorderColor<<UI>> #1976D2
+    BackgroundColor<<ViewModel>> #F3E5F5
+    BorderColor<<ViewModel>> #7B1FA2
+    BackgroundColor<<Factory>> #FFF3E0
+    BorderColor<<Factory>> #F57C00
+    BackgroundColor<<Model>> #E8F5E9
+    BorderColor<<Model>> #388E3C
+    BackgroundColor<<Util>> #FAFAFA
+    BorderColor<<Util>> #616161
+    BackgroundColor<<Theme>> #FCE4EC
+    BorderColor<<Theme>> #C2185B
+}
+
+' Arrow styling
+skinparam arrow {
+    Color #2C3E50
+    Thickness 1.5
+}
+
+package "VIDA Application" {
+    [MainActivity] as main <<UI>>
+
+    package "UI Layer" {
+        package "Screens" {
+            [MainScreen] <<UI>>
+            [LanguageSelectionScreen] <<UI>>
+            
+            package "Feature Screens" {
+                [AssistScreen] <<UI>>
+                [DepthScreen] <<UI>>
+                [ExploreScreen] <<UI>>
+                [ReadScreen] <<UI>>
+                [SceneScreen] <<UI>>
+                [SettingsScreen] <<UI>>
+            }
+        }
+
+        package "ViewModels" {
+            [AssistViewModel] <<ViewModel>>
+            [DepthViewModel] <<ViewModel>>
+            [ExploreViewModel] <<ViewModel>>
+            [ReadViewModel] <<ViewModel>>
+            [SceneViewModel] <<ViewModel>>
+            [SettingsViewModel] <<ViewModel>>
+        }
+
+        package "ViewModelFactories" {
+            [AssistViewModelFactory] <<Factory>>
+            [DepthViewModelFactory] <<Factory>>
+            [ExploreViewModelFactory] <<Factory>>
+            [ReadViewModelFactory] <<Factory>>
+            [SceneViewModelFactory] <<Factory>>
+            [SettingsViewModelFactory] <<Factory>>
+        }
+
+        package "Theme Components" {
+            [ThemeConfig] as theme <<Theme>>
+            [SystemBars] <<Theme>>
+            [Color] <<Theme>>
+            [Type] <<Theme>>
+        }
+    }
+    
+    package "Models" {
+        [BoundingBox] <<Model>>
+        [AssistResult] <<Model>>
+    }
+    
+    package "Utils" {
+        [Constants] <<Util>>
+        [PermissionsUtil] <<Util>>
+        [PreferencesManager] <<Util>>
+        [YoloModelLoader] <<Util>>
+        [UILangHelper] <<Util>>
+        [AppImageProcessor] <<Util>>
+        [DepthEstimator] <<Util>>
+    }
+}
+
+' Layout hints
+together {
+    [AssistScreen]
+    [AssistViewModel]
+    [AssistViewModelFactory]
+}
+
+together {
+    [DepthScreen]
+    [DepthViewModel]
+    [DepthViewModelFactory]
+}
+
+' Main navigation flow
+main -[#1976D2]-> [MainScreen]
+main -[#1976D2]-> [LanguageSelectionScreen]
+
+' Screen to ViewModel relationships
+[AssistScreen] -[#7B1FA2]-> [AssistViewModel]
+[DepthScreen] -[#7B1FA2]-> [DepthViewModel]
+[ExploreScreen] -[#7B1FA2]-> [ExploreViewModel]
+[ReadScreen] -[#7B1FA2]-> [ReadViewModel]
+[SceneScreen] -[#7B1FA2]-> [SceneViewModel]
+[SettingsScreen] -[#7B1FA2]-> [SettingsViewModel]
+
+' ViewModel to ViewModelFactory relationships
+[AssistViewModelFactory] -[#F57C00]..> [AssistViewModel]
+[DepthViewModelFactory] -[#F57C00]..> [DepthViewModel]
+[ExploreViewModelFactory] -[#F57C00]..> [ExploreViewModel]
+[ReadViewModelFactory] -[#F57C00]..> [ReadViewModel]
+[SceneViewModelFactory] -[#F57C00]..> [SceneViewModel]
+[SettingsViewModelFactory] -[#F57C00]..> [SettingsViewModel]
+
+' ViewModel to Model relationships
+[AssistViewModel] -[#388E3C]-> [AssistResult]
+[AssistViewModel] -[#388E3C]-> [BoundingBox]
+[DepthViewModel] -[#388E3C]-> [BoundingBox]
+
+' Theme relationships
+[MainScreen] -[#C2185B]..> theme
+[AssistScreen] -[#C2185B]..> theme
+[DepthScreen] -[#C2185B]..> theme
+[ExploreScreen] -[#C2185B]..> theme
+[ReadScreen] -[#C2185B]..> theme
+[SceneScreen] -[#C2185B]..> theme
+[SettingsScreen] -[#C2185B]..> theme
+
+' Utility relationships
+[AssistViewModel] -[#616161]..> [YoloModelLoader]
+[AssistViewModel] -[#616161]..> [AppImageProcessor]
+[DepthViewModel] -[#616161]..> [DepthEstimator]
+[MainScreen] -[#616161]..> [PermissionsUtil]
+[SettingsViewModel] -[#616161]..> [PreferencesManager]
+[MainScreen] -[#616161]..> [UILangHelper]
+
+legend right
+    <back:#E3F2FD>|= Component Type |</back>
+    <back:#E3F2FD>|_ UI Components |</back>
+    <back:#F3E5F5>|_ ViewModels |</back>
+    <back:#FFF3E0>|_ Factories |</back>
+    <back:#E8F5E9>|_ Models |</back>
+    <back:#FCE4EC>|_ Theme |</back>
+    <back:#FAFAFA>|_ Utils |</back>
+    ==
+    |= Arrow Type |= Meaning |
+    |<color:#2C3E50>——></color>| Direct Dependency |
+    |<color:#2C3E50>..></color>| Usage/Creation |
+endlegend
+
+@enduml 
