@@ -42,6 +42,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,6 +94,18 @@ fun MainScreen(
     val selectedDropdownItemColor = MaterialTheme.colorScheme.primary
     val defaultDropdownItemColor = MaterialTheme.colorScheme.secondary
 
+    // Get string resources outside of semantic modifiers
+    val openModeSelectionDesc = stringResource(R.string.open_mode_selection)
+    val closeModeSelectionDesc = stringResource(R.string.close_mode_selection)
+    val modeSelectionMenuDesc = stringResource(R.string.mode_selection_menu)
+    val tabAssistDesc = stringResource(R.string.tab_assist)
+    val tabModesDesc = stringResource(R.string.tab_modes)
+    val tabSettingsDesc = stringResource(R.string.tab_settings)
+    val tabExploreDesc = stringResource(R.string.tab_explore)
+    val tabReadDesc = stringResource(R.string.tab_read)
+    val tabDepthDesc = stringResource(R.string.tab_depth)
+    val tabSceneDesc = stringResource(R.string.tab_scene)
+
     // Cleanup TTS on navigation
     DisposableEffect(navController) {
         val listener = NavController.OnDestinationChangedListener { _, destination: NavDestination, _ ->
@@ -112,12 +126,12 @@ fun MainScreen(
                     icon = {
                         Icon(
                             Icons.Default.Assistant,
-                            contentDescription = stringResource(R.string.tab_assist)
+                            contentDescription = tabAssistDesc
                         )
                     },
                     label = {
                         Text(
-                            stringResource(R.string.tab_assist),
+                            tabAssistDesc,
                             maxLines = 1,
                             softWrap = false,
                             fontSize = 10.sp
@@ -149,7 +163,13 @@ fun MainScreen(
                             role = Role.Button,
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null
-                        ),
+                        )
+                        .semantics {
+                            contentDescription = if (isExploreMenuExpanded) 
+                                closeModeSelectionDesc 
+                            else 
+                                openModeSelectionDesc
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -167,13 +187,13 @@ fun MainScreen(
                         ) {
                             Icon(
                                 Icons.Default.Menu,
-                                contentDescription = stringResource(R.string.tab_modes),
+                                contentDescription = tabModesDesc,
                                 tint = if (isModesSelected) navItemColors.selectedIconColor else navItemColors.unselectedIconColor
                             )
                         }
 
                         Text(
-                            stringResource(R.string.tab_modes),
+                            tabModesDesc,
                             maxLines = 1,
                             softWrap = false,
                             fontSize = 10.sp,
@@ -184,9 +204,12 @@ fun MainScreen(
 
                     DropdownMenu(
                         expanded = isExploreMenuExpanded,
-                        onDismissRequest = { isExploreMenuExpanded = false }
+                        onDismissRequest = { isExploreMenuExpanded = false },
+                        modifier = Modifier.semantics {
+                            contentDescription = modeSelectionMenuDesc
+                        }
                     ) {
-                        // Mode selection items
+                        // Mode selection items with icons
                         DropdownMenuItem(
                             text = {
                                 Row(
@@ -208,11 +231,11 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.Visibility,
-                                        contentDescription = stringResource(R.string.tab_explore),
+                                        contentDescription = tabExploreDesc,
                                         tint = if (currentRoute == "explore") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
-                                        stringResource(R.string.tab_explore),
+                                        tabExploreDesc,
                                         color = if (currentRoute == "explore") selectedDropdownItemColor else defaultDropdownItemColor,
                                         modifier = Modifier.padding(start = 8.dp)
                                     )
@@ -254,11 +277,11 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.TextFields,
-                                        contentDescription = stringResource(R.string.tab_read),
+                                        contentDescription = tabReadDesc,
                                         tint = if (currentRoute == "read") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
-                                        stringResource(R.string.tab_read),
+                                        tabReadDesc,
                                         color = if (currentRoute == "read") selectedDropdownItemColor else defaultDropdownItemColor,
                                         modifier = Modifier.padding(start = 8.dp)
                                     )
@@ -300,11 +323,11 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.ViewInAr,
-                                        contentDescription = stringResource(R.string.tab_depth),
+                                        contentDescription = tabDepthDesc,
                                         tint = if (currentRoute == "depth") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
-                                        stringResource(R.string.tab_depth),
+                                        tabDepthDesc,
                                         color = if (currentRoute == "depth") selectedDropdownItemColor else defaultDropdownItemColor,
                                         modifier = Modifier.padding(start = 8.dp)
                                     )
@@ -346,11 +369,11 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.Image,
-                                        contentDescription = stringResource(R.string.tab_scene),
+                                        contentDescription = tabSceneDesc,
                                         tint = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
-                                        stringResource(R.string.tab_scene),
+                                        tabSceneDesc,
                                         color = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor,
                                         modifier = Modifier.padding(start = 8.dp)
                                     )
@@ -379,12 +402,12 @@ fun MainScreen(
                     icon = {
                         Icon(
                             Icons.Default.Settings,
-                            contentDescription = stringResource(R.string.tab_settings)
+                            contentDescription = tabSettingsDesc
                         )
                     },
                     label = {
                         Text(
-                            stringResource(R.string.tab_settings),
+                            tabSettingsDesc,
                             maxLines = 1,
                             softWrap = false,
                             fontSize = 10.sp

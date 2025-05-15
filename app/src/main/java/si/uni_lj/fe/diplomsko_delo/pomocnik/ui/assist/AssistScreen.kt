@@ -5,6 +5,7 @@ package si.uni_lj.fe.diplomsko_delo.pomocnik.ui.assist
 import android.content.Context
 import android.graphics.Paint
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -30,6 +31,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -58,6 +61,11 @@ fun AssistScreen(
     }
     val viewModel: AssistViewModel = viewModel(factory = viewModelFactory)
 
+    // Get string resources outside of semantic modifiers
+    val cameraPreviewDesc = stringResource(R.string.camera_preview_description)
+    val detectionOverlayDesc = stringResource(R.string.detection_overlay_description)
+    val stopReadingText = stringResource(R.string.stop_reading)
+
     // Display rotation for proper camera orientation
     val displayRotation = remember {
         (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager)
@@ -76,7 +84,10 @@ fun AssistScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         // Camera preview with image analysis
         AndroidView(factory = { ctx ->
-            val previewView = PreviewView(ctx)
+            val previewView = PreviewView(ctx).apply {
+                contentDescription = cameraPreviewDesc
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+            }
             val preview = Preview.Builder().build()
                 .also { it.surfaceProvider = previewView.surfaceProvider }
 
@@ -111,7 +122,12 @@ fun AssistScreen(
         }, modifier = Modifier.fillMaxSize())
 
         // Overlay for bounding boxes and text
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier
+            .fillMaxSize()
+            .semantics {
+                contentDescription = detectionOverlayDesc
+            }
+        ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
 
@@ -223,7 +239,7 @@ fun AssistScreen(
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Text(text = stringResource(R.string.stop_reading))
+            Text(text = stopReadingText)
         }
     }
 }

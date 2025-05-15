@@ -40,4 +40,12 @@
     <string name="language_selection_continue">Nadaljuj</string>
     <string name="language_selection_slovenian">Slovenščina</string>
     <string name="language_selection_english">English</string>
+    <string name="vida_logo_description">Logotip aplikacije VIDA</string>
+    <string name="select_slovenian_language">Izberi slovenski jezik</string>
+    <string name="select_english_language">Izberi angleški jezik</string>
+    <string name="open_mode_selection">Odpri meni za izbiro načina</string>
+    <string name="close_mode_selection">Zapri meni za izbiro načina</string>
+    <string name="mode_selection_menu">Meni za izbiro načina</string>
+    <string name="camera_preview_description">Predogled kamere v živo za zaznavanje predmetov</string>
+    <string name="detection_overlay_description">Prekrivni prikaz zaznanih predmetov z okvirji in oznakami</string>
 </resources>

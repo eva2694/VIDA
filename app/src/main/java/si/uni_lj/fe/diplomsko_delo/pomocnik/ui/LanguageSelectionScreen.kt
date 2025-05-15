@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,11 @@ fun LanguageSelectionScreen(
     val coroutineScope = rememberCoroutineScope()
     val isDarkTheme = isSystemInDarkTheme()
     val backgroundColor = if (isDarkTheme) languageSelectionDark else languageSelectionLight
+
+    // Get string resources outside of semantic modifiers
+    val logoDescription = stringResource(R.string.vida_logo_description)
+    val slovenianButtonDescription = stringResource(R.string.select_slovenian_language)
+    val englishButtonDescription = stringResource(R.string.select_english_language)
 
     Box(
         modifier = Modifier
@@ -61,7 +68,7 @@ fun LanguageSelectionScreen(
 
                 Image(
                     painter = painterResource(id = R.drawable.vida_no_bg),
-                    contentDescription = "VIDA Logo",
+                    contentDescription = logoDescription,
                     modifier = Modifier
                         .size(200.dp)
                         .padding(bottom = 64.dp)
@@ -82,7 +89,10 @@ fun LanguageSelectionScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .padding(bottom = 24.dp)
-                        .height(56.dp),
+                        .height(56.dp)
+                        .semantics {
+                            contentDescription = slovenianButtonDescription
+                        },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = iconColor
                     )
@@ -105,7 +115,10 @@ fun LanguageSelectionScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
-                        .height(56.dp),
+                        .height(56.dp)
+                        .semantics {
+                            contentDescription = englishButtonDescription
+                        },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = iconColor
                     )

@@ -40,4 +40,12 @@
     <string name="language_selection_continue">Continue</string>
     <string name="language_selection_slovenian">Slovenščina</string>
     <string name="language_selection_english">English</string>
+    <string name="vida_logo_description">VIDA Application Logo</string>
+    <string name="select_slovenian_language">Select Slovenian language</string>
+    <string name="select_english_language">Select English language</string>
+    <string name="open_mode_selection">Open mode selection menu</string>
+    <string name="close_mode_selection">Close mode selection menu</string>
+    <string name="mode_selection_menu">Mode selection menu</string>
+    <string name="camera_preview_description">Live camera preview for object detection</string>
+    <string name="detection_overlay_description">Object detection overlay showing detected items with bounding boxes and labels</string>
 </resources>
