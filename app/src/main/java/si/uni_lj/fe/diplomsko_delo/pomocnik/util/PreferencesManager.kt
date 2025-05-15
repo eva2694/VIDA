@@ -77,4 +77,13 @@ class PreferencesManager(private val context: Context) {
     suspend fun getDarkMode(): Boolean? {
         return context.dataStore.data.map { it[DARK_MODE] }.first()
     }
+
+    /**
+     * Clears all preferences (useful for testing first-launch behavior)
+     */
+    suspend fun clearPreferences() {
+        context.dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }
