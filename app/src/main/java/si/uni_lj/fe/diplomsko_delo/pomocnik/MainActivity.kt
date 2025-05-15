@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
             preferencesManager.isDarkMode.collectLatest { isDarkMode ->
                 setContent {
                     val isSystemDarkMode = isSystemInDarkTheme()
+                    val isHighContrast by preferencesManager.isHighContrast.collectAsState(initial = false)
                     
                     // Update theme preference if it hasn't been set yet
                     LaunchedEffect(isSystemDarkMode) {
@@ -101,7 +102,10 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    PomocnikTheme(darkTheme = isDarkMode) {
+                    PomocnikTheme(
+                        darkTheme = isDarkMode,
+                        highContrast = isHighContrast
+                    ) {
                         // Add system bars configuration
                         SetSystemBarsColor(preferencesManager = preferencesManager)
                         

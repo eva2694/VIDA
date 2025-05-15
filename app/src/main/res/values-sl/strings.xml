@@ -11,6 +11,7 @@
     <string name="settings_sl">Slovenščina</string>
     <string name="setting_rs_title">Izberite hitrost govora</string>
     <string name="settings_title_dm">Temni način</string>
+    <string name="settings_title_hc">Visok kontrast</string>
     <string name="tab_depth">Globina</string>
     <string name="depth_desc_very_close">Zelo Blizu</string>
     <string name="depth_desc_close">Blizu</string>
@@ -34,4 +35,9 @@
     <string name="permission_settings_message">Dovoljenje za kamerico je potrebno za delovanje aplikacije. Prosim, omogočite ga v nastavitvah.</string>
     <string name="permission_open_settings">Odpri nastavitve</string>
     <string name="permission_cancel">Prekliči</string>
+    <string name="language_selection_title">Dobrodošli</string>
+    <string name="language_selection_subtitle">Izbira jezika</string>
+    <string name="language_selection_continue">Nadaljuj</string>
+    <string name="language_selection_slovenian">Slovenščina</string>
+    <string name="language_selection_english">English</string>
 </resources>

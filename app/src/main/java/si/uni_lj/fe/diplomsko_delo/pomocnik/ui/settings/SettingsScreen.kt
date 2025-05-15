@@ -45,6 +45,7 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
     val language by viewModel.language.collectAsState(initial = "sl")
     val readingSpeed by viewModel.readingSpeed.collectAsState(initial = 1.0f)
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
+    val isHighContrast by viewModel.isHighContrast.collectAsState(initial = false)
 
     Scaffold { paddingValues ->
         Column(
@@ -118,6 +119,24 @@ fun SettingsScreen(preferencesManager: PreferencesManager) {
                 Switch(
                     checked = isDarkMode,
                     onCheckedChange = { viewModel.setDarkMode(it) },
+                    modifier = Modifier.padding(horizontal = 24.dp)
+                )
+            }
+
+            Divider(modifier = Modifier.padding(vertical = 20.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    stringResource(R.string.settings_title_hc),
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Switch(
+                    checked = isHighContrast,
+                    onCheckedChange = { viewModel.setHighContrast(it) },
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
             }

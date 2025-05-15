@@ -17,6 +17,7 @@ class SettingsViewModel(
       val language: Flow<String> = preferencesManager.language
       val readingSpeed: Flow<Float> = preferencesManager.readingSpeed
       val isDarkMode: Flow<Boolean> = preferencesManager.isDarkMode
+      val isHighContrast: Flow<Boolean> = preferencesManager.isHighContrast
 
       /**
        * Updates the app language.
@@ -42,6 +43,15 @@ class SettingsViewModel(
       fun setDarkMode(isDark: Boolean) {
             viewModelScope.launch {
                   preferencesManager.setDarkMode(isDark)
+                }
+          }
+
+      /**
+       * Updates the high contrast setting.
+       */
+      fun setHighContrast(isHighContrast: Boolean) {
+            viewModelScope.launch {
+                  preferencesManager.setHighContrast(isHighContrast)
                 }
           }
 }

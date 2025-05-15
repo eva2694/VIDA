@@ -25,6 +25,7 @@ class PreferencesManager(private val context: Context) {
         val READING_SPEED = floatPreferencesKey("reading_speed")
         val DARK_MODE = booleanPreferencesKey("dark_mode")
         val HAS_SELECTED_LANGUAGE = booleanPreferencesKey("has_selected_language")
+        val HIGH_CONTRAST = booleanPreferencesKey("high_contrast")
     }
 
     /** Current language setting (default: "sl") */
@@ -38,6 +39,10 @@ class PreferencesManager(private val context: Context) {
     /** Dark mode setting (default: false) */
     val isDarkMode: Flow<Boolean> = context.dataStore.data
         .map { it[DARK_MODE] ?: false }
+
+    /** High contrast mode setting (default: false) */
+    val isHighContrast: Flow<Boolean> = context.dataStore.data
+        .map { it[HIGH_CONTRAST] ?: false }
 
     /** Whether the user has made their initial language selection (default: false) */
     val hasSelectedLanguage: Flow<Boolean> = context.dataStore.data
@@ -76,6 +81,22 @@ class PreferencesManager(private val context: Context) {
      */
     suspend fun getDarkMode(): Boolean? {
         return context.dataStore.data.map { it[DARK_MODE] }.first()
+    }
+
+    /**
+     * Updates the high contrast mode setting.
+     * @param value true for high contrast mode, false for normal contrast
+     */
+    suspend fun setHighContrast(value: Boolean) {
+        context.dataStore.edit { it[HIGH_CONTRAST] = value }
+    }
+
+    /**
+     * Retrieves the current high contrast setting.
+     * @return true if high contrast is enabled, false if normal contrast is enabled, null if not set
+     */
+    suspend fun getHighContrast(): Boolean? {
+        return context.dataStore.data.map { it[HIGH_CONTRAST] }.first()
     }
 
     /**
