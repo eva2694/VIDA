@@ -228,10 +228,13 @@ fun MainScreen(
                                         )
                                         .padding(8.dp)
                                         .fillMaxWidth()
+                                        .semantics {
+                                            contentDescription = tabExploreDesc
+                                        }
                                 ) {
                                     Icon(
                                         Icons.Default.Visibility,
-                                        contentDescription = tabExploreDesc,
+                                        contentDescription = null,
                                         tint = if (currentRoute == "explore") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
@@ -274,10 +277,13 @@ fun MainScreen(
                                         )
                                         .padding(8.dp)
                                         .fillMaxWidth()
+                                        .semantics {
+                                            contentDescription = tabReadDesc
+                                        }
                                 ) {
                                     Icon(
                                         Icons.Default.TextFields,
-                                        contentDescription = tabReadDesc,
+                                        contentDescription = null,
                                         tint = if (currentRoute == "read") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
@@ -320,10 +326,13 @@ fun MainScreen(
                                         )
                                         .padding(8.dp)
                                         .fillMaxWidth()
+                                        .semantics {
+                                            contentDescription = tabDepthDesc
+                                        }
                                 ) {
                                     Icon(
                                         Icons.Default.ViewInAr,
-                                        contentDescription = tabDepthDesc,
+                                        contentDescription = null,
                                         tint = if (currentRoute == "depth") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
@@ -366,10 +375,13 @@ fun MainScreen(
                                         )
                                         .padding(8.dp)
                                         .fillMaxWidth()
+                                        .semantics {
+                                            contentDescription = tabSceneDesc
+                                        }
                                 ) {
                                     Icon(
                                         Icons.Default.Image,
-                                        contentDescription = tabSceneDesc,
+                                        contentDescription = null,
                                         tint = if (currentRoute == "scene") selectedDropdownItemColor else defaultDropdownItemColor
                                     )
                                     Text(
