@@ -9,7 +9,7 @@ Kopalna kad
 Postelja
 Klop
 Kolo
-Kolesno kolo
+Kolo
 Reklamna tabla
 Ptič
 Čoln
@@ -43,16 +43,16 @@ Kozmetika
 Kavč
 Pult
 Prehod za pešce
-Beraška palica
+Palica
 Omara s policami
 Zavesa
-Rezilna deska
+Rezalna deska
 Pisalna miza
 Pomivalni stroj
 Pes
 Vrata
 Kljuka za vrata
-Dol
+Puščica dol
 Predal
 Utež
 Dvigalo
@@ -67,9 +67,9 @@ Cvetlični lonček
 Hrana
 Obutev
 Vilica
-Fontana
+Vodnjak
 Sadje
-Ponva
+Ponev
 Pohištvo
 Plinski štedilnik
 Deklica
@@ -92,17 +92,17 @@ Sobna rastlina
 Jakna
 Vrč
 Kotliček
-Jedilna in kuhinjska miza
+Jedilna ali kuhinjska miza
 Kuhinjski aparat
 Kuhinjski pripomoček
 Nož
 Lestev
 Svetilka
-Prenosnik
-Levo
+Prenosni računalnik
+Puščica levo
 Žarnica
 Stikalo za luč
-Prtljaga in torbe
+Prtljaga ali torba
 Sesalec
 Moški
 Mehanski ventilator
@@ -116,14 +116,14 @@ Skodelica
 Glasbilo
 Nočna omarica
 Poslovna stavba
-Pisarna potrebščine
+Pisarniške potrebščine
 Pečica
 Papirnate brisače
 Parkirni števec
 Svinčnik
 Peresnica
 Oseba
-Osebna nega
+Pripomoček za osebno nego
 Košara za piknik
 Okvir za slike
 Blazina
@@ -138,7 +138,7 @@ Tiskalnik
 Hladilnik
 Daljinski upravljalnik
 Plazilec
-Desno
+Puščica desno
 Raketa
 Ravnilo
 Sendvič
@@ -148,8 +148,8 @@ Polica
 Tuš
 Umivalnik
 Nebotičnik
-Dozator mila
-Raztegljiva postelja
+Milo
+Kavč
 Žlica
 Športna oprema
 Stopnice
@@ -167,7 +167,7 @@ Pipa
 Telefon
 Televizor
 Šotor
-Opekač kruha
+Opekač za kruh
 Stranišče
 Toaletni papir
 Orodje
@@ -180,7 +180,7 @@ Vlak
 Drevo
 Tovornjak
 Dežnik
-Gor
+Puščica gor
 Kombi
 Vaza
 Zelenjava

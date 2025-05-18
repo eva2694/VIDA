@@ -245,7 +245,7 @@ Ocean
 Office
 Office Building
 Office Cubicles
-Oilrig
+Oil rig
 Operating Room
 Orchard
 Orchestra Pit

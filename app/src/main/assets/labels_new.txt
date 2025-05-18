@@ -52,7 +52,7 @@ Dishwasher
 Dog
 Door
 Door handle
-Down
+Arrow down
 Drawer
 Dumbbell
 Elevator
@@ -99,7 +99,7 @@ Knife
 Ladder
 Lamp
 Laptop
-Left
+Arrow left
 Light bulb
 Light switch
 Luggage and bags
@@ -138,7 +138,7 @@ Printer
 Refrigerator
 Remote control
 Reptile
-Right
+Arrow right
 Rocket
 Ruler
 Sandwich
@@ -180,7 +180,7 @@ Train
 Tree
 Truck
 Umbrella
-Up
+Arrow up
 Van
 Vase
 Vegetable

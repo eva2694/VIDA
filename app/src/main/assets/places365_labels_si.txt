@@ -1,12 +1,12 @@
 Letališče
 Kabina letala
 Letališki terminal
-Niša
-Uličica
+Zasebni kotiček, niša
+Ulica
 Amfiteater
 Igre v igralnici
 Zabaviščni park
-Stanovanjska stavba na prostem
+Stanovanjska stavba od zunaj
 Akvarij
 Akvadukt
 Arkada
@@ -25,18 +25,18 @@ Montažna linija
 Športno igrišče na prostem
 Atrij
 Podstrešje
-Avditorij
+Avditorij (dvorana)
 Avtomobilska tovarna
 Avtosalon
 Puščava
 Pekarna
 Balkon zunanji
 Balkon notranji
-Jama z žogicami
+Igralni bazen z žogicami
 Plesna dvorana
 Bambusov gozd
 Bančni trezor
-Banketna dvorana
+Prireditveni prostor
 Bar
 Hlev
 Hlevska vrata
@@ -59,9 +59,9 @@ Sprehajališče
 Paluba čolna
 Čolnarna
 Knjigarna
-Stojnica notranja
+Stojnica notri
 Botanični vrt
-Lok okno notranje
+Polkrožno okno
 Kegljišče
 Boksarski ring
 Most
@@ -77,7 +77,7 @@ Menza
 Kamp
 Kampus
 Kanal naravni
-Kanal mestni
+Kanal v mestu
 Sladkarija
 Kanjon
 Notranjost avtomobila
@@ -96,7 +96,7 @@ Pregrada
 Omara
 Trgovina z oblačili
 Obala
-Kokpit
+Pilotna kabina
 Kavarna
 Računalniška soba
 Konferenčni center
@@ -114,8 +114,8 @@ Prehod za pešce
 Jez
 Delikatesa
 Veleblagovnica
-Puščava pesek
-Puščava rastje
+Puščava s peskom
+Puščava z raszjem
 Puščavska cesta
 Gostilna na prostem
 Jedilnica
@@ -133,7 +133,7 @@ Jašek dvigala
 Veleposlaništvo
 Strojnica
 Vhodna dvorana
-Eskalator notranji
+Premične stopnice notri
 Izkopavanje
 Trgovina s tkaninami
 Kmetija
@@ -151,8 +151,8 @@ Nogometno igrišče
 Listnati gozd
 Gozdna pot
 Gozdna cesta
-Formalni vrt
-Fontana
+Urejen vrt
+Vodnjak ali fontana
 Kuhinja
 Garaža notranja
 Garaža zunanja
@@ -170,7 +170,7 @@ Telovadnica notranja
 Hangar notranji
 Hangar zunanji
 Pristanišče
-Železarija
+Trgovina z orodjem
 Senožet
 Heliport
 Avtocesta
@@ -178,7 +178,7 @@ Domača pisarna
 Domače kino
 Bolnica
 Bolišnična soba
-Topel izvir
+Termalni izvir
 Hotel na prostem
 Hotelska soba
 Hiša
@@ -226,7 +226,7 @@ Močvirje
 Telovadnica za borilne veščine
 Mavzolej
 Medina
-Mezanin
+Medetaža
 Jarek voda
 Mošeja na prostem
 Motel
@@ -238,7 +238,7 @@ Muzej notranji
 Muzej zunanji
 Glasbeni studio
 Naravoslovni muzej
-Vrtčevska soba
+Rastlinjak
 Dom za ostarele
 Sušilnica
 Ocean
@@ -248,8 +248,8 @@ Pisarniške kabine
 Naftna ploščad
 Operacijska dvorana
 Sadovnjak
-Orkestrski jarek
-Pagoda
+Orkestrska jama
+Pagoda (azijski stolp)
 Palača
 Shramba
 Park
@@ -328,7 +328,7 @@ Bazen zunanji
 Sinagoga na prostem
 Televizijska soba
 Televizijski studio
-Tempelj azija
+Azijski tempelj
 Dvorana prestola
 Prodajna blagajna
 Topiarni vrt
@@ -341,7 +341,7 @@ Hiša na drevesu
 Jarek
 Tundra
 Podvodno ocean globoko
-Pomožna soba
+Gospodinjski prostor
 Dolina
 Zelenjavni vrt
 Veterinarska ordinacija
